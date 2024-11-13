@@ -8,10 +8,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="h-screen bg-[#2E3532] flex items-center justify-center">
+    <div class="h-screen bg-stockhive-grey flex items-center justify-center">
         <div>
         <h1 class="text-center text-6xl text-white font-extrabold">StockHive</h1>
-        <p class="text-center my-8 hover:scale-105 hover:opacity-55 transition-all"><a class="rounded-lg py-2 px-4 bg-[#EE4266] font-bold text-white bg-accent text-3xl" href="/login">Login</a></p>
+        <p class="text-center my-8 hover:scale-105 hover:opacity-55 transition-all"><a class="rounded-lg py-2 px-4 bg-accent font-bold text-white text-3xl" href="/login">Login</a></p>
         </div>
       </div>
 </body>
