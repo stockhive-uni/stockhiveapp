@@ -15,6 +15,12 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors: {
+            'stockhive-grey': '#2E3532',
+            'stockhive-grey-dark': '#1c1f1e',
+            'accent': '#EE4266',
+            'white': '#ffffff',
+        }
     },
 
     plugins: [forms],
