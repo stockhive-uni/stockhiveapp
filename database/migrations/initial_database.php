@@ -4,6 +4,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -17,6 +18,10 @@ return new class extends Migration
             $table->string('location')->unique();
             $table->string('postcode');
         });
+        DB::table('store')->insert([
+            ['id' => '1', 'location' => 'Sheffield', 'postcode' => 'S1 2NH'],
+            ['id' => '2', 'location' => 'Leeds', 'postcode' => 'LS2 7DA']
+        ]);
 
         Schema::create('users', function (Blueprint $table) {
             $table->id()->primary();
@@ -28,6 +33,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::table('users')->insert(
+            ['id' => '1', 'store_id' => '1', 'first_name' => 'First', 'last_name' => 'Last', 'email' => 'test@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18']
+        );
 
         Schema::create('role', function (Blueprint $table) {
             $table->id()->primary();
