@@ -41,21 +41,107 @@ return new class extends Migration
             $table->id()->primary();
             $table->string('name');
         });
+        DB::table('role')->insert([
+            ['id' => '1', 'name' => 'Manager'],
+            ['id' => '2', 'name' => 'Salesperson'],
+            ['id' => '3', 'name' => 'Purchaser'],
+            ['id' => '4', 'name' => 'Stocker'],
+            ['id' => '5', 'name' => 'Warehouse Operator'],
+            ['id' => '6', 'name' => 'Optimiser'],
+            ['id' => '7', 'name' => 'Admin']
+        ]);
 
-        Schema::create('permission', function (Blueprint $table) {
+        Schema::create('category', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
         });
+        DB::table('category')->insert([
+            ['id' => '1', 'name' => 'Stock Management'],
+            ['id' => '2', 'name' => 'Sales'],
+            ['id' => '3', 'name' => 'Logistics'],
+            ['id' => '4', 'name' => 'Inventory'],
+            ['id' => '5', 'name' => 'Admin']
+        ]);
+
+        Schema::create('permission', function (Blueprint $table) {
+            $table->id()->primary();
+            $table->foreignID('category_id')->references('id')->on('category')->onDelete('cascade');
+            $table->string('name');
+        });
+        DB::table('permission')->insert([
+            ['id' => '1', 'category_id' => '1', 'name' => 'Buy Products'],
+            ['id' => '2', 'category_id' => '1', 'name' => 'View Stock'],
+            ['id' => '3', 'category_id' => '1', 'name' => 'Add/Remove Stock'],
+            ['id' => '4', 'category_id' => '1', 'name' => 'Generate Stock Reports'],
+            ['id' => '5', 'category_id' => '2', 'name' => 'Sell Products'],
+            ['id' => '6', 'category_id' => '2', 'name' => 'Generate Sales Invoices'],
+            ['id' => '7', 'category_id' => '3', 'name' => 'Receive Stock'],
+            ['id' => '8', 'category_id' => '3', 'name' => 'Generate Delivery Reports'],
+            ['id' => '9', 'category_id' => '3', 'name' => 'Note over-deliveries'],
+            ['id' => '10', 'category_id' => '3', 'name' => 'Complete over-deliveries'],
+            ['id' => '11', 'category_id' => '4', 'name' => 'Move Shelf'],
+            ['id' => '12', 'category_id' => '4', 'name' => 'Stock Check'],
+            ['id' => '13', 'category_id' => '4', 'name' => 'Generate Stock Check Reports'],
+            ['id' => '14', 'category_id' => '5', 'name' => 'Create Users'],
+            ['id' => '15', 'category_id' => '5', 'name' => 'Edit Users'],
+            ['id' => '16', 'category_id' => '5', 'name' => 'Delete Users'],
+            ['id' => '17', 'category_id' => '5', 'name' => 'Generare User Reports']
+        ]);
 
         Schema::create('role_permission', function (Blueprint $table) {
             $table->foreignID('role_id')->references('id')->on('role')->onDelete('cascade');
             $table->foreignID('permission_id')->references('id')->on('permission')->onDelete('cascade');
         });
+        DB::table('role_permission')->insert([
+            ['role_id' => '1', 'permission_id' => '1'],
+            ['role_id' => '1', 'permission_id' => '2'],
+            ['role_id' => '1', 'permission_id' => '3'],
+            ['role_id' => '1', 'permission_id' => '4'],
+            ['role_id' => '1', 'permission_id' => '5'],
+            ['role_id' => '1', 'permission_id' => '6'],
+            ['role_id' => '1', 'permission_id' => '7'],
+            ['role_id' => '1', 'permission_id' => '8'],
+            ['role_id' => '1', 'permission_id' => '9'],
+            ['role_id' => '1', 'permission_id' => '10'],
+            ['role_id' => '1', 'permission_id' => '11'],
+            ['role_id' => '1', 'permission_id' => '12'],
+            ['role_id' => '1', 'permission_id' => '13'],
+            ['role_id' => '1', 'permission_id' => '14'],
+            ['role_id' => '1', 'permission_id' => '15'],
+            ['role_id' => '1', 'permission_id' => '16'],
+            ['role_id' => '1', 'permission_id' => '17'],
+            ['role_id' => '2', 'permission_id' => '5'],
+            ['role_id' => '3', 'permission_id' => '1'],
+            ['role_id' => '3', 'permission_id' => '2'],
+            ['role_id' => '3', 'permission_id' => '3'],
+            ['role_id' => '3', 'permission_id' => '4'],
+            ['role_id' => '3', 'permission_id' => '10'],
+            ['role_id' => '4', 'permission_id' => '2'],
+            ['role_id' => '4', 'permission_id' => '11'],
+            ['role_id' => '4', 'permission_id' => '12'],
+            ['role_id' => '4', 'permission_id' => '13'],
+            ['role_id' => '5', 'permission_id' => '2'],
+            ['role_id' => '5', 'permission_id' => '7'],
+            ['role_id' => '5', 'permission_id' => '8'],
+            ['role_id' => '5', 'permission_id' => '9'],
+            ['role_id' => '6', 'permission_id' => '2'],
+            ['role_id' => '6', 'permission_id' => '4'],
+            ['role_id' => '6', 'permission_id' => '6'],
+            ['role_id' => '6', 'permission_id' => '8'],
+            ['role_id' => '6', 'permission_id' => '13'],
+            ['role_id' => '7', 'permission_id' => '14'],
+            ['role_id' => '7', 'permission_id' => '15'],
+            ['role_id' => '7', 'permission_id' => '16'],
+            ['role_id' => '7', 'permission_id' => '17']
+        ]);
 
         Schema::create('user_role', function (Blueprint $table) {
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('role_id')->references('id')->on('role')->onDelete('cascade');
         });
+        DB::table('user_role')->insert([
+            ['user_id' => '1', 'role_id' => '1']
+        ]);
 
         Schema::create('transaction', function (Blueprint $table) {
             $table->id()->primary();
@@ -69,14 +155,29 @@ return new class extends Migration
             $table->id()->primary();
             $table->string('name');
         });
+        DB::table('department')->insert([
+            ['department_id' => '1', 'name' => 'Food'],
+            ['department_id' => '2', 'name' => 'Drink'],
+            ['department_id' => '3', 'name' => 'Clothing'],
+            ['department_id' => '4', 'name' => 'Seasonal'],
+            ['department_id' => '5', 'name' => 'Home']
+        ]);
 
         Schema::create('item', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
             $table->integer('price');
             $table->foreignID('department_id')->references('id')->on('department')->onDelete('cascade');
-            $table->integer('order_limit');
         });
+        DB::table('item')->insert([
+            ['item_id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
+            ['item_id' => '2', 'name' => 'Orange', 'price' => '0.99', 'department_id' => '1'],
+            ['item_id' => '3', 'name' => 'Pear', 'price' => '0.99', 'department_id' => '1'],
+            ['item_id' => '4', 'name' => 'Pepsi', 'price' => '1.50', 'department_id' => '2'],
+            ['item_id' => '5', 'name' => 'Pepsi Max', 'price' => '1.20', 'department_id' => '2'],
+            ['item_id' => '6', 'name' => 'Fuck Laravel T-Shirt', 'price' => '0', 'department_id' => '3'],
+            ['item_id' => '7', 'name' => 'Christmas Tree', 'price' => '24.99', 'department_id' => '4']
+        ]);
 
         Schema::create('transaction_item', function (Blueprint $table) {
             $table->foreignID('transaction_id')->references('id')->on('transaction')->onDelete('cascade');
@@ -103,6 +204,12 @@ return new class extends Migration
             $table->id()->primary();
             $table->string('name');
         });
+        DB::table('location')->insert([
+            ['id' => '1', 'name' => 'Freezer'],
+            ['id' => '2', 'name' => 'Fridge'],
+            ['id' => '3', 'name' => 'Warehouse'],
+            ['id' => '4', 'name' => 'Floor']
+        ]);
 
         Schema::create('store_item', function (Blueprint $table) {
             $table->id()->primary();
@@ -110,11 +217,21 @@ return new class extends Migration
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('price');
         });
+        DB::table('store_item')->insert([
+            ['id' => '1', 'store_id' => '1', 'item_id' => '1', 'price' => '1.19'],
+            ['id' => '2', 'store_id' => '1', 'item_id' => '2', 'price' => '1.19'],
+            ['id' => '3', 'store_id' => '1', 'item_id' => '3', 'price' => '1.19'],
+            ['id' => '4', 'store_id' => '1', 'item_id' => '4', 'price' => '1.80'],
+            ['id' => '5', 'store_id' => '1', 'item_id' => '5', 'price' => '1.50'],
+            ['id' => '6', 'store_id' => '1', 'item_id' => '6', 'price' => '0'],
+            ['id' => '7', 'store_id' => '1', 'item_id' => '7', 'price' => '29.99']
+        ]);
 
         Schema::create('store_item_storage', function (Blueprint $table) {
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
             $table->integer('price');
             $table->foreignID('location_id')->references('id')->on('location')->onDelete('cascade');
+            $table->timestamp('expiration_date')->nullable();
         });
 
         Schema::create('delivery_note', function (Blueprint $table) {
@@ -126,7 +243,7 @@ return new class extends Migration
 
         Schema::create('delivered_item', function (Blueprint $table) {
             $table->foreignID('delivery_note_id')->references('id')->on('delivery_note')->onDelete('cascade');
-            $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('quantity');
         });
 
@@ -138,13 +255,6 @@ return new class extends Migration
             $table->boolean('returned');
             $table->integer('quantity');
             $table->timestamp('date_time');
-        });
-
-        Schema::create('store_item_location_change', function (Blueprint $table) {
-            $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
-            $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignID('old_location')->references('id')->on('location')->onDelete('cascade');
-            $table->foreignID('new_location')->references('id')->on('location')->onDelete('cascade');
         });
 
         Schema::create('store_item_price_change', function (Blueprint $table) {
