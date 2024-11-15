@@ -156,34 +156,34 @@ return new class extends Migration
             $table->string('name');
         });
         DB::table('department')->insert([
-            ['department_id' => '1', 'name' => 'Food'],
-            ['department_id' => '2', 'name' => 'Drink'],
-            ['department_id' => '3', 'name' => 'Clothing'],
-            ['department_id' => '4', 'name' => 'Seasonal'],
-            ['department_id' => '5', 'name' => 'Home']
+            ['id' => '1', 'name' => 'Food'],
+            ['id' => '2', 'name' => 'Drink'],
+            ['id' => '3', 'name' => 'Clothing'],
+            ['id' => '4', 'name' => 'Seasonal'],
+            ['id' => '5', 'name' => 'Home']
         ]);
 
         Schema::create('item', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
-            $table->integer('price');
+            $table->double('price');
             $table->foreignID('department_id')->references('id')->on('department')->onDelete('cascade');
         });
         DB::table('item')->insert([
-            ['item_id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
-            ['item_id' => '2', 'name' => 'Orange', 'price' => '0.99', 'department_id' => '1'],
-            ['item_id' => '3', 'name' => 'Pear', 'price' => '0.99', 'department_id' => '1'],
-            ['item_id' => '4', 'name' => 'Pepsi', 'price' => '1.50', 'department_id' => '2'],
-            ['item_id' => '5', 'name' => 'Pepsi Max', 'price' => '1.20', 'department_id' => '2'],
-            ['item_id' => '6', 'name' => 'Fuck Laravel T-Shirt', 'price' => '0', 'department_id' => '3'],
-            ['item_id' => '7', 'name' => 'Christmas Tree', 'price' => '24.99', 'department_id' => '4']
+            ['id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '2', 'name' => 'Orange', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '3', 'name' => 'Pear', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '4', 'name' => 'Pepsi', 'price' => '1.50', 'department_id' => '2'],
+            ['id' => '5', 'name' => 'Pepsi Max', 'price' => '1.20', 'department_id' => '2'],
+            ['id' => '6', 'name' => 'Fuck Laravel T-Shirt', 'price' => '0', 'department_id' => '3'],
+            ['id' => '7', 'name' => 'Christmas Tree', 'price' => '24.99', 'department_id' => '4']
         ]);
 
         Schema::create('transaction_item', function (Blueprint $table) {
             $table->foreignID('transaction_id')->references('id')->on('transaction')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('quantity');
-            $table->integer('price');
+            $table->double('price');
         });
 
         Schema::create('order', function (Blueprint $table) {
@@ -197,7 +197,7 @@ return new class extends Migration
             $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('ordered');
-            $table->integer('price');
+            $table->double('price');
         });
 
         Schema::create('location', function (Blueprint $table) {
@@ -215,7 +215,7 @@ return new class extends Migration
             $table->id()->primary();
             $table->foreignID('store_id')->references('id')->on('store')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
-            $table->integer('price');
+            $table->double('price');
         });
         DB::table('store_item')->insert([
             ['id' => '1', 'store_id' => '1', 'item_id' => '1', 'price' => '1.19'],
@@ -229,7 +229,7 @@ return new class extends Migration
 
         Schema::create('store_item_storage', function (Blueprint $table) {
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
-            $table->integer('price');
+            $table->double('quantity');
             $table->foreignID('location_id')->references('id')->on('location')->onDelete('cascade');
             $table->timestamp('expiration_date')->nullable();
         });
@@ -248,9 +248,8 @@ return new class extends Migration
         });
 
         Schema::create('over_deliveries', function (Blueprint $table) {
-            $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->foreignID('delivery_note_id')->references('id')->on('delivery_note')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
-            $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('store_id')->references('id')->on('store')->onDelete('cascade');
             $table->boolean('returned');
             $table->integer('quantity');
@@ -260,8 +259,8 @@ return new class extends Migration
         Schema::create('store_item_price_change', function (Blueprint $table) {
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('old_price');
-            $table->integer('new_price');
+            $table->double('old_price');
+            $table->double('new_price');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
