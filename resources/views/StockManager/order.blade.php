@@ -16,4 +16,8 @@
     @endforelse
     <x-primary-button>Order</x-primary-button>
     </form>
+
+    {{$count}}
+    {{$deliveryDate}}
+    £{{$totalPrice}}
 </x-app-layout>
