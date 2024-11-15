@@ -1,3 +1,8 @@
+<?php
+use Illuminate\Support\Facades\DB;
+
+$perms = DB::select('SELECT DISTINCT category.name FROM role, user_role, permission, role_permission, category WHERE user_role.user_id = ' . Auth::user()->id . ' AND user_role.role_id = role.id AND role.id = role_permission.role_id AND role_permission.permission_id = permission.id AND permission.category_id = category.id');
+?>
 <nav x-data="{ open: false }" class="bg-stockhive-grey-dark text-white">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,6 +20,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @foreach ($perms as $perm)
+                    <?php $name = str_replace(' ', '-', $perm->name); $name = strtolower($name); ?>
+                    <x-nav-link :href="route($name)" :active="request()->routeIs($name)">
+                        {{ $perm->name }}
+                    </x-nav-link>
+                    @endforeach
                 </div>
             </div>
 
