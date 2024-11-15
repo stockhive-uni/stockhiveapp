@@ -18,8 +18,9 @@ export default {
         colors: {
             'stockhive-grey': '#2E3532',
             'stockhive-grey-dark': '#1c1f1e',
-            'accent': '#EE4266',
+            'accent': '#F9B339',
             'white': '#ffffff',
+            'black': '#000000',
         },
         boxShadow: {
             'bxs': "0 0 10px #FF79C6",
