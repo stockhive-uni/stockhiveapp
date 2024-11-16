@@ -21,39 +21,41 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// Stock Management
-
-Route::get('/stock-management', [ItemController::class, 'index'])
-    ->name('stock-management');
-
-Route::post('/stock/order', [ItemController::class, 'chosenItems'])
-    ->name('stock.chosenItems');
-
-Route::post('/stock/store', [WarehouseOrderController::class, 'store'])
-    ->name('WarehouseOrder.store');
-
-// Sales
-
-Route::get('/sales', function () {
-    return view('sales');
-})->middleware(['auth', 'verified'])->name('sales');
-
-// Logistics
-
-Route::get('/logistics', function () {
-    return view('logistics');
-})->middleware(['auth', 'verified'])->name('logistics');
-
-// Inventory
-
-Route::get('/inventory', function () {
-    return view('inventory');
-})->middleware(['auth', 'verified'])->name('inventory');
-
-// Admin
-
-Route::get('/admin', function () {
-    return view('admin');
-})->middleware(['auth', 'verified'])->name('admin');
-
 // Sales, Logistics, Inventory and Admin are currently files. When you want to start implementing them properly, create a controller and folder for them.
+
+Route::middleware(['auth', 'verified', 'check-category'])->group(function () {
+    // Stock Management
+
+    Route::get('/stock-management', [ItemController::class, 'index'])
+        ->name('stock-management');
+
+    Route::post('/stock/order', [ItemController::class, 'chosenItems'])
+        ->name('stock.chosenItems');
+
+    Route::post('/stock/store', [WarehouseOrderController::class, 'store'])
+        ->name('WarehouseOrder.store');
+
+    // Sales
+
+    Route::get('/sales', function () {
+        return view('sales');
+    })->name('sales');
+
+    // Logistics
+
+    Route::get('/logistics', function () {
+        return view('logistics');
+    })->name('logistics');
+
+    // Inventory
+
+    Route::get('/inventory', function () {
+        return view('inventory');
+    })->name('inventory');
+
+    // Admin
+
+    Route::get('/admin', function () {
+        return view('admin');
+    })->name('admin');
+});
