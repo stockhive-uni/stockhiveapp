@@ -3,6 +3,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 $perms = DB::select('SELECT DISTINCT category.name FROM  user_role, permission, role_permission, category WHERE user_role.user_id = ' . Auth::user()->id . ' AND user_role.role_id = role_permission.role_id AND role_permission.permission_id = permission.id AND permission.category_id = category.id');
+
+$categories = array_map(function ($perm) {
+    return str_replace(' ', '-', strtolower($perm->name));
+}, $perms);
 ?>
 <nav x-data="{ open: false }" class="bg-stockhive-grey-dark text-white">
     <!-- Primary Navigation Menu -->
@@ -23,7 +27,7 @@ $perms = DB::select('SELECT DISTINCT category.name FROM  user_role, permission, 
                     </x-nav-link>
 
                     @foreach ($categories as $category)
-                    <?php $name = str_replace('-', ' ', ucwords($category)); ?> <!-- Formats output to a more user friendly and readable format -->
+                    <?php $name = str_replace('-', ' ', $category); $name = ucwords($name); ?> <!-- Formats output to a more user friendly and readable format -->
                     <x-nav-link :href="route($category)" :active="request()->routeIs($category)">
                         {{ $name }}
                     </x-nav-link>
