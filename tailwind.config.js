@@ -21,9 +21,10 @@ export default {
             'accent': '#F9B339',
             'white': '#ffffff',
             'black': '#000000',
+            'grey': '#4b5563',
         },
         boxShadow: {
-            'bxs': "0 0 10px #FF79C6",
+            'bxs': "0 0 10px #F9B339",
         },
     },
 

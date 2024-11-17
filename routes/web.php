@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WarehouseOrderController;
+use App\Http\Controllers\StockSortController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/stock', [ItemController::class, 'index'])->name('stock.index');
+Route::get('/stock/sort', [StockSortController::class, 'sort'])->name('stock.sort');
 Route::post('/stock/order', [ItemController::class, 'chosenItems'])->name('stock.chosenItems');
 
 Route::post('/stock/store', [WarehouseOrderController::class, 'store'])->name('WarehouseOrder.store');
