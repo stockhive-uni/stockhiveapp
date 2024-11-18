@@ -37,6 +37,7 @@
                 <p class="text-white">No available stock to order</p>
             @endif
             <div class="m-auto w-[90%] text-right">
+                {{ $items->links() }}
                 <x-primary-button>Create Order</x-primary-button>
             </div>
         </form>

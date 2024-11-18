@@ -9,7 +9,7 @@ class StockSortController extends Controller {
         $sort = $request->input('sort', 'id'); // Default to ID
         $items = Item::with('department') // Stackoverflow answer for sorting using Laravel https://stackoverflow.com/a/60182632
                     ->orderBy($sort) 
-                    ->get();
+                    ->simplePaginate(5); // Pagination for the items
         return view('StockManager.index', ['items' => $items]);
     }
 }
