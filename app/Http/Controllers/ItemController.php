@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -15,7 +14,7 @@ class ItemController extends Controller
     public function index()
     {
         //when loading into the stockManager view, items are displayed with their department
-        $items = Item::with('department')->get();
+        $items = Item::with('department')->paginate(5)->onEachSide(0.5);
         return (view('StockManager.index', ['items' => $items]));
     }
 
