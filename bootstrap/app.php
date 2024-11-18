@@ -11,7 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(CheckUserAccess::class);
+        $middleware->append(CheckUserAccess::class); // Found of this way to define middlewares through docs and stack overflow
     })
     ->withMiddleware(function (Middleware $middleware) {
         //

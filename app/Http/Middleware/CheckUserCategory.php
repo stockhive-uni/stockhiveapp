@@ -28,8 +28,8 @@ class CheckUserCategory
 
         // Checks if the current route is in the list of routes they have access to
         if (!in_array(explode('.', Route::currentRouteName())[0], $categories)) {
-            var_dump(explode('.', Route::currentRouteName())[0]);
-            // header("Location: " . route('dashboard')); // Routes back to dashboard if the user doesn't have permissions
+            // var_dump(explode('.', Route::currentRouteName())[0]); // Uncomment this and comment the next line to see what the Route is and compare it to expected result
+            header("Location: " . route('dashboard')); // Routes back to dashboard if the user doesn't have permissions
             exit;
         }
         return $next($request);
