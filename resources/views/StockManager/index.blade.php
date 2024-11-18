@@ -6,12 +6,17 @@
                 <option value="name" {{ request('sort') === 'name' ? 'selected' : '' }}>Name</option>
                 <option value="price" {{ request('sort') === 'price' ? 'selected' : '' }}>Price</option>
             </select>
+            <input type="hidden" name="page" value="{{ request('page', 1) }}"> <!-- Get page number, default to 1 if none set. -->
             <x-primary-button class="ml-4">Sort</x-primary-button>
         </form>
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
             @if($items->isNotEmpty())
-                <table class="border-separate border-2 m-auto my-8 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
+                    {{ $items->appends(request()->except('page'))->links()}}
+                    <x-primary-button>Create Order</x-primary-button>
+                </div>
+                <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -36,10 +41,6 @@
             @else
                 <p class="text-white">No available stock to order</p>
             @endif
-            <div class="m-auto w-[90%] text-right">
-                {{ $items->links() }}
-                <x-primary-button>Create Order</x-primary-button>
-            </div>
         </form>
     </div>
 </x-app-layout>
