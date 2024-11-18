@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WarehouseOrderController;
+use App\Http\Controllers\StockSortController;
 use App\Http\Middleware\CheckUserCategory;
 
 Route::get('/', function () {
@@ -25,10 +26,14 @@ require __DIR__.'/auth.php';
 // Sales, Logistics, Inventory and Admin are currently files. When you want to start implementing them properly, create a controller and folder for them.
 
 Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(function () {
+  
     // Stock Management
 
     Route::get('/stock-management', [ItemController::class, 'index'])
         ->name('stock-management');
+  
+    Route::get('/stock-management/sort', [StockSortController::class, 'sort'])
+        ->name('stock-management.sort');
 
     Route::post('/stock-management/order', [ItemController::class, 'chosenItems'])
         ->name('stock-management.chosenItems');
