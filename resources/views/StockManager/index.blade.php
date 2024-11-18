@@ -7,6 +7,7 @@
                 <option value="price" {{ request('sort') === 'price' ? 'selected' : '' }}>Price</option>
             </select>
             <x-primary-button class="ml-4">Sort</x-primary-button>
+            <x-get-permissions/>
         </form>
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
