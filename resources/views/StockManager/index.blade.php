@@ -1,5 +1,5 @@
 <x-app-layout>
-    <form action='{{ route('stock.chosenItems')}}' method="POST">
+    <form action="{{route('stock-management.chosenItems')}}" method="POST">
     @csrf
     <ul>
         <dt>ID</dt>
@@ -11,7 +11,7 @@
             <li>{{$item->name}}</li>
             <li>£{{$item->price}}</li>
             <li>{{$item->department->name}}</li>
-            <input type="checkbox" name='items[]' value={{$item->id}}>
+            <input type="checkbox" name='items[]' value='{{$item->id}}'>
         </ul>
     @empty
     <div>No Stock Available To Order</div>

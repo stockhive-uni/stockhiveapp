@@ -21,17 +21,15 @@ class CheckUserCategory
         // Selectes all categories the user has access to. User -> UserRole -> RolePermission -> Category
         $perms = DB::select('SELECT DISTINCT category.name FROM  user_role, permission, role_permission, category WHERE user_role.user_id = ' . Auth::user()->id . ' AND user_role.role_id = role_permission.role_id AND role_permission.permission_id = permission.id AND permission.category_id = category.id');
 
-        // Converts returned categories into an array
+        // Converts returned categories into an array and reformats them
         $categories = array_map(function ($perm) {
             return str_replace(' ', '-', strtolower($perm->name));
         }, $perms);
 
-        // Gets the current route name
-        $currentRouteName = Route::currentRouteName();
-
-        // Checks if the current route is dashboard or in the list of routes they have access to
-        if (!in_array($currentRouteName, $categories)) {
-            header("Location: " . route('dashboard')); // Routes back to dashboard if the user doesn't have permissions
+        // Checks if the current route is in the list of routes they have access to
+        if (!in_array(explode('.', Route::currentRouteName())[0], $categories)) {
+            var_dump(explode('.', Route::currentRouteName())[0]);
+            // header("Location: " . route('dashboard')); // Routes back to dashboard if the user doesn't have permissions
             exit;
         }
         return $next($request);

@@ -30,11 +30,11 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management', [ItemController::class, 'index'])
         ->name('stock-management');
 
-    Route::post('/stock/order', [ItemController::class, 'chosenItems'])
-        ->name('stock.chosenItems');
+    Route::post('/stock-management/order', [ItemController::class, 'chosenItems'])
+        ->name('stock-management.chosenItems');
 
-    Route::post('/stock/store', [WarehouseOrderController::class, 'store'])
-        ->name('WarehouseOrder.store');
+    Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
+        ->name('stock-management.store');
 
     // Sales
 

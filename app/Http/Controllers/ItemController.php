@@ -24,7 +24,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('StockManagement.index');
+        return view('StockManager.index');
     }
 
     /**

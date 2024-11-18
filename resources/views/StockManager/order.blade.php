@@ -1,5 +1,5 @@
 <x-app-layout>
-    <form action="{{route('WarehouseOrder.store')}}" method='POST'>
+    <form action="{{route('stock-management.store')}}" method='POST'>
     @csrf
     @forelse($items as $collection )
         @forelse($collection as $item)
