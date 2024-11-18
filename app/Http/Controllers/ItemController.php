@@ -14,7 +14,7 @@ class ItemController extends Controller
     public function index()
     {
         //when loading into the stockManager view, items are displayed with their department
-        $items = Item::with('department')->paginate(5)->onEachSide(0.5);
+        $items = Item::with('department')->paginate(5)->onEachSide(1);
         return (view('StockManager.index', ['items' => $items]));
     }
 
