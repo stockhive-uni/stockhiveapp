@@ -11,7 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(CheckUserAccess::class); // Found of this way to define middlewares through docs and stack overflow
+        $middleware->append(CheckUserAccess::class); // Found of this way to define middlewares through stack overflow https://stackoverflow.com/questions/78532447/laravel-kernel-php-file-alternative
     })
     ->withMiddleware(function (Middleware $middleware) {
         //
