@@ -5,6 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Artisan;
 
 return new class extends Migration
 {
@@ -217,15 +218,6 @@ return new class extends Migration
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->double('price');
         });
-        DB::table('store_item')->insert([
-            ['id' => '1', 'store_id' => '1', 'item_id' => '1', 'price' => '1.19'],
-            ['id' => '2', 'store_id' => '1', 'item_id' => '2', 'price' => '1.19'],
-            ['id' => '3', 'store_id' => '1', 'item_id' => '3', 'price' => '1.19'],
-            ['id' => '4', 'store_id' => '1', 'item_id' => '4', 'price' => '1.80'],
-            ['id' => '5', 'store_id' => '1', 'item_id' => '5', 'price' => '1.50'],
-            ['id' => '6', 'store_id' => '1', 'item_id' => '6', 'price' => '0'],
-            ['id' => '7', 'store_id' => '1', 'item_id' => '7', 'price' => '29.99']
-        ]);
 
         Schema::create('store_item_storage', function (Blueprint $table) {
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
@@ -322,6 +314,14 @@ return new class extends Migration
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
+
+        Artisan::call('db:seed');
+
+        for ($i = 1; $i < 108; $i++) {
+            DB::table('store_item')->insert([
+                ['id' => $i,'store_id' => '1', 'item_id' => $i, 'price' => '1']
+            ]);
+        }
     }
 
     /**
