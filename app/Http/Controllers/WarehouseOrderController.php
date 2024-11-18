@@ -54,9 +54,8 @@ class WarehouseOrderController extends Controller
                     'ordered' => 0, //not sure if this needs changing for another feature
                      'price' => $item->price
                 ];
-                DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
-    
             }
+            DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
         }
     }
 
