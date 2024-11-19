@@ -43,10 +43,16 @@ class ItemController extends Controller
 
         //totals the cost of the items, number of items and gives the delivery date
         $itemsPrice = 0;
-        $count = 0;
-        foreach ($stock as $item) {
-            $itemsPrice += $item->price;
-            $count++;
+        $count = count($request->items);
+
+        $allStock = new Collection();
+        $allItems = Item::whereIn('id', $request->items)->with('department')->get();
+        $allStock->push($allItems);
+
+        foreach ($allStock as $collection) {
+            foreach ($collection as $item) {
+                $itemsPrice += $item->price;
+            }
         }
 
         $deliveryDate = now()->addDays(3); //always takes 3 days to deliver

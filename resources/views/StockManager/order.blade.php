@@ -38,6 +38,5 @@
             @else
             <p class="text-white">No items on display</p>
         @endif
-    {{$count}}
     </div>
 </x-app-layout>
