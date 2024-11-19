@@ -7,7 +7,7 @@
             <div>{{$item->name}}</div>
             <div>£{{$item->price}}</div>
             <div>{{$item->department->name}}</div>
-            <input type='number' name='ItemQty[]'></input>
+            <input type='number' name='ItemQty[{{$item->id}}]'></input>
             <input type='hidden' name='checkbox[]' value='{{$item->id}}'></input>
 
         @empty

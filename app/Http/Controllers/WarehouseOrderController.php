@@ -36,6 +36,9 @@ class WarehouseOrderController extends Controller
         $collect =  Item::whereIn('id', $request->input('checkbox'))->with('department')->get(); 
         $stock->push($collect);
 
+        //item qtys
+        $itemQty = $request->input('ItemQty');
+        
         //insert into Order table
         DB::table('order')->insert([
             'user_id' => Auth::id(),
@@ -48,14 +51,17 @@ class WarehouseOrderController extends Controller
         foreach($stock as $product)     
         {
             foreach($product as $item) {
+                //depending on which itemid, depends on the qty given
+
                 $insert[] = [
                     'order_id' => $last->id,
                     'item_id' => $item->id,
-                    'ordered' => 0, //not sure if this needs changing for another feature
+                    'ordered' => $itemQty[$item->id], //uses the item id to get the item qty of the order
                      'price' => $item->price
                 ];
+            
             }
-            DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
+           DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
         }
     }
 
