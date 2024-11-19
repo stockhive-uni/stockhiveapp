@@ -42,17 +42,7 @@ class ItemController extends Controller
             $collect =  Item::whereIn('id', $request->items)->with('department')->get(); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
             $stock->push($collect);
 
-        //totals the cost of the items, number of items and gives the delivery date
-        $itemsPrice = 0;
-        foreach ($stock as $collection) {
-            foreach ($collection as $item) {
-                $itemsPrice += $item->price;
-            }
-            $count = $collection->count();
-        }
-
-        $deliveryDate = now()->addDays(3); //always takes 3 days to deliver
-        return (view('StockManager.order', ['items' => $stock, 'count' => $count, 'deliveryDate' => $deliveryDate, 'totalPrice' => $itemsPrice]));
+        return (view('StockManager.order', ['items' => $stock]));
     }
 
     /**

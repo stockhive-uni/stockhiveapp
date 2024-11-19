@@ -1,5 +1,5 @@
 <x-app-layout>
-    <form action="{{route('stock-management.store')}}" method='POST'>
+    <form action="{{route('stock-management.toOverview')}}" method='POST'>
     @csrf
     @forelse($items as $collection )
         @forelse($collection as $item)
@@ -16,13 +16,9 @@
     @empty
     <div>empty</div>
     @endforelse
-    <x-primary-button>Order</x-primary-button>
+    <x-primary-button>Continue</x-primary-button>
     </form>
     @error('ItemQty[]')
         <div>Qty input incorrect, try again.</div>        
     @enderror
-
-    {{$count}}
-    {{$deliveryDate}}
-    £{{$totalPrice}}
 </x-app-layout>

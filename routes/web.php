@@ -41,6 +41,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
         ->name('stock-management.store');
 
+    Route::post('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
+        ->name('stock-management.toOverview');
+
     // Sales
 
     Route::get('/sales', function () {
