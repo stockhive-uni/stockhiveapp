@@ -5,6 +5,10 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Controllers\StockSortController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\LogisticsController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\AdminController;
 use App\Http\Middleware\CheckUserCategory;
 
 Route::get('/', function () {
@@ -43,25 +47,21 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     // Sales
 
-    Route::get('/sales', function () {
-        return view('sales');
-    })->name('sales');
+    Route::get('/sales', [SalesController::class, 'index'])
+    ->name('sales');
 
     // Logistics
 
-    Route::get('/logistics', function () {
-        return view('logistics');
-    })->name('logistics');
+    Route::get('/logistics', [LogisticsController::class, 'index'])
+    ->name('logistics');
 
     // Inventory
 
-    Route::get('/inventory', function () {
-        return view('inventory');
-    })->name('inventory');
+    Route::get('/inventory', [InventoryController::class, 'index'])
+    ->name('inventory');
 
     // Admin
 
-    Route::get('/admin', function () {
-        return view('admin');
-    })->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])
+    ->name('admin');
 });
