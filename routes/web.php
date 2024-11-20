@@ -7,6 +7,11 @@ use App\Http\Middleware\CheckUserCategory;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockSortController;
 use App\Http\Controllers\WarehouseOrderController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\LogisticsController;
+use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsersSortController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,8 +29,6 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// Sales, Logistics, Inventory and Admin are currently files. When you want to start implementing them properly, create a controller and folder for them.
-
 Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(function () {
   
     // Stock Management
@@ -36,7 +39,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/sort', [StockSortController::class, 'sort'])
         ->name('stock-management.sort');
 
-    Route::post('/stock-management/order', [ItemController::class, 'chosenItems'])
+    Route::get('/stock-management/order/sort', [StockSortController::class, 'sortOrder'])
+        ->name('stock-management.sortOrder');
+
+    Route::any('/stock-management/order', [ItemController::class, 'chosenItems'])
         ->name('stock-management.chosenItems');
 
     Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
@@ -50,25 +56,27 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     // Sales
 
-    Route::get('/sales', function () {
-        return view('sales');
-    })->name('sales');
+    Route::get('/sales', [SalesController::class, 'index'])
+    ->name('sales');
 
     // Logistics
 
-    Route::get('/logistics', function () {
-        return view('logistics');
-    })->name('logistics');
+    Route::get('/logistics', [LogisticsController::class, 'index'])
+    ->name('logistics');
 
     // Inventory
 
-    Route::get('/inventory', function () {
-        return view('inventory');
-    })->name('inventory');
+    Route::get('/inventory', [InventoryController::class, 'index'])
+    ->name('inventory');
 
     // Admin
 
-    Route::get('/admin', function () {
-        return view('admin');
-    })->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])
+    ->name('admin');
+
+    Route::get('/admin/sort', [UsersSortController::class, 'sort'])
+    ->name('admin.sort');
+
+    Route::post('/admin/user', [AdminController::class, 'selectedUser'])
+    ->name('admin.selectedUser');
 });
