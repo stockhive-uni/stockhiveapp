@@ -27,7 +27,7 @@
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Edit User</th>
+                            <!-- <th>Edit User</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +36,7 @@
                                 <td>{{ $employee->id }}</td>
                                 <td>{{ $employee->first_name }}</td>
                                 <td>{{ $employee->last_name }}</td>
-                                <td><x-primary-button>Edit User</x-primary-button></td>
+                                <!-- <td><x-primary-button>Edit User</x-primary-button></td> -->
                             </tr>
                         @endforeach
                     </tbody>
