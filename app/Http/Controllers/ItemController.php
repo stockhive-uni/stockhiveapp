@@ -39,21 +39,24 @@ class ItemController extends Controller
     public function chosenItems(Request $request) 
     {
         //selected item ids from stock are then fetched again 
-        $stock = new Collection();
-            $collect =  Item::whereIn('id', $request->items)->with('department')->get(); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
-            $stock->push($collect);
+        $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
 
         //totals the cost of the items, number of items and gives the delivery date
         $itemsPrice = 0;
-        foreach ($stock as $collection) {
+        $count = count($request->items);
+
+        $allStock = new Collection();
+        $allItems = Item::whereIn('id', $request->items)->with('department')->get();
+        $allStock->push($allItems);
+
+        foreach ($allStock as $collection) {
             foreach ($collection as $item) {
                 $itemsPrice += $item->price;
             }
-            $count = $collection->count();
         }
 
         $deliveryDate = now()->addDays(3); //always takes 3 days to deliver
-        return (view('StockManager.order', ['items' => $stock, 'count' => $count, 'deliveryDate' => $deliveryDate, 'totalPrice' => $itemsPrice]));
+        return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items, 'count' => $count, 'deliveryDate' => $deliveryDate, 'totalPrice' => $itemsPrice]));
     }
 
     /**
