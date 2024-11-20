@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WarehouseOrderController;
-use App\Http\Controllers\StockSortController;
+use App\Http\Controllers\reportController;
 use App\Http\Middleware\CheckUserCategory;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StockSortController;
+use App\Http\Controllers\WarehouseOrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +44,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::post('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
         ->name('stock-management.toOverview');
+
+    Route::post('/stock-management/report', [reportController::class, 'index'])
+        ->name('stock-management.report'); 
 
     // Sales
 

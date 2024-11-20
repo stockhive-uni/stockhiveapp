@@ -18,6 +18,7 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>Department</th>
+                            <th>Generate Report</th>
                             <th>Select</th>
                         </tr>
                     </thead>
@@ -28,6 +29,11 @@
                                 <td>{{ $item->name }}</td>
                                 <td>£{{ $item->price }}</td>
                                 <td>{{ $item->department->name }}</td>
+                                <td><form method='POST' action="{{route('stock-management.report')}}">
+                                    @csrf
+                                    <input type="hidden" name="reports[]" value="{{ $item->id }}"></input>
+                                    <x-primary-button>Generate Report</x-primary-button>
+                                </form></td>
                                 <td><input type="checkbox" name="items[]" value="{{ $item->id }}"></td>
                             </tr>
                         @endforeach
