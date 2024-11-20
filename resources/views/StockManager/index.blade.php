@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Stock Management') }}
+        </h2>
+    </x-slot>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <form method="GET" action="{{ route('stock-management.sort') }}" class="m-auto text-right w-[90%]">
             <select name="sort" id="sort" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-[50%]">
@@ -13,10 +18,10 @@
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
             @if($items->isNotEmpty())
-                <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
-                    <x-paginate :items="$items"/>
-                    <x-primary-button>Create Order</x-primary-button>
-                </div>
+            <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
+                <x-paginate :items="$items"/>
+                <x-primary-button>Create Order</x-primary-button>
+            </div>
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
                         <tr>

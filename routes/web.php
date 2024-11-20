@@ -9,6 +9,7 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\LogisticsController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsersSortController;
 use App\Http\Middleware\CheckUserCategory;
 
 Route::get('/', function () {
@@ -26,8 +27,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-// Sales, Logistics, Inventory and Admin are currently files. When you want to start implementing them properly, create a controller and folder for them.
 
 Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(function () {
   
@@ -67,4 +66,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/admin', [AdminController::class, 'index'])
     ->name('admin');
+
+    Route::get('/admin/sort', [UsersSortController::class, 'sort'])
+    ->name('admin.sort');
+
+    Route::post('/admin/user', [AdminController::class, 'selectedUser'])
+    ->name('admin.selectedUser');
 });
