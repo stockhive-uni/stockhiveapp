@@ -1,6 +1,5 @@
 <x-app-layout>
-    <form>
-        <form action="{{route('stock-management.store')}}" method='POST'>
+    <form action="{{route('stock-management.store')}}" method='POST'>
             @csrf
             @forelse($items as $collection )
                 @forelse($collection as $item)
@@ -8,7 +7,7 @@
                     <div>{{$item->name}}</div>
                     <div>£{{$item->price}}</div>
                     <div>{{$item->department->name}}</div>
-                    <div>{{$ItemQty[$item->id]}}</div>
+                    <input type='hidden' name='ItemQty[{{$item->id}}]' value='{{$ItemQty[$item->id]}}'>{{$ItemQty[$item->id]}}</input>
                     <input type='hidden' name='checkbox[]' value='{{$item->id}}'></input>
         
                 @empty
@@ -19,6 +18,7 @@
             @endforelse
             <x-primary-button>Order</x-primary-button>
             </form>
+            
             @error('ItemQty[]')
                 <div>Qty input incorrect, try again.</div>        
             @enderror

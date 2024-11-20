@@ -9,16 +9,13 @@
                 <option value="price" {{ request('sort') === 'price' ? 'selected' : '' }}>Price</option>
             </select>
             <x-primary-button class="ml-4">Sort</x-primary-button>
-            <input type="hidden" name="count" value="{{ $count }}">
-            <input type="hidden" name="deliveryDate" value="{{ $deliveryDate }}">
-            <input type="hidden" name="totalPrice" value="{{ $totalPrice }}">
             <input type="hidden" name="page" value="{{ request('page', 1) }}">
             <?php $itemsImploded = implode(',', $allItems); ?>
             <input type="hidden" name="items" value="{{ $itemsImploded }}">
         </form>
 
         <!-- Items Display -->
-        <form action="{{ route('stock-management.store') }}" method="POST" class="w-full">
+        <form action="{{ route('stock-management.toOverview') }}" method="POST" class="w-full">
             @csrf
             @if($items->isNotEmpty())
                 <!-- Pagination and Order Button -->
@@ -35,6 +32,7 @@
                             <th class="py-2 px-4 text-center">Name</th>
                             <th class="py-2 px-4 text-center">Price</th>
                             <th class="py-2 px-4 text-center">Department</th>
+                            <th class="py-2 px-4 text-center">Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,18 +42,13 @@
                                 <td class="py-2 px-4">{{ $item->name }}</td>
                                 <td class="py-2 px-4">£{{ $item->price }}</td>
                                 <td class="py-2 px-4">{{ $item->department->name }}</td>
+                                <td class="py-2 px-4 text-black"><input type='number' name='ItemQty[{{$item->id}}]'></input></td> <!-- here needs changing, the variable name needs to match the item id -->
                                 <input type='hidden' name='checkbox[]' value='{{$item->id}}'></input>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                <!-- Order Totals -->
-                <div class="bg-stockhive-grey-light text-right rounded-lg p-4 w-full mt-4">
-                    <p class="text-sm">Total Count: <span class="font-semibold">{{ $count }}</span></p>
-                    <p class="text-sm">Delivery Date: <span class="font-semibold">{{ \Carbon\Carbon::parse($deliveryDate)->format('d/m/Y \a\t H:i') }}</span></p>
-                    <p class="text-sm">Total Price: <span class="font-semibold">£{{ $totalPrice }}</span></p>
-                </div>
             @else
                 <p class="text-center text-white mt-6">No items on display</p>
             @endif
