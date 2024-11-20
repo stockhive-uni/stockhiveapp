@@ -36,6 +36,9 @@ class WarehouseOrderController extends Controller
         $collect =  Item::whereIn('id', $request->input('checkbox'))->with('department')->get(); 
         $stock->push($collect);
 
+        //item qtys
+        $itemQty = $request->input('ItemQty');
+        
         //insert into Order table
         DB::table('order')->insert([
             'user_id' => Auth::id(),
@@ -48,15 +51,48 @@ class WarehouseOrderController extends Controller
         foreach($stock as $product)     
         {
             foreach($product as $item) {
+                //depending on which itemid, depends on the qty given
                 $insert[] = [
                     'order_id' => $last->id,
                     'item_id' => $item->id,
-                    'ordered' => 0, //not sure if this needs changing for another feature
+                    'ordered' => $itemQty[$item->id], //uses the item id to get the item qty of the order
                      'price' => $item->price
                 ];
+                
+            
             }
-            DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
+           DB::table('order_item')->insert($insert);  //learnt how to only insert specific fields here, posted 8 years ago by StormShadow: https://laracasts.com/discuss/channels/eloquent/insert-to-data-base-on-the-fly-from-dynamic-content    
         }
+    }
+
+    public function toOverview(Request $request) 
+    {        
+        //selected item ids from stock are then fetched again 
+        $stock = new Collection();
+        $collect =  Item::whereIn('id', $request->input('checkbox'))->with('department')->get(); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
+        $stock->push($collect);
+
+        //total cost and items
+        $itemQty = $request->input('ItemQty');
+
+        $totalPrice = 0;
+        $totalItems = 0;
+        foreach ($stock as $collection) {
+            foreach ($collection as $item) {
+                $Qty = $itemQty[$item->id];
+                $totalPrice += ($Qty * $item->price);
+                $totalItems += $Qty;
+            }
+        }
+
+        //Quantities
+        $ItemQty = $request->input('ItemQty');
+
+        //delivery date
+        $deliveryDate = now()->addDay(3);
+
+        //overview stuff here like total cost, delivery date, total items
+        return view('StockManager.overview',['items' => $stock, 'ItemQty' => $ItemQty, 'stock' => $stock, 'totalPrice' => $totalPrice, 'totalItems' => $totalItems, 'deliveryDate' => $deliveryDate]);
     }
 
     /**
