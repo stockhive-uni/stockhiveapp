@@ -46,6 +46,7 @@
                                 <td class="py-2 px-4">{{ $item->name }}</td>
                                 <td class="py-2 px-4">£{{ $item->price }}</td>
                                 <td class="py-2 px-4">{{ $item->department->name }}</td>
+                                <input type='hidden' name='checkbox[]' value='{{$item->id}}'></input>
                             </tr>
                         @endforeach
                     </tbody>
