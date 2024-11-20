@@ -38,7 +38,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/sort', [StockSortController::class, 'sort'])
         ->name('stock-management.sort');
 
-    Route::post('/stock-management/order', [ItemController::class, 'chosenItems'])
+    Route::get('/stock-management/order/sort', [StockSortController::class, 'sortOrder'])
+        ->name('stock-management.sortOrder');
+
+    Route::any('/stock-management/order', [ItemController::class, 'chosenItems'])
         ->name('stock-management.chosenItems');
 
     Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
