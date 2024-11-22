@@ -48,19 +48,21 @@ class ItemController extends Controller
         else {
             $stock = Item::whereIn('id', $request->items)->with('department')->get();
             $allresults = array();
-            foreach ($stock as $stockitem) {
-                foreach ($stockitem as $item) {
-                    $id=$item->id;
-                    $orders = $item->orders;
-                    $query = DB::query('SELECT Transaction_Item.quantity, Transaction_Item.price, Transaction.date_time  FROM Transaction_Item, Transaction WHERE Transaction_Item.item_id = $id AND Transaction_Item.transaction_id = Transaction.id', [$id]);
-                    $quantity = $query->pluck('quantity');
-                    $price = $query->pluck('price');
-                    $date = $query->pluck('date_time');
+            foreach ($stock as $item) {
+                $id=$item->id;
+                $orders = $item->orders;
+                $query = DB::query('SELECT Transaction_Item.quantity, Transaction_Item.price, Transaction.date_time  FROM Transaction_Item, Transaction WHERE Transaction_Item.item_id = ? AND Transaction_Item.transaction_id = Transaction.id', [$id]);
+                if (!empty($query)) {
+                    /* Not fully functional
+                    $quantity = collect($query)->pluck('quantity');
+                    $price = collect($query)->pluck('price');
+                    $date = collect($query)->pluck('date_time');
                     $month = date('m', strtotime($date)); // Get month from date
                     $total = $quantity * $price;
                     array_push($allresults, compact('total', 'month'));
+                    */
                 }
-            }   
+            } 
             return view('StockManager.report', ['allresults' => $allresults]);
         }
     }
