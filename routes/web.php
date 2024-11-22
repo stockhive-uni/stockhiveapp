@@ -2,24 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SalesController;
 use App\Http\Controllers\reportController;
 use App\Http\Middleware\CheckUserCategory;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StockSortController;
-use App\Http\Controllers\WarehouseOrderController;
-use App\Http\Controllers\SalesController;
-use App\Http\Controllers\LogisticsController;
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LogisticsController;
+use App\Http\Controllers\StockSortController;
 use App\Http\Controllers\UsersSortController;
+use App\Http\Controllers\WarehouseOrderController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
+->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
