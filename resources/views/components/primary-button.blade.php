@@ -1,4 +1,4 @@
-@props(['nameEnter'])
+@props(['nameEnter' => null])
 @php
 $name = "main";
 if ($nameEnter != null) {

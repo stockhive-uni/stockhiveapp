@@ -39,7 +39,7 @@ class ItemController extends Controller
 
     public function chosenItems(Request $request) 
     {
-        if (!$request->reports) {
+        if ($request->has("Order")) {
             //selected item ids from stock are then fetched again 
             $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
 
