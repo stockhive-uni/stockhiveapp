@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
 class ItemController extends Controller
@@ -38,10 +39,30 @@ class ItemController extends Controller
 
     public function chosenItems(Request $request) 
     {
-        //selected item ids from stock are then fetched again 
-        $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
+        if (!$request->reports) {
+            //selected item ids from stock are then fetched again 
+            $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
 
-        return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
+            return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
+        }
+        else {
+            $stock = Item::whereIn('id', $request->items)->with('department')->get();
+            $allresults = array();
+            foreach ($stock as $stockitem) {
+                foreach ($stockitem as $item) {
+                    $id=$item->id;
+                    $orders = $item->orders;
+                    $query = DB::query('SELECT Transaction_Item.quantity, Transaction_Item.price, Transaction.date_time  FROM Transaction_Item, Transaction WHERE Transaction_Item.item_id = $id AND Transaction_Item.transaction_id = Transaction.id', [$id]);
+                    $quantity = $query->pluck('quantity');
+                    $price = $query->pluck('price');
+                    $date = $query->pluck('date_time');
+                    $month = date('m', strtotime($date)); // Get month from date
+                    $total = $quantity * $price;
+                    array_push($allresults, compact('total', 'month'));
+                }
+            }   
+            return view('StockManager.report', ['allresults' => $allresults]);
+        }
     }
 
     /**
