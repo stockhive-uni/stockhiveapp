@@ -152,11 +152,11 @@ return new class extends Migration
             $table->string('card');
         });
         DB::table('transaction')->insert([
-            ['id' => '1', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-11-22 15:22:45', 'card' => 'example'],
-            ['id' => '2', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2023-11-22 11:36:43', 'card' => 'example'],
-            ['id' => '3', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2022-11-22 09:34:14', 'card' => 'example'],
-            ['id' => '4', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-10-22 13:13:59', 'card' => 'example'],
-            ['id' => '5', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-09-22 12:01:00', 'card' => 'example']
+            ['id' => '1', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-11-12 15:22:45', 'card' => 'example'],
+            ['id' => '2', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-10-23 11:36:43', 'card' => 'example'],
+            ['id' => '3', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-09-07 09:34:14', 'card' => 'example'],
+            ['id' => '4', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2023-11-15 13:13:59', 'card' => 'example'],
+            ['id' => '5', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2022-10-01 12:01:00', 'card' => 'example']
         ]);
 
         Schema::create('department', function (Blueprint $table) {
