@@ -9,7 +9,11 @@ class warehouseOrderedItems extends Model
     //
     protected $table = 'order_item';
 
-    public function order_items() {
-        return $this->belongsTo('store_item', 'order_id');
+    public function items() {
+        $this->hasMany(Item::class, 'item_id');
+    }
+
+    public function order() {
+        $this->belongsTo(warehouseOrder::class, 'order_id');
     }
 }

@@ -21,6 +21,9 @@ Route::get('/', function () {
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
 ->middleware(['auth', 'verified']);
 
+Route::post('/order-history', [dashboardController::class, 'ShowOrderHistory'])->name('dashboard.ShowOrderHistory')
+->middleware(['auth', 'verified']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
