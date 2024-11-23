@@ -5,6 +5,9 @@
         </h2>
     </x-slot>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <form action='{{}}' method='POST'>
+            <input type='text' name='search' :value="old('search')"></input>
+        </form>
         <form method="GET" action="{{ route('stock-management.sort') }}" class="m-auto text-right w-[90%]">
             <select name="sort" id="sort" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-[50%]">
                 <option value="id" {{ request('sort') === 'id' ? 'selected' : '' }}>ID</option>

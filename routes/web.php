@@ -59,6 +59,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
         ->name('stock-management.ShowOrderHistory');
 
+    Route::get('/stock-management/search', [searchController::class, 'index'])
+        ->name('stock-management.search');
+
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])

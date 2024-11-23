@@ -4,7 +4,7 @@
             {{ __('Search') }}
         </h2>
     </x-slot>
-    <form action='{{}}' method='POST'>
-        <input type='text'></input>
+    <form action='{{}}' method='GET'>
+        <input type='text' name='search' :value="old('search')"></input>
     </form>
 </x-app-layout>
