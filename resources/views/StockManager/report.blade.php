@@ -1,8 +1,10 @@
 <x-app-layout>
 
-    @dd($allresults)
-
     @foreach ($allresults as $result)
-    <div>{{ $result }}</div>
+    <div>{{ $result['item_name'] }}</div>
+    @foreach ($result['data'] as $key => $data)
+        <div>£{{ $data['total'] }}</div>
+        <div>{{ $data['month'] }}</div>
+    @endforeach
     @endforeach
 </x-app-layout>

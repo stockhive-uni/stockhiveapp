@@ -51,7 +51,6 @@ class ItemController extends Controller
             // Loop through all items.
             foreach ($stock as $item) {
                 $id=$item->id;
-                $orders = $item->orders;
                 $query = DB::table('Transaction_Item') // Use laravel's query builder. https://www.google.com/search?client=firefox-b-d&q=laravel+query+builder
                     ->join('Transaction', 'Transaction_Item.transaction_id', '=', 'Transaction.id')
                     ->where('Transaction_Item.item_id', $id)
