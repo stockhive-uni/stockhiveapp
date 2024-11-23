@@ -48,19 +48,39 @@ class ItemController extends Controller
         else {
             $stock = Item::whereIn('id', $request->items)->with('department')->get();
             $allresults = array();
+            // Loop through all items.
             foreach ($stock as $item) {
                 $id=$item->id;
                 $orders = $item->orders;
-                $query = DB::query('SELECT Transaction_Item.quantity, Transaction_Item.price, Transaction.date_time  FROM Transaction_Item, Transaction WHERE Transaction_Item.item_id = ? AND Transaction_Item.transaction_id = Transaction.id', [$id]);
-                if (!empty($query)) {
-                    /* Not fully functional
-                    $quantity = collect($query)->pluck('quantity');
-                    $price = collect($query)->pluck('price');
-                    $date = collect($query)->pluck('date_time');
-                    $month = date('m', strtotime($date)); // Get month from date
-                    $total = $quantity * $price;
-                    array_push($allresults, compact('total', 'month'));
-                    */
+                $query = DB::table('Transaction_Item') // Use laravel's query builder. https://www.google.com/search?client=firefox-b-d&q=laravel+query+builder
+                    ->join('Transaction', 'Transaction_Item.transaction_id', '=', 'Transaction.id')
+                    ->where('Transaction_Item.item_id', $id)
+                    ->select('Transaction_Item.quantity', 'Transaction_Item.price', 'Transaction.date_time')
+                    ->get();
+                if ($query->isNotEmpty()) {
+                    $data = [];
+                    // Iterate through transactions.
+                    foreach ($query as $transaction) {
+                        $quantity = $transaction->quantity;
+                        $price = $transaction->price;
+                        $date = $transaction->date_time;
+                        // Get the month from date
+                        $month = date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
+                        // Store the data in an array, group by month.
+                        if (!isset($data[$month])) {
+                            $data[$month] = [
+                                'total' => 0, 
+                                'month' => $month,
+                            ];
+                        }
+                        // Set the total for the month.
+                        $data[$month]['total'] += $quantity * $price;
+                    }
+                     // Add the item's monthly data
+                    $allresults[] = [
+                        'item_name' => $item->name,  // Item name
+                        'data' => $data, // Item information per month.
+                    ];
                 }
             } 
             return view('StockManager.report', ['allresults' => $allresults]);

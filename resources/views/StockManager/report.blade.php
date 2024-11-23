@@ -1,8 +1,8 @@
 <x-app-layout>
 
-    @dd ($allresults)
+    @dd($allresults)
 
-    @foreach ($request->input('reports') as $report)
-        <div>{{$report}}</div>
+    @foreach ($allresults as $result)
+    <div>{{ $result }}</div>
     @endforeach
 </x-app-layout>
