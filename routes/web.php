@@ -21,8 +21,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
 ->middleware(['auth', 'verified']);
 
-Route::post('/order-history', [dashboardController::class, 'ShowOrderHistory'])->name('dashboard.ShowOrderHistory')
-->middleware(['auth', 'verified']);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,7 +54,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
         ->name('stock-management.toOverview');
 
     Route::post('/stock-management/report', [reportController::class, 'index'])
-        ->name('stock-management.report'); 
+        ->name('stock-management.report');
+
+    Route::post('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
+        ->name('stock-management.ShowOrderHistory');
 
     // Sales
 

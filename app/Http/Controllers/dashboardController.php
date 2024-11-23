@@ -32,7 +32,6 @@ class dashboardController extends Controller
         ->where('order.id', '=', $request->order)
         ->get();
 
-
         return (view('order-history', ['orderHistoryItems' => $orderHistoryItems, 'orders' => $orders]));
     }
 }

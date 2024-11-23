@@ -19,7 +19,7 @@
                     <span>Order History:</span>
                     <!-- if statement here -->
                     @foreach ($orderHistory as $order)
-                        <form action="{{route('dashboard.ShowOrderHistory')}}" method="POST">
+                        <form action="{{route('stock-management.ShowOrderHistory')}}" method="POST">
                             @csrf
                             <div>{{$order->id}}</div>
                             <div>{{$order->users->first_name}}</div>
