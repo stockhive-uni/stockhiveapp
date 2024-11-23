@@ -151,6 +151,13 @@ return new class extends Migration
             $table->timestamp('date_time');
             $table->string('card');
         });
+        DB::table('transaction')->insert([
+            ['id' => '1', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-11-22 15:22:45', 'card' => 'example'],
+            ['id' => '2', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2023-11-22 11:36:43', 'card' => 'example'],
+            ['id' => '3', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2022-11-22 09:34:14', 'card' => 'example'],
+            ['id' => '4', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-10-22 13:13:59', 'card' => 'example'],
+            ['id' => '5', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-09-22 12:01:00', 'card' => 'example']
+        ]);
 
         Schema::create('department', function (Blueprint $table) {
             $table->id()->primary();
@@ -186,6 +193,17 @@ return new class extends Migration
             $table->integer('quantity');
             $table->double('price');
         });
+        DB::table('transaction_item')->insert([
+            ['transaction_id' => '1', 'item_id' => '1', 'quantity' => '10', 'price' => '12.43'],
+            ['transaction_id' => '1', 'item_id' => '2', 'quantity' => '6', 'price' => '12.43'],
+            ['transaction_id' => '1', 'item_id' => '3', 'quantity' => '2', 'price' => '12.43'],
+            ['transaction_id' => '2', 'item_id' => '1', 'quantity' => '4', 'price' => '12.43'],
+            ['transaction_id' => '3', 'item_id' => '1', 'quantity' => '1', 'price' => '12.43'],
+            ['transaction_id' => '3', 'item_id' => '2', 'quantity' => '2', 'price' => '12.43'],
+            ['transaction_id' => '3', 'item_id' => '3', 'quantity' => '6', 'price' => '12.43'],
+            ['transaction_id' => '4', 'item_id' => '4', 'quantity' => '3', 'price' => '12.43'],
+            ['transaction_id' => '5', 'item_id' => '5', 'quantity' => '1', 'price' => '12.43']
+        ]);
 
         Schema::create('order', function (Blueprint $table) {
             $table->id()->primary();
