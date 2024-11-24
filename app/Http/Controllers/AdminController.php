@@ -29,11 +29,13 @@ class AdminController extends Controller
         $last_name = $request->last_name;
         $email = $request->email;
 
-        Employee::where('id', $id)
+        if ($first_name != "" && $last_name != "" && $email != ""){
+            Employee::where('id', $id)
             ->update(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email]);
-            
+        }
+
         $user = Employee::where('id', $request->id)->with('store')->get();
-        $user = $user[0];
+            $user = $user[0];
 
         return (view('Admin.user', ['user' => $user]));
     }
@@ -41,14 +43,16 @@ class AdminController extends Controller
     public function updatePermissions(Request $request) {
         $roles = $request->roles;
 
-        DB::table('user_role')
-            ->where('user_id', $request->id)
-            ->delete();
+        if ($roles != null) {
+            DB::table('user_role')
+                ->where('user_id', $request->id)
+                ->delete();
 
-        foreach ($roles as $role) {
-            DB::table('user_role')->insert([
-                ['user_id' => $request->id, 'role_id' => $role]
-            ]);
+            foreach ($roles as $role) {
+                DB::table('user_role')->insert([
+                    ['user_id' => $request->id, 'role_id' => $role]
+                ]);
+            }
         }
 
         $user = Employee::where('id', $request->id)->with('store')->get();
