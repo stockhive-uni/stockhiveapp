@@ -7,6 +7,12 @@ global $permissions;
 $permissions = collect($perms);
 
 /*
+To get permissions:
+@php global $permissions; @endphp
+@include('components.get-permissions', ['id' => $id]) //$id is whichever user you need the permissions of. In most situations, Auth::user()->id should be fine as it gets the id for the logged in user 
+
+
+
 Stock Management
 1 - Create Order
 2 - View Stock
@@ -33,11 +39,5 @@ Admin
 15 - Edit Users
 16 - Delete Users
 17 - Generate User Reports
-
-
-
-if (in_array(permission_id, $permissions)) {
-    // Do Thing
-}
 */
 ?>
