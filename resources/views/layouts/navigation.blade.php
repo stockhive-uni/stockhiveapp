@@ -27,8 +27,8 @@ $categories = array_map(function ($perm) {
                     </x-nav-link>
 
                     @foreach ($categories as $category)
-                    <?php $name = str_replace('-', ' ', $category); $name = ucwords($name);  ?> <!-- Formats output to a more user friendly and readable format -->
-                    <x-nav-link :href="route($category)" :active="request()->routeIs($category)">
+                    <?php $name = str_replace('-', ' ', $category); $name = ucwords($name); $active = explode('.', Route::currentRouteName())[0] == $category;  ?> <!-- Formats output to a more user friendly and readable format -->
+                    <x-nav-link :href="route($category)" :active="$active">
                         {{ $name }}
                     </x-nav-link>
                     @endforeach
