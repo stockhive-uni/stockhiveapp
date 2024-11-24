@@ -27,9 +27,10 @@ class AdminController extends Controller
         $id = $request->id;
         $first_name = $request->first_name;
         $last_name = $request->last_name;
+        $email = $request->email;
 
         Employee::where('id', $id)
-            ->update(['first_name' => $first_name, 'last_name' => $last_name]);
+            ->update(['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email]);
             
         $user = Employee::where('id', $request->id)->with('store')->get();
         $user = $user[0];

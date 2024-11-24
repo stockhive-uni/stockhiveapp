@@ -6,6 +6,8 @@
         <input type="text" name="first_name" value="{{ ($user['first_name']) }}">
         <h2>Last Name:</h2>
         <input type="text" name="last_name" value="{{ ($user['last_name']) }}">
+        <h2>Email:</h2>
+        <input type="text" name="email" value="{{ ($user['email']) }}">
         <input type="hidden" name="id" value ="{{ $user['id'] }}">
         <x-primary-button>Save Settings</x-primary-button>
     </form>
@@ -26,6 +28,9 @@
         @endforeach
     </div>
     <div>
+        @if ($user['id'] == Auth::user()->id)
+        <h2>You cannot edit your own permissions</h2>
+        @else
         <h2>Roles</h2>
         <form action="{{ route('admin.updatePermissions') }}" method="POST">
             @csrf
@@ -64,5 +69,6 @@
             </table>
             <x-primary-button>Update Permissions</x-primary-button>
         </form>
+        @endif
     </div>
 </x-app-layout>
