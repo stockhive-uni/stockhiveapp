@@ -27,7 +27,9 @@
     </div>
     <div>
         <h2>Roles</h2>
-        <form action="" method="POST">
+        <form action="{{ route('admin.updatePermissions') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" value="{{ $user['id'] }}">
             <table>
                 <tr>
                     <th>Role</th>
@@ -55,7 +57,7 @@
                         }
                     @endphp
                     <td>
-                        <input type="checkbox" {{$checked}}>
+                        <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{$checked}}>
                     </td>
                 </tr>
                 @endforeach
