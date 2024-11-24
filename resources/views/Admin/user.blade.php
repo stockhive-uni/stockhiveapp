@@ -1,10 +1,12 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __($user) }}
-        </h2>
-    </x-slot>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
-
-    </div>
+    <form action="{{ route('admin.updateSettings') }}" method="POST">
+        @csrf
+        <h2>ID: {{ ($user['id']) }}</h2>
+        <h2>First Name:</h2>
+        <input type="text" name="first_name" value="{{ ($user['first_name']) }}">
+        <h2>Last Name:</h2>
+        <input type="text" name="last_name" value="{{ ($user['last_name']) }}">
+        <input type="hidden" name="id" value ="{{ $user['id'] }}">
+        <x-primary-button>Save Settings</x-primary-button>
+    </form>
 </x-app-layout>

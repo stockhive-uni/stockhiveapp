@@ -15,8 +15,6 @@
             <x-primary-button class="ml-4">Sort</x-primary-button>
             <x-get-permissions/>
         </form>
-        <form action="{{ route('admin.selectedUser') }}" method="POST">
-            @csrf
             @if($employees->isNotEmpty())
             <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                 <x-paginate :items="$employees"/>
@@ -27,23 +25,26 @@
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <!-- <th>Edit User</th> -->
+                            <th>Edit User</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($employees as $employee)
-                            <tr>
-                                <td>{{ $employee->id }}</td>
-                                <td>{{ $employee->first_name }}</td>
-                                <td>{{ $employee->last_name }}</td>
-                                <!-- <td><x-primary-button>Edit User</x-primary-button></td> -->
-                            </tr>
+                            <form action="{{ route('admin.selectedUser') }}" method="POST">
+                                @csrf
+                                <tr>
+                                    <input type="hidden" name="id" value="{{ $employee->id }}">
+                                    <td>{{ $employee->id }}</td>
+                                    <td>{{ $employee->first_name }}</td>
+                                    <td>{{ $employee->last_name }}</td>
+                                    <td><x-primary-button>Edit User</x-primary-button></td>
+                                </tr>
+                             </form>
                         @endforeach
                     </tbody>
                 </table>
             @else
                 <p class="text-white">No other users in system</p>
             @endif
-        </form>
     </div>
 </x-app-layout>

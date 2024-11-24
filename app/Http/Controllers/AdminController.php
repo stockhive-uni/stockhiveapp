@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,23 @@ class AdminController extends Controller
 
     public function selectedUser(Request $request)
     {
-        $user = Employee::whereIn('id', $request->id)->with('store')->get();
+        $user = Employee::where('id', $request->id)->with('store')->get();
+        $user = $user[0];
+        return (view('Admin.user', ['user' => $user]));
+    }
+
+    public function updateSettings(Request $request) {
+        $id = $request->id;
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+
+        Employee::where('id', $id)
+            ->update(['first_name' => $first_name, 'last_name' => $last_name]);
+
+            
+        $user = Employee::where('id', $request->id)->with('store')->get();
+        $user = $user[0];
+
         return (view('Admin.user', ['user' => $user]));
     }
 }
