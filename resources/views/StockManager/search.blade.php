@@ -4,7 +4,7 @@
             {{ __('Search') }}
         </h2>
     </x-slot>
-    <form action='{{}}' method='GET'>
-        <input type='text' name='search' :value="old('search')"></input>
+    <form action='{{route('stock-management.search')}}' method='GET'>
+        <input type='text' name='search' :value="old('search') !== '' ? old('search') : $searchQuery"></input>
     </form>
 </x-app-layout>
