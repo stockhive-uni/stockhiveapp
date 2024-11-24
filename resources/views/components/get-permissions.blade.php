@@ -2,8 +2,9 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-$perms = DB::select("SELECT DISTINCT permission.id FROM permission, role_permission, user_role WHERE permission.id = role_permission.permission_id AND role_permission.role_id = user_role.role_id AND user_role.user_id = " . Auth::user()->id);
-$permissions = collect($perms)->toArray();
+$perms = DB::select("SELECT DISTINCT permission.id, permission.name AS permissionName, category.name AS categoryName FROM permission, role_permission, user_role, category WHERE permission.id = role_permission.permission_id AND role_permission.role_id = user_role.role_id AND permission.category_id = category.id AND user_role.user_id = " . $id);
+global $permissions;
+$permissions = collect($perms);
 
 /*
 Stock Management

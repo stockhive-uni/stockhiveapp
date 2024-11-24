@@ -9,4 +9,23 @@
         <input type="hidden" name="id" value ="{{ $user['id'] }}">
         <x-primary-button>Save Settings</x-primary-button>
     </form>
+    <div>
+        <h2>Active Permissions:</h2>
+        @php global $permissions; @endphp
+        @include('components.get-permissions', ['id' => $user['id']])
+
+        @foreach($permissions->groupBy('categoryName') as $category => $categoryPermissions)
+        <div>
+        <h3>{{ $category }}</h3>
+        <ul>
+            @foreach($categoryPermissions as $permission)
+                <li>{{ $permission->id }} - {{ $permission->permissionName }}</li>
+            @endforeach
+        </ul>
+        </div>
+        @endforeach
+    </div>
+    <div>
+        <h2>Roles</h2>
+    </div>
 </x-app-layout>
