@@ -61,6 +61,8 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     // Logistics
 
+    Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics.index');
+    Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');    
     Route::get('/logistics', [LogisticsController::class, 'index'])
     ->name('logistics');
 
