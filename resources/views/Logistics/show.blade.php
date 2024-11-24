@@ -1,5 +1,6 @@
 <x-app-layout>
     <h1 class="text-2xl font-bold mb-4">Order Details (ID: {{ $order->id }})</h1>
+    <a href="{{ route('logistics') }}" class="text-blue-500 hover:underline mb-4">← Back to Logistics</a>
 
     <div class="mb-6">
         <p><strong>User ID:</strong> {{ $order->user_id }}</p>
