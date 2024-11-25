@@ -84,4 +84,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::post('/admin/user', [AdminController::class, 'selectedUser'])
     ->name('admin.selectedUser');
+
+    Route::post('/admin/update-settings', [AdminController::class, 'updateSettings'])
+    ->name('admin.updateSettings');
+
+    Route::any('/admin/update-permissions', [AdminController::class, 'updatePermissions'])
+        ->name('admin.updatePermissions');
 });

@@ -80,7 +80,7 @@ return new class extends Migration
             ['id' => '8', 'category_id' => '3', 'name' => 'Generate Delivery Reports'],
             ['id' => '9', 'category_id' => '3', 'name' => 'Note over-deliveries'],
             ['id' => '10', 'category_id' => '3', 'name' => 'Complete over-deliveries'],
-            ['id' => '11', 'category_id' => '4', 'name' => 'Move Shelf'],
+            ['id' => '11', 'category_id' => '4', 'name' => 'Move Stock'],
             ['id' => '12', 'category_id' => '4', 'name' => 'Stock Check'],
             ['id' => '13', 'category_id' => '4', 'name' => 'Generate Stock Check Reports'],
             ['id' => '14', 'category_id' => '5', 'name' => 'Create Users'],
