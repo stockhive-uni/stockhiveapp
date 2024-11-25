@@ -1,74 +1,82 @@
 <x-app-layout>
-    <form action="{{ route('admin.updateSettings') }}" method="POST">
-        @csrf
-        <h2>ID: {{ ($user['id']) }}</h2>
-        <h2>First Name:</h2>
-        <input type="text" name="first_name" value="{{ ($user['first_name']) }}">
-        <h2>Last Name:</h2>
-        <input type="text" name="last_name" value="{{ ($user['last_name']) }}">
-        <h2>Email:</h2>
-        <input type="text" name="email" value="{{ ($user['email']) }}">
-        <input type="hidden" name="id" value ="{{ $user['id'] }}">
-        <x-primary-button>Save Settings</x-primary-button>
-    </form>
-    <div>
-        <h2>Active Permissions:</h2>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <form action="{{ route('admin.updateSettings') }}" method="POST">
+            @csrf
+            <h1 class="text-xl">ID: {{ ($user['id']) }}</h1>
+            <div class="flex items-center space-x-4">
+                <h2>First Name:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="first_name" value="{{ ($user['first_name']) }}" class="form-input">
+                <h2>Last Name:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="last_name" value="{{ ($user['last_name']) }}" class="form-input">
+                <h2>Email:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="email" value="{{ ($user['email']) }}" class="form-input">
+                <input type="hidden" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="id" value ="{{ $user['id'] }}">
+                <x-primary-button>Save Settings</x-primary-button>
+            </div>
+        </form>
+    </div>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <h1 class="text-2xl font-bold text-center">Active Permissions</h1>
         @php global $permissions; @endphp
         @include('components.get-permissions', ['id' => $user['id']])
 
         @foreach($permissions->groupBy('categoryName') as $category => $categoryPermissions)
-            <div>
-                <h3>{{ $category }}</h3>
-                <ul>
+            <div class="mt-4">
+                <h1 class="font-bold text-xl">{{ $category }}</h1>
+                <ul class="flex items-center space-x-4">
                     @foreach($categoryPermissions as $permission)
-                        <li>{{ $permission->id }} - {{ $permission->permissionName }}</li>
+                        <li class="text-sm text-gray-600 bg-stockhive-grey my-4 p-2 rounded-lg">{{ $permission->id }} - {{ $permission->permissionName }}</li>
                     @endforeach
                 </ul>
             </div>
         @endforeach
     </div>
-    <div>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         @if ($user['id'] == Auth::user()->id)
-        <h2>You cannot edit your own permissions</h2>
+        <h2 class="text-error">You cannot edit your own permissions</h2>
         @else
         <h2>Roles</h2>
         <form action="{{ route('admin.updatePermissions') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $user['id'] }}">
-            <table>
-                <tr>
-                    <th>Role</th>
-                    <th>Permissions</th>
-                    <th>Active</th>
-                </tr>
-                @php
-                    $roles = DB::select("SELECT *, CASE WHEN name IN (SELECT name FROM role, user_role WHERE role.id = user_role.role_id AND user_role.user_id = ?) THEN TRUE ELSE FALSE END AS isActive FROM role", [$user['id']])
-                @endphp
-                @foreach ($roles as $role)
-                <tr>
-                    @php
-                    $permissions = DB::select("SELECT permission.name FROM role_permission, permission WHERE permission.id = role_permission.permission_id AND role_id = " . $role->id)
-                    @endphp
-                    <td>{{ $role->name }}</td>
-                    <td>
-                        @foreach ($permissions as $permission)
-                            <p>{{ $permission->name }}</p>
-                        @endforeach
-                    </td>
-                    @php
-                        $checked = "";
-                        if ($role->isActive == 1) {
-                            $checked = "checked";
-                        }
-                    @endphp
-                    <td>
-                        <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{$checked}}>
-                    </td>
-                </tr>
+            <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+    <thead>
+        <tr class="text-left border-b-2 border-grey">
+            <th class="py-2 px-4 text-center">Role</th>
+            <th class="py-2 px-4 text-center">Permissions</th>
+            <th class="py-2 px-4 text-center">Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        @php
+            $roles = DB::select("SELECT *, CASE WHEN name IN (SELECT name FROM role, user_role WHERE role.id = user_role.role_id AND user_role.user_id = ?) THEN TRUE ELSE FALSE END AS isActive FROM role", [$user['id']])
+        @endphp
+        @foreach ($roles as $role)
+        <tr class="hover:bg-stockhive-grey-light transition-all">
+            @php
+            $permissions = DB::select("SELECT permission.name FROM role_permission, permission WHERE permission.id = role_permission.permission_id AND role_id = " . $role->id)
+            @endphp
+            <td class="py-2 px-4">{{ $role->name }}</td>
+            <td class="py-2 px-4">
+                @foreach ($permissions as $permission)
+                    <p class="text-sm text-gray-600 bg-stockhive-grey-dark my-4 p-2 rounded-lg">{{ $permission->name }}</p>
                 @endforeach
-            </table>
-            <x-primary-button>Update Permissions</x-primary-button>
+            </td>
+            @php
+                $checked = $role->isActive == 1 ? "checked" : "";
+            @endphp
+            <td class="py-2 px-4">
+                <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{$checked}} class="form-checkbox h-5 w-5 text-blue-600 rounded">
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+            <div class="lg:w-[90%] m-auto">
+                <x-primary-button>Update Permissions</x-primary-button>
+            </div>
         </form>
         @endif
     </div>
+    <br />
 </x-app-layout>
