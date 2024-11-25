@@ -4,11 +4,16 @@
             {{ __('Search') }}
         </h2>
     </x-slot>
+
+    <form action="{{ route('stock-management.search') }}" method="GET">
+        <x-paginate :items="$searchAnswers"/>
+    </form>
+
     <form action='{{route('stock-management.search')}}' method='GET'>
         <input type='text' name='search' value="{{$searchQuery}}"></input>
         <x-primary-button>Search</x-primary-button>
     </form>
-
+    
     <form action='{{route('stock-management.chosenItems')}}' method='GET'>
         @if (!empty($searchAnswers))
         <x-primary-button>Create Order</x-primary-button>
