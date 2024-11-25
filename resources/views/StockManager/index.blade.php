@@ -13,7 +13,6 @@
             </select>
             <input type="hidden" name="page" value="{{ request('page', 1) }}"> <!-- Get page number, default to 1 if none set. -->
             <x-primary-button class="ml-4">Sort</x-primary-button>
-            <x-get-permissions/>
         </form>
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
@@ -41,9 +40,9 @@
                                 <td>{{ $item->name }}</td>
                                 <td>£{{ $item->price }}</td>
                                 <td>{{ $item->department->name }}</td>
-                                <td><form method='POST' action="{{route('stock-management.report')}}">
+                                <td><form method='POST' action="{{route('stock-management.chosenItems')}}">
                                     @csrf
-                                    <input type="hidden" name="reports[]" value="{{ $item->id }}"></input>
+                                    <input type="hidden" name="item" value="{{ $item->id }}"></input>
                                     <x-primary-button>Generate Report</x-primary-button>
                                 </form></td>
                                 <td><input type="checkbox" name="items[]" value="{{ $item->id }}"></td>

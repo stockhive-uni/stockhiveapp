@@ -53,9 +53,6 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
         ->name('stock-management.toOverview');
 
-    Route::post('/stock-management/report', [reportController::class, 'index'])
-        ->name('stock-management.report');
-
     Route::post('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
         ->name('stock-management.ShowOrderHistory');
 
