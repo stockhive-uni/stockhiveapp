@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -35,7 +36,7 @@ class AdminController extends Controller
         }
 
         $user = Employee::where('id', $request->id)->with('store')->get();
-            $user = $user[0];
+        $user = $user[0];
 
         return (view('Admin.user', ['user' => $user]));
     }
@@ -52,6 +53,26 @@ class AdminController extends Controller
                 DB::table('user_role')->insert([
                     ['user_id' => $request->id, 'role_id' => $role]
                 ]);
+            }
+        }
+
+        $user = Employee::where('id', $request->id)->with('store')->get();
+        $user = $user[0];
+        return (view('Admin.user', ['user' => $user]));
+    }
+
+    public function toggleAccountActivation(Request $request) {
+        $user = Employee::where('id', $request->id)->with('store')->get();
+        $user = $user[0];
+
+        if ($user['password'] != "") {
+            Employee::where('id', $request->id)
+                ->update(['password' => '']);
+        }
+        else {
+            if ($request->password != "") {
+                Employee::where('id', $request->id)
+                    ->update(['password' => Hash::make($request->password)]);
             }
         }
 

@@ -87,4 +87,7 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::any('/admin/update-permissions', [AdminController::class, 'updatePermissions'])
         ->name('admin.updatePermissions');
+
+    Route::any('/admin/toggle-activation', [AdminController::class, 'toggleAccountActivation'])
+        ->name('admin.toggleAccountActivation');
 });
