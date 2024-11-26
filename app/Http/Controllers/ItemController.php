@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
 class ItemController extends Controller
@@ -38,10 +39,51 @@ class ItemController extends Controller
 
     public function chosenItems(Request $request) 
     {
-        //selected item ids from stock are then fetched again 
-        $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
+        if ($request->has("Order")) {
+            //selected item ids from stock are then fetched again 
+            $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
 
-        return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
+            return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
+        }
+        else {
+            $stock = Item::whereIn('id', $request->items)->with('department')->get();
+            $allresults = array();
+            // Loop through all items.
+            foreach ($stock as $item) {
+                $id=$item->id;
+                $query = DB::table('Transaction_Item') // Use laravel's query builder. https://www.google.com/search?client=firefox-b-d&q=laravel+query+builder
+                    ->join('Transaction', 'Transaction_Item.transaction_id', '=', 'Transaction.id')
+                    ->where('Transaction_Item.item_id', $id)
+                    ->select('Transaction_Item.quantity', 'Transaction_Item.price', 'Transaction.date_time')
+                    ->get();
+                if ($query->isNotEmpty()) {
+                    $data = [];
+                    // Iterate through transactions.
+                    foreach ($query as $transaction) {
+                        $quantity = $transaction->quantity;
+                        $price = $transaction->price;
+                        $date = $transaction->date_time;
+                        // Get the month from date
+                        $month = date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
+                        // Store the data in an array, group by month.
+                        if (!isset($data[$month])) {
+                            $data[$month] = [
+                                'total' => 0, 
+                                'month' => $month,
+                            ];
+                        }
+                        // Set the total for the month.
+                        $data[$month]['total'] += $quantity * $price;
+                    }
+                     // Add the item's monthly data
+                    $allresults[] = [
+                        'item_name' => $item->name,  // Item name
+                        'data' => $data, // Item information per month.
+                    ];
+                }
+            } 
+            return view('StockManager.report', ['allresults' => $allresults]);
+        }
     }
 
     /**
