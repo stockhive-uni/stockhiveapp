@@ -13,7 +13,6 @@
             </select>
             <input type="hidden" name="page" value="{{ request('page', 1) }}"> <!-- Get page number, default to 1 if none set. -->
             <x-primary-button class="ml-4">Sort</x-primary-button>
-            <x-get-permissions/>
         </form>
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
