@@ -231,12 +231,14 @@ return new class extends Migration
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->timestamp('date_time');
+            $table->timestamps();
         });
 
         Schema::create('delivered_item', function (Blueprint $table) {
             $table->foreignID('delivery_note_id')->references('id')->on('delivery_note')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('quantity');
+            $table->timestamps();
         });
 
         Schema::create('over_deliveries', function (Blueprint $table) {
