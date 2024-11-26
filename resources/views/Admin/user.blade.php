@@ -11,6 +11,24 @@
         <input type="hidden" name="id" value ="{{ $user['id'] }}">
         <x-primary-button>Save Settings</x-primary-button>
     </form>
+    <form action="{{ route('admin.toggleAccountActivation') }}">
+    @csrf
+    <input type="hidden" name="id" value="{{ $user['id'] }}">
+        <x-primary-button>
+            @php
+            if ($user['password'] == null) {
+                echo "Activate Account";
+            }
+            else {
+                echo "Deactivate Account";
+            }
+            @endphp
+        </x-primary-button>
+        @if ($user['password'] == null)
+            <p>Password</p>
+            <input type="password" name="password">
+        @endif
+    </form>
     <div>
         <h2>Active Permissions:</h2>
         @php global $permissions; @endphp
