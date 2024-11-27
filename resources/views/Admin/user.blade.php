@@ -16,6 +16,26 @@
         </form>
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+      <form action="{{ route('admin.toggleAccountActivation') }}">
+      @csrf
+      <input type="hidden" name="id" value="{{ $user['id'] }}">
+          <x-primary-button>
+              @php
+              if ($user['password'] == null) {
+                  echo "Activate Account";
+              }
+              else {
+                  echo "Deactivate Account";
+              }
+              @endphp
+          </x-primary-button>
+          @if ($user['password'] == null)
+              <p>Password</p>
+              <input type="password" name="password">
+          @endif
+      </form>
+    </div>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <h1 class="text-2xl font-bold text-center">Active Permissions</h1>
         @php global $permissions; @endphp
         @include('components.get-permissions', ['id' => $user['id']])

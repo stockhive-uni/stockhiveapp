@@ -4,6 +4,9 @@
             {{ __('Admin') }}
         </h2>
     </x-slot>
+    <form method="GET" action="{{ route('admin.createNewUser') }}">
+        <x-primary-button>Create New User</x-primary-button>
+    </form>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <form method="GET" action="{{ route('admin.sort') }}" class="m-auto text-right w-[90%]">
             <select name="sort" id="sort" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-[50%]">

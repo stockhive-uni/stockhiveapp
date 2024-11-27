@@ -234,6 +234,7 @@ return new class extends Migration
             $table->id()->primary();
             $table->foreignID('store_id')->references('id')->on('store')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
+            $table->integer('low-stock-amount');
             $table->double('price');
         });
 
@@ -337,7 +338,7 @@ return new class extends Migration
 
         for ($i = 1; $i < 108; $i++) {
             DB::table('store_item')->insert([
-                ['id' => $i,'store_id' => '1', 'item_id' => $i, 'price' => '1']
+                ['id' => $i,'store_id' => '1', 'item_id' => $i, 'price' => '1', 'low-stock-amount' => '1']
             ]);
         }
     }
