@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\reportController;
+use App\Http\Controllers\searchController;
 use App\Http\Middleware\CheckUserCategory;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\dashboardController;
@@ -44,17 +45,23 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/order/sort', [StockSortController::class, 'sortOrder'])
         ->name('stock-management.sortOrder');
 
-    Route::any('/stock-management/order', [ItemController::class, 'chosenItems'])
+    Route::get('/stock-management/order', [ItemController::class, 'chosenItems'])
         ->name('stock-management.chosenItems');
 
     Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
         ->name('stock-management.store');
 
-    Route::post('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
+    Route::get('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
         ->name('stock-management.toOverview');
+ 
+    Route::post('/stock-management/report', [reportController::class, 'index'])
+        ->name('stock-management.report');
 
-    Route::post('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
+    Route::any('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
         ->name('stock-management.ShowOrderHistory');
+
+    Route::get('/stock-management/search', [searchController::class, 'search'])
+        ->name('stock-management.search');
 
     // Sales
 

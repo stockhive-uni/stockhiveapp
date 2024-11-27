@@ -19,12 +19,11 @@
                     <span>Order History:</span>
                     <!-- if statement here -->
                     @foreach ($orderHistory as $order)
-                        <form action="{{route('stock-management.ShowOrderHistory')}}" method="POST">
-                            @csrf
+                        <form action="{{route('stock-management.ShowOrderHistory')}}" method="GET">
                             <div>{{$order->id}}</div>
                             <div>{{$order->users->first_name}}</div>
                             <div>{{$order->users->last_name}}</div>
-                            <div>Number of Items: {{$order->order_item->count()}}</div>
+                            <div>Types of Item: {{$order->order_item->count()}}</div>
                             <input type='hidden' name="order" value='{{$order->id}}'></input>
                             <div>{{$order->date_time}}</div> <!-- maybe change this for diffForHumans() command? -->
                             <x-primary-button>Details</x-primary-button>
