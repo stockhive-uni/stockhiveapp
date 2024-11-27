@@ -14,26 +14,23 @@
                 <x-primary-button>Save Settings</x-primary-button>
             </div>
         </form>
-    </div>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
-      <form action="{{ route('admin.toggleAccountActivation') }}">
-      @csrf
-      <input type="hidden" name="id" value="{{ $user['id'] }}">
-          <x-primary-button>
-              @php
-              if ($user['password'] == null) {
-                  echo "Activate Account";
-              }
-              else {
-                  echo "Deactivate Account";
-              }
-              @endphp
-          </x-primary-button>
-          @if ($user['password'] == null)
-              <p>Password</p>
-              <input type="password" name="password">
-          @endif
-      </form>
+        <form action="{{ route('admin.toggleAccountActivation') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" value="{{ $user['id'] }}">
+            <x-primary-button>
+            @php
+            if ($user['password'] == null) {
+                echo "Activate Account";
+            } else {
+                echo "Deactivate Account";
+            }
+            @endphp
+            </x-primary-button>
+            @if ($user['password'] == null)
+            <h2>Password</h2>
+            <input type="password" name="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent">
+            @endif
+        </form>
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <h1 class="text-2xl font-bold text-center">Active Permissions</h1>
@@ -85,7 +82,7 @@
                 $checked = $role->isActive == 1 ? "checked" : "";
             @endphp
             <td class="py-2 px-4">
-                <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{$checked}} class="form-checkbox h-5 w-5 text-blue-600 rounded">
+                <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{$checked}} class="form-checkbox h-5 w-5 bg-stockhive-grey-dark text-accent rounded border-2">
             </td>
         </tr>
         @endforeach
