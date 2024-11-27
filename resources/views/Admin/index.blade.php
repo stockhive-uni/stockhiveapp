@@ -4,6 +4,9 @@
             {{ __('Admin') }}
         </h2>
     </x-slot>
+    <form method="GET" action="{{ route('admin.createNewUser') }}">
+        <x-primary-button>Create New User</x-primary-button>
+    </form>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <form method="GET" action="{{ route('admin.sort') }}" class="m-auto text-right w-[90%]">
             <select name="sort" id="sort" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-[50%]">
@@ -13,10 +16,7 @@
             </select>
             <input type="hidden" name="page" value="{{ request('page', 1) }}"> <!-- Get page number, default to 1 if none set. -->
             <x-primary-button class="ml-4">Sort</x-primary-button>
-            <x-get-permissions/>
         </form>
-        <form action="{{ route('admin.selectedUser') }}" method="POST">
-            @csrf
             @if($employees->isNotEmpty())
             <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                 <x-paginate :items="$employees"/>
@@ -27,23 +27,26 @@
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <!-- <th>Edit User</th> -->
+                            <th>Edit User</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($employees as $employee)
-                            <tr>
-                                <td>{{ $employee->id }}</td>
-                                <td>{{ $employee->first_name }}</td>
-                                <td>{{ $employee->last_name }}</td>
-                                <!-- <td><x-primary-button>Edit User</x-primary-button></td> -->
-                            </tr>
+                            <form action="{{ route('admin.selectedUser') }}" method="POST">
+                                @csrf
+                                <tr>
+                                    <input type="hidden" name="id" value="{{ $employee->id }}">
+                                    <td>{{ $employee->id }}</td>
+                                    <td>{{ $employee->first_name }}</td>
+                                    <td>{{ $employee->last_name }}</td>
+                                    <td><x-primary-button>Edit User</x-primary-button></td>
+                                </tr>
+                             </form>
                         @endforeach
                     </tbody>
                 </table>
             @else
                 <p class="text-white">No other users in system</p>
             @endif
-        </form>
     </div>
 </x-app-layout>
