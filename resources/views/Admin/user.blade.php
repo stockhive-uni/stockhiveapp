@@ -55,7 +55,6 @@
         @if ($user['id'] == Auth::user()->id)
         <h2 class="text-error">You cannot edit your own permissions</h2>
         @else
-        <h2>Roles</h2>
         <form action="{{ route('admin.updatePermissions') }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $user['id'] }}">
