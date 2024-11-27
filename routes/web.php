@@ -59,7 +59,16 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])
-    ->name('sales');
+        ->name('sales');
+
+    Route::get('/sales/create-sale', [SalesController::class, 'startSale'])
+        ->name('sales.createSale');
+
+    Route::get('/sales/view-details', [SalesController::class, 'viewDetails'])
+        ->name('sales.viewDetails');
+
+    Route::get('/sales/view-invoice', [SalesController::class, 'generateInvoice'])
+        ->name('sales.generateInvoice');
 
     // Logistics
 
