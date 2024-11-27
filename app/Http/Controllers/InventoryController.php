@@ -12,11 +12,10 @@ class InventoryController extends Controller
         //get stock item from database that is lower than the low stock number.
         $lowStockItemWarning = DB::table('store_item_storage')
         ->join('store_item', 'store_item.id' , '=', 'store_item_storage.store_item_id')
-        ->join('location', 'store_item_storage.location_id', '=' , 'location.id')
         ->join('store', 'store_item.store_id', '=', 'store.id')
         ->join('item', 'store_item.item_id', '=' , 'item.id')
         ->join('department', 'item.department_id', '=','department.id')
-        ->where('store_item_storage.quantity','<=','store_item.low_stock_amount')
+        ->whereColumn('store_item_storage.quantity','<=','store_item.low-stock-amount')
         ->get();
 
         {{dd($lowStockItemWarning);}}
