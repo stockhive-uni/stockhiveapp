@@ -64,10 +64,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/sales/create-sale', [SalesController::class, 'startSale'])
         ->name('sales.createSale');
 
-    Route::get('/sales/view-details', [SalesController::class, 'viewDetails'])
+    Route::post('/sales/view-details', [SalesController::class, 'viewDetails'])
         ->name('sales.viewDetails');
 
-    Route::get('/sales/view-invoice', [SalesController::class, 'generateInvoice'])
+    Route::post('/sales/view-invoice', [SalesController::class, 'generateInvoice'])
         ->name('sales.generateInvoice');
 
     // Logistics

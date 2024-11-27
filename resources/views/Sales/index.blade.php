@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
     <form action="{{ route('sales.createSale') }}" method="GET">
+        @csrf
         <x-primary-button>Create New Sale</x-primary-button>
     </form>
     <h2>Transaction History</h2>
@@ -25,13 +26,15 @@
                 <th>{{ $item->first_name }}</th>
                 <th>{{ $item->date_time }}</th>
                 <th>
-                <form action="" method="POST">
+                <form action="{{ route('sales.viewDetails') }}" method="POST">
+                    @csrf
                     <input type="hidden" value="{{ $item->id }}" name="id">
                     <x-primary-button>Show Details</x-primary-button>
                 </form>
                 </th>
                 <th>
-                <form action="" method="POST">
+                <form action="{{ route('sales.generateInvoice') }}" method="POST">
+                    @csrf
                     <input type="hidden" value="{{ $item->id }}" name="id">
                     <x-primary-button>Generate</x-primary-button>
                 </form>
