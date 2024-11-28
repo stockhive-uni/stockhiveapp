@@ -33,7 +33,7 @@
     <div>{{$item->item->name}}</div>
     <div>£{{$item->item->price}}</div>
     <div>{{$item->last_spot_checked}}</div>
-    <form method="GET" action="{{ route('Inventory.spotCheck') }}">
+    <form method="GET" action="{{ route('inventory.spotCheck') }}">
         <input type="hidden" name="spotcheck" value="{{$item->id}}">
         <x-primary-button>Complete</x-primary-button>
     </form>

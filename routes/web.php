@@ -22,9 +22,6 @@ Route::get('/', function () {
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
 ->middleware(['auth', 'verified']);
 
-Route::get('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
-->name('Inventory.spotCheck');
-
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -74,6 +71,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/inventory', [InventoryController::class, 'index'])
     ->name('inventory');
+
+    Route::get('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
+    ->name('inventory.spotCheck');
 
     // Admin
 
