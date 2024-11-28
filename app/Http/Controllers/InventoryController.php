@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\store_item;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class InventoryController extends Controller
 {
@@ -20,9 +23,21 @@ class InventoryController extends Controller
         ->get();
 
         //spot check for items query needed here
+        $spotCheckItemWarning = store_item::with(['store', 'item'])
+        ->where('store_id', '=', Auth::user()->store_id)
+        ->OrderBy('last_spot_checked', 'asc')
+        ->limit(5)
+        ->get();
 
 
-        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning]);
+        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning]);
+    }
+
+    public function spotCheck(Request $request) {
+        //update spotcheck here, update the time of the last spot check, update quantity in the storage part
+        dd("hello");
+        //updating time on spotcheck
+        dd($request->input('spotCheckId'));
     }
 
 }

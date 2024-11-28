@@ -73,6 +73,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/inventory', [InventoryController::class, 'index'])
     ->name('inventory');
+
+    Route::post('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
+    ->name('Inventory.spotCheck');
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])

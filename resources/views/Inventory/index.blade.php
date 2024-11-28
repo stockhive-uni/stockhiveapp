@@ -8,8 +8,14 @@
         {{ __('Notifications') }}
     </h2>
 
-    @forelse ($lowStockItemWarning as $item) 
-        <div>Low Stock</div>
+    @if(empty($lowStockItemWarning) && empty($spotCheckItemWarning) ) 
+        <div>No Notifications.</div>
+    @endif
+
+    @if (!empty($lowStockItemWarning))
+        <h3>Low Stock</h3>
+    @endif
+    @foreach ($lowStockItemWarning as $item) 
         <div>{{$item->itemName}}</div>
         <div>{{$item->price}}</div>
         <div>{{$item->lowStockNum}}</div>
@@ -17,7 +23,21 @@
         <form method='GET'  action='{{route('stock-management')}}'>
             <x-primary-button>Order More</x-primary-button>
         </form>
-    @empty
-        <div>No Notifications.</div>
-    @endforelse
+    @endforeach
+
+    @if (!empty($spotCheckItemWarning))
+    <h3>Spot Check</h3>
+    @endif
+    @foreach ($spotCheckItemWarning as $item) 
+    <h2>Spot Check</h2>
+    <div>{{$item->item->name}}</div>
+    <div>£{{$item->item->price}}</div>
+    <div>{{$item->last_spot_checked}}</div>
+    <form method="POST" action="{{route('Inventory.spotCheck')}}">
+        @csrf
+        <input type="hidden"></input>
+        <input type="number"></input>
+        <x-primary-button>Complete</x-primary-button>
+    </form>
+    @endforeach
 </x-app-layout>
