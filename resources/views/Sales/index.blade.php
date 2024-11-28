@@ -36,7 +36,7 @@
                 <form action="{{ route('sales.downloadInvoice') }}" method="POST">
                     @csrf
                     <input type="hidden" value="{{ $item->id }}" name="id">
-                    <x-primary-button>Generate</x-primary-button>
+                    <x-primary-button>Download</x-primary-button>
                 </form>
                 </th>
             </tr>

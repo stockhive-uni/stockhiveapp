@@ -34,15 +34,21 @@ class SalesController extends Controller
 
         $id = $request->id;
 
-        $items = DB::table('transaction')
+        $transaction = Transaction::where('transaction.id', $id)
             ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->where('transaction.store_id', Auth::User()->store_id)
-            ->select('transaction.id', 'users.first_name', 'transaction.date_time')
+            ->join('store', 'transaction.store_id', '=', 'store.id')
+            ->select('transaction.id', 'users.first_name', 'users.last_name', 'transaction.date_time', 'transaction.card', 'store.location')
+            ->first();
+
+        $items = DB::table('transaction_item')
+            ->where('transaction_id', $id)
+            ->join('item', 'item.id', '=', 'transaction_item.item_id')
+            ->select('transaction_item.quantity', 'transaction_item.price', 'item.name')
             ->get();
 
-        $pdf = Pdf::loadView('Sales.invoice', compact('id'));
+        $pdf = Pdf::loadView('Sales.invoice', compact('transaction', 'items'));
 
         // Stream the PDF to the browser for download
-        return $pdf->download('transaction-' . $id . '.pdf');
+        return $pdf->download('invoice-' . $id . '.pdf');
     }
 }
