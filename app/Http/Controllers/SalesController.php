@@ -15,7 +15,7 @@ class SalesController extends Controller
         $items = DB::table('transaction')
             ->join('users', 'transaction.user_id', '=', 'users.id')
             ->where('transaction.store_id', Auth::User()->store_id)
-            ->select('transaction.id', 'users.first_name', 'transaction.date_time')
+            ->select('transaction.id', 'users.first_name', 'users.last_name', 'transaction.date_time')
             ->get();
         return view('Sales.index', ['items' => $items]);
     }
@@ -25,8 +25,21 @@ class SalesController extends Controller
     }
 
     public function viewDetails(Request $request) {
-        $transaction = Transaction::where('id', $request->id)->get();
-        return view('Sales.transaction-details', ['transaction' => $transaction]);
+        $id = $request->id;
+
+        $transaction = Transaction::where('transaction.id', $id)
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->join('store', 'transaction.store_id', '=', 'store.id')
+            ->select('transaction.id', 'users.first_name', 'users.last_name', 'transaction.date_time', 'transaction.card', 'store.location')
+            ->first();
+
+        $items = DB::table('transaction_item')
+            ->where('transaction_id', $id)
+            ->join('item', 'item.id', '=', 'transaction_item.item_id')
+            ->select('transaction_item.quantity', 'transaction_item.price', 'item.name')
+            ->get();
+            
+        return view('Sales.transaction-details', compact('transaction', 'items'));
     }
 
     public function downloadInvoice(Request $request) {

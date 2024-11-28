@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>Transaction ID</th>
-                <th>User</th>
+                <th>Salesperson</th>
                 <th>Date/Time</th>
                 <th>Details</th>
                 <th>Invoice</th>
@@ -23,7 +23,7 @@
             @foreach($items as $item)
             <tr>
                 <th>{{ $item->id }}</th>
-                <th>{{ $item->first_name }}</th>
+                <th>{{ $item->first_name }} {{$item->last_name}}</th>
                 <th>{{ $item->date_time }}</th>
                 <th>
                 <form action="{{ route('sales.viewDetails') }}" method="POST">

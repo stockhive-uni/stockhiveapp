@@ -1,8 +1,5 @@
-<image alt="logo.png"><image>
-<h1>StockHive Invoice</h1>
 <h3>Transaction ID: {{ $transaction->id }}</h3>
 <h3>Sold by: {{ $transaction->first_name}} {{ $transaction->last_name }}</h3>
-<h3>Store: {{ $transaction->location }}</h3>
 
 @php
 $date_time = explode(' ', $transaction->date_time);
