@@ -19,6 +19,8 @@
             <input type="hidden" name="page" value="{{ request('page', 1) }}"> <!-- Get page number, default to 1 if none set. -->
             <x-primary-button class="ml-4">Sort</x-primary-button>
         </form>
+        <form action="{{ route('stock-management.chosenItems') }}" method="POST">
+            @csrf
             @if($items->isNotEmpty())
             <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                 <x-paginate :items="$items"/>

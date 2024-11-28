@@ -22,6 +22,7 @@ export default {
             'white': '#ffffff',
             'black': '#000000',
             'grey': '#4b5563',
+            'error': '#e3342f',
         },
         boxShadow: {
             'bxs': "0 0 10px #F9B339",
