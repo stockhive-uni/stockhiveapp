@@ -22,7 +22,8 @@ Route::get('/', function () {
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
 ->middleware(['auth', 'verified']);
 
-
+Route::get('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
+->name('Inventory.spotCheck');
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -74,8 +75,6 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/inventory', [InventoryController::class, 'index'])
     ->name('inventory');
 
-    Route::post('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
-    ->name('Inventory.spotCheck');
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])

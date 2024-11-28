@@ -6,7 +6,7 @@ use App\Models\Item;
 use App\Models\store_item;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
@@ -34,10 +34,18 @@ class InventoryController extends Controller
     }
 
     public function spotCheck(Request $request) {
-        //update spotcheck here, update the time of the last spot check, update quantity in the storage part
-        dd("hello");
+        //goes to spot check page where info is put into it, and then a post request is made to come back here and update the table, then redirect back to the inventory home page.
+        dd($request);
+        $spotCheckItem = store_item::with(['store', 'item'])
+        ->where('store_id', '=', Auth::user()->store_id)
+        ->where('id', '=', $request->input('spotcheck'))
+        ->OrderBy('last_spot_checked', 'asc')
+        ->limit(5)
+        ->get();
         //updating time on spotcheck
-        dd($request->input('spotCheckId'));
+        dd($spotCheckItem);
+
+        return view('Inventory.spot-check', ['spotCheckItem' => $spotCheckItem]);
     }
 
 }

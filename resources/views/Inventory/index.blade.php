@@ -33,10 +33,8 @@
     <div>{{$item->item->name}}</div>
     <div>£{{$item->item->price}}</div>
     <div>{{$item->last_spot_checked}}</div>
-    <form method="POST" action="{{route('Inventory.spotCheck')}}">
-        @csrf
-        <input type="hidden"></input>
-        <input type="number"></input>
+    <form method="GET" action="{{ route('Inventory.spotCheck') }}">
+        <input type="hidden" name="spotcheck" value="{{$item->id}}">
         <x-primary-button>Complete</x-primary-button>
     </form>
     @endforeach
