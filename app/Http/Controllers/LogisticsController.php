@@ -22,9 +22,10 @@ class LogisticsController extends Controller
 
     public function show($orderId)
     {
+       
         $order = Order::with(['items.item', 'deliveryNotes.deliveredItems'])->findOrFail($orderId);
     
-       
+      
         $items = $order->items->map(function ($orderItem) use ($order) {
             $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {
                 return $note->deliveredItems->where('item_id', $orderItem->item_id);
@@ -41,6 +42,16 @@ class LogisticsController extends Controller
             ];
         });
     
+        
+        $allFulfilled = $items->every(function ($item) {
+            return $item['quantity_left'] <= 0;
+        });
+    
+   
+        if ($allFulfilled && !$order->fulfilled) {
+            $order->update(['fulfilled' => 1]);
+        }
+ 
         $notesWithItems = $order->deliveryNotes->map(function ($note) {
             return [
                 'delivery_note_id' => $note->id,
@@ -56,6 +67,7 @@ class LogisticsController extends Controller
     
         return view('logistics.show', compact('order', 'items', 'notesWithItems'));
     }
+    
     
 
     
