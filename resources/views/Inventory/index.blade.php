@@ -20,5 +20,4 @@
     @empty
         <div>No Notifications.</div>
     @endforelse
-
 </x-app-layout>

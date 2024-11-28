@@ -24,4 +24,5 @@ class InventoryController extends Controller
 
         return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning]);
     }
+
 }

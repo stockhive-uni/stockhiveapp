@@ -74,7 +74,6 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/inventory', [InventoryController::class, 'index'])
     ->name('inventory');
-
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])
