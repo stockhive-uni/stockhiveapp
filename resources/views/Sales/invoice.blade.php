@@ -1,3 +1,1 @@
-<x-app-layout>
-    <h1>{{ $id }}</h1>
-</x-app-layout>
+<h2>Invoice details</h2>

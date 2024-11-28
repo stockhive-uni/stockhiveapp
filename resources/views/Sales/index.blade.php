@@ -33,7 +33,7 @@
                 </form>
                 </th>
                 <th>
-                <form action="{{ route('sales.generateInvoice') }}" method="POST">
+                <form action="{{ route('sales.downloadInvoice') }}" method="POST">
                     @csrf
                     <input type="hidden" value="{{ $item->id }}" name="id">
                     <x-primary-button>Generate</x-primary-button>

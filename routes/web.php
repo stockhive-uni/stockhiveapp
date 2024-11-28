@@ -67,8 +67,8 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/sales/view-details', [SalesController::class, 'viewDetails'])
         ->name('sales.viewDetails');
 
-    Route::post('/sales/view-invoice', [SalesController::class, 'generateInvoice'])
-        ->name('sales.generateInvoice');
+    Route::any('/sales/download-invoice', [SalesController::class, 'downloadInvoice'])
+        ->name('sales.downloadInvoice');
 
     // Logistics
 

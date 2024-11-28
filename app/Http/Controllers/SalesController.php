@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SalesController extends Controller
 {
@@ -28,8 +29,20 @@ class SalesController extends Controller
         return view('Sales.transaction-details', ['transaction' => $transaction]);
     }
 
-    public function generateInvoice(Request $request) {
+    public function downloadInvoice(Request $request) {
+        // https://bagisto.com/en/how-to-generate-a-pdf-in-laravel-view/
+
         $id = $request->id;
-        return view('Sales.invoice', ['id' => $id]);
+
+        $items = DB::table('transaction')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->where('transaction.store_id', Auth::User()->store_id)
+            ->select('transaction.id', 'users.first_name', 'transaction.date_time')
+            ->get();
+
+        $pdf = Pdf::loadView('Sales.invoice', compact('id'));
+
+        // Stream the PDF to the browser for download
+        return $pdf->download('transaction-' . $id . '.pdf');
     }
 }
