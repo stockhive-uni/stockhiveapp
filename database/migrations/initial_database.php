@@ -234,7 +234,7 @@ return new class extends Migration
             $table->id()->primary();
             $table->foreignID('store_id')->references('id')->on('store')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
-            $table->integer('low-stock-amount');
+            $table->integer('low_stock_amount');
             $table->double('price');
             $table->timestamp('last_spot_checked');
         });

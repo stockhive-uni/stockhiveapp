@@ -18,8 +18,8 @@ class InventoryController extends Controller
         ->join('store', 'store_item.store_id', '=', 'store.id')
         ->join('item', 'store_item.item_id', '=' , 'item.id')
         ->join('department', 'item.department_id', '=','department.id')
-        ->whereColumn('store_item_storage.quantity','<=','store_item.low-stock-amount') //found that using standard where does not work as that is only for comparing a field to something you entered, use whereColumn to compare to columns. Found here: https://laravel-code.tips/you-can-use-eloquent-wherecolumn-to-compare-columns-to-each-other/
-        ->select('item.name AS itemName', 'item.price', 'department.name AS departmentName','store_item.low-stock-amount AS lowStockNum','store_item_storage.quantity')
+        ->whereColumn('store_item_storage.quantity','<=','store_item.low_stock_amount') //found that using standard where does not work as that is only for comparing a field to something you entered, use whereColumn to compare to columns. Found here: https://laravel-code.tips/you-can-use-eloquent-wherecolumn-to-compare-columns-to-each-other/
+        ->select('item.name AS itemName', 'item.price', 'department.name AS departmentName','store_item.low_stock_amount AS lowStockNum','store_item_storage.quantity')
         ->get();
 
         //spot check for items query needed here
