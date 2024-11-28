@@ -23,17 +23,15 @@ class OrderSeeder extends Seeder
             [  'order_id' => 3,  'item_id' => 1, 'ordered' => 15, 'price' => 4.99,],    
         ]);        
 
-        // Add delivery notes for the orders
         DB::table('delivery_note')->insert([
-            [ 'id' => 1,'user_id' => 1,'order_id' => 1,'date_time' => Carbon::now()->addDays(1),'created_at' => Carbon::now(),'updated_at' => Carbon::now(), ],
-            ['id' => 2,'user_id' => 2, 'order_id' => 2, 'date_time' => Carbon::now()->addDays(2), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),],
+            [ 'id' => 1,'user_id' => 1,'order_id' => 1,'date_time' => Carbon::now()->addDays(1), ],
+            ['id' => 2,'user_id' => 2, 'order_id' => 2, 'date_time' => Carbon::now()->addDays(2),],
         ]);
 
-        // Add delivered items to the delivery notes
         DB::table('delivered_item')->insert([
-            ['delivery_note_id' => 1,    'item_id' => 1,    'quantity' => 10,  'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),  ],
-            ['delivery_note_id' => 1,  'item_id' => 2,  'quantity' => 5,  'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),  ],
-            [ 'delivery_note_id' => 2,'item_id' => 3,'quantity' => 20,'created_at' => Carbon::now(),  'updated_at' => Carbon::now() ],
+            ['delivery_note_id' => 1,    'item_id' => 1,    'quantity' => 10, ],
+            ['delivery_note_id' => 1,  'item_id' => 2,  'quantity' => 5,    ],
+            [ 'delivery_note_id' => 2,'item_id' => 3,'quantity' => 20, ],
         ]);
     
     }

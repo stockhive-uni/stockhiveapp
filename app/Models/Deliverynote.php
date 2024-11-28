@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Deliverynote extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'delivery_note';
     protected $fillable = ['user_id', 'order_id', 'date_time'];
 
@@ -19,5 +21,15 @@ class Deliverynote extends Model
     {
         return $this->hasMany(DeliveredItem::class, 'delivery_note_id');
     }
+public function item()
+{
+    return $this->belongsTo(Item::class);
+}
+
+public function deliveryNote()
+{
+    return $this->belongsTo(DeliveryNote::class);
+}
+
 }
 

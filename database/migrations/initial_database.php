@@ -171,11 +171,13 @@ return new class extends Migration
             ['id' => '5', 'name' => 'Home']
         ]);
 
+
         Schema::create('item', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->string('name');
-            $table->double('price');
-            $table->foreignID('department_id')->references('id')->on('department')->onDelete('cascade');
+            $table->id()->primary(); 
+            $table->string('name'); 
+            $table->double('price'); 
+            $table->foreignId('department_id')->constrained('department')->onDelete('cascade');
+            $table->timestamps(); 
         });
         DB::table('item')->insert([
             ['id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],

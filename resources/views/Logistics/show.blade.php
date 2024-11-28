@@ -5,50 +5,34 @@
         </h2>
     </x-slot>
 
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Order ID: {{ $order->id }}</h1>
-
         <p><strong>User ID:</strong> {{ $order->user_id }}</p>
         <p><strong>Store ID:</strong> {{ $order->store_id }}</p>
-        <p><strong>Order Date/Time:</strong> {{ $order->date_time }}</p>
+    </div>
 
-        <h2 class="text-xl font-bold mt-6 mb-4">Items in Order</h2>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <form method="POST" action="{{ route('logistics.createDeliveryNote', $order->id) }}">
-    @csrf
-    <!-- Form contents -->
-    <x-primary-button>Create Delivery Note</x-primary-button>
-</form>
-
-            <div class="mb-4">
-                <label for="date_time" class="block text-white font-bold mb-2">Delivery Date/Time</label>
-<!-- Before 
-                <input type="datetime-local" name="date_time" id="date_time" class="w-full p-2 rounded-lg bg-gray-700 text-white" required>
-             After (Remove the entire input field) -->
-
-            </div>
-
-
+            @csrf
             <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                 <thead>
                     <tr>
-                        <th>Item ID</th>
-                        <th>Item Name</th>
-                        <th>Ordered Quantity</th>
-                        <th>Delivered Quantity</th>
-                        <th>Quantity Left</th>
-                        <th>Quantity to Deliver</th>
+                        <th class="p-2">Item Name</th>
+                        <th class="p-2">Ordered Quantity</th>
+                        <th class="p-2">Delivered Quantity</th>
+                        <th class="p-2">Quantity Left</th>
+                        <th class="p-2">Quantity to Deliver</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($items as $item)
-                        <tr>
-                            <td>{{ $item['id'] }}</td>
-                            <td>{{ $item['name'] }}</td>
-                            <td>{{ $item['ordered'] }}</td>
-                            <td>{{ $item['delivered'] }}</td>
-                            <td>{{ $item['quantity_left'] }}</td>
-                            <td>
-                                <input type="number" name="items[{{ $item['id'] }}][quantity]" min="0" max="{{ $item['quantity_left'] }}" value="0" class="w-full p-2 rounded-lg bg-gray-700 text-black">
+                        <tr class="hover:bg-stockhive-grey">
+                            <td class="p-2">{{ $item['name'] }}</td>
+                            <td class="p-2">{{ $item['ordered'] }}</td>
+                            <td class="p-2">{{ $item['delivered'] }}</td>
+                            <td class="p-2">{{ $item['quantity_left'] }}</td>
+                            <td class="p-2">
+                                <input type="number" name="items[{{ $item['id'] }}][quantity]" min="0" max="{{ $item['quantity_left'] }}" value="0" class="p-2 rounded-lg bg-stockhive-grey-dark text-white border border-accent focus:ring focus:ring-accent w-full">
                                 <input type="hidden" name="items[{{ $item['id'] }}][id]" value="{{ $item['id'] }}">
                             </td>
                         </tr>
@@ -56,8 +40,38 @@
                 </tbody>
             </table>
 
+            <div class="flex justify-end items-center gap-8 my-4 lg:w-[90%] w-full m-auto">
+                <x-primary-button class="mt-4">Create Delivery Note</x-primary-button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
+        <h2 class="text-xl font-bold mb-4">Delivery Notes</h2>
+        @forelse ($notesWithItems as $note)
+            <div class="border border-stockhive-grey-dark rounded-lg p-4 mb-6">
+                <h3 class="text-lg font-bold">Delivery Note ID: {{ $note['delivery_note_id'] }}</h3>
+                <p><strong>Date:</strong> {{ $note['delivery_note_date'] }}</p>
+                <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                    <thead>
+                        <tr>
+                            <th class="p-2">Item Name</th>
+                            <th class="p-2">Delivered Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($note['delivered_items'] as $deliveredItem)
+                            <tr class="hover:bg-stockhive-grey">
+                                <td class="p-2">{{ $deliveredItem['name'] }}</td>
+                                <td class="p-2">{{ $deliveredItem['quantity'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @empty
+            <p class="text-white text-center font-semibold py-4">No delivery notes available for this order.</p>
+        @endforelse
     </div>
 </x-app-layout>
-
-
 
