@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     public $timestamps = false;
-
     use HasFactory;
     protected $table = 'item';
+    protected $fillable = ['name', 'price', 'quantity'];
 
-    protected $fillable = ['name', 'price', 'department_id'];
 
 
     public function deliveredItems()

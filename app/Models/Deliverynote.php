@@ -14,12 +14,12 @@ class Deliverynote extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
     public function deliveredItems(): HasMany
     {
-        return $this->hasMany(DeliveredItem::class, 'delivery_note_id');
+        return $this->hasMany(DeliveredItem::class, 'delivery_note_id', 'id');
     }
 public function item()
 {

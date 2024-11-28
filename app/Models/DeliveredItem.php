@@ -15,11 +15,11 @@ class DeliveredItem extends Model
 
     public function item()
     {
-        return $this->belongsTo(Item::class, 'item_id'); 
+        return $this->belongsTo(Item::class, 'item_id', 'id'); // Reference the Item model
     }
 
     public function deliveryNote()
     {
-        return $this->belongsTo(DeliveryNote::class);
+        return $this->belongsTo(DeliveryNote::class, 'delivery_note_id');
     }
 }

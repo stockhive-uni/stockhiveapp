@@ -9,15 +9,17 @@ class Order extends Model
     public $timestamps = false;
 
     protected $table = 'order';
+    protected $fillable = ['user_id', 'store_id', 'date_time', 'fulfilled'];
+
 
 public function items()
 {
-    return $this->hasMany(OrderItem::class);
+    return $this->hasMany(OrderItem::class, 'order_id', 'id');
 }
 
 public function deliveryNotes()
 {
-    return $this->hasMany(DeliveryNote::class);
+    return $this->hasMany(DeliveryNote::class, 'order_id', 'id');
 }
 
 public function deliveredItems()

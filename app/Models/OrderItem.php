@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class OrderItem extends Model
 {
     protected $table = 'order_item';
+    protected $fillable = ['order_id', 'item_id', 'ordered', 'price'];
+
 
     public function order()
     {
@@ -15,7 +17,7 @@ class OrderItem extends Model
 
     public function item()
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 
     public function deliveredItems()

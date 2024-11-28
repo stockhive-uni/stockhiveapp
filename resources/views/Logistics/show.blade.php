@@ -5,13 +5,16 @@
         </h2>
     </x-slot>
 
+  
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Order ID: {{ $order->id }}</h1>
         <p><strong>User ID:</strong> {{ $order->user_id }}</p>
         <p><strong>Store ID:</strong> {{ $order->store_id }}</p>
+        <p><strong>Order Date/Time:</strong> {{ $order->date_time }}</p>
     </div>
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
+        <h2 class="text-xl font-bold mb-4">Items in Order</h2>
         <form method="POST" action="{{ route('logistics.createDeliveryNote', $order->id) }}">
             @csrf
             <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
@@ -32,7 +35,10 @@
                             <td class="p-2">{{ $item['delivered'] }}</td>
                             <td class="p-2">{{ $item['quantity_left'] }}</td>
                             <td class="p-2">
-                                <input type="number" name="items[{{ $item['id'] }}][quantity]" min="0" max="{{ $item['quantity_left'] }}" value="0" class="p-2 rounded-lg bg-stockhive-grey-dark text-white border border-accent focus:ring focus:ring-accent w-full">
+                                <input type="number" name="items[{{ $item['id'] }}][quantity]" 
+                                    min="0" 
+                                    value="0" 
+                                    class="p-2 rounded-lg bg-stockhive-grey-dark text-white border border-accent focus:ring focus:ring-accent w-full">
                                 <input type="hidden" name="items[{{ $item['id'] }}][id]" value="{{ $item['id'] }}">
                             </td>
                         </tr>
@@ -46,6 +52,7 @@
         </form>
     </div>
 
+   
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h2 class="text-xl font-bold mb-4">Delivery Notes</h2>
         @forelse ($notesWithItems as $note)
@@ -74,4 +81,3 @@
         @endforelse
     </div>
 </x-app-layout>
-
