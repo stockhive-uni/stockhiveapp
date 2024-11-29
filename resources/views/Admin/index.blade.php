@@ -17,6 +17,9 @@
             @if($employees->isNotEmpty())
             <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                 <x-paginate :items="$employees"/>
+                <form method="GET" action="{{ route('admin.createNewUser') }}">
+                    <x-primary-button>Create New User</x-primary-button>
+                </form>
             </div>
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>

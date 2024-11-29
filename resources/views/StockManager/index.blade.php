@@ -5,6 +5,11 @@
         </h2>
     </x-slot>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <form name='searchFunction' action='{{route('stock-management.search')}}' method='GET'>
+            <input class='text-black' type='text' name='search' :value="request()"></input>
+            <x-primary-button>Search</x-primary-button>
+        </form>
+
         <form method="GET" action="{{ route('stock-management.sort') }}" class="m-auto text-right w-[90%]">
             <select name="sort" id="sort" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-[50%]">
                 <option value="id" {{ request('sort') === 'id' ? 'selected' : '' }}>ID</option>
@@ -40,9 +45,9 @@
                                 <td>{{ $item->name }}</td>
                                 <td>£{{ $item->price }}</td>
                                 <td>{{ $item->department->name }}</td>
-                                <td><form method='POST' action="{{route('stock-management.report')}}">
+                                <td><form method='POST' action="{{route('stock-management.chosenItems')}}">
                                     @csrf
-                                    <input type="hidden" name="reports[]" value="{{ $item->id }}"></input>
+                                    <input type="hidden" name="item" value="{{ $item->id }}"></input>
                                     <x-primary-button>Generate Report</x-primary-button>
                                 </form></td>
                                 <td><input type="checkbox" name="items[]" value="{{ $item->id }}"></td>

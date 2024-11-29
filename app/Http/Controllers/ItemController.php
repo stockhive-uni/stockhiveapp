@@ -46,7 +46,13 @@ class ItemController extends Controller
             return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
         }
         else {
-            $stock = Item::whereIn('id', $request->items)->with('department')->get();
+            $stock = null;
+            if ($request->has("Report")) {
+                $stock = Item::whereIn('id', $request->items)->with('department')->get();
+            }
+            else {
+                $stock = Item::where('id', $request->item)->with('department')->get();
+            }
             $allresults = array();
             // Loop through all items.
             foreach ($stock as $item) {
