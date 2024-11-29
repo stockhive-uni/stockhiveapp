@@ -50,6 +50,8 @@ class LogisticsController extends Controller
    
         if ($allFulfilled && !$order->fulfilled) {
             $order->update(['fulfilled' => 1]);
+            return redirect()->route('logistics')->with('success', 'Order fully fulfilled!');
+
         }
  
         $notesWithItems = $order->deliveryNotes->map(function ($note) {
@@ -76,7 +78,7 @@ class LogisticsController extends Controller
     $validated = $request->validate([
         'items' => 'required|array',
         'items.*.id' => 'required|exists:item,id',
-        'items.*.quantity' => 'required|integer|min:1',
+        'items.*.quantity' => 'required|integer|min:0',
     ]);
 
     $order = Order::findOrFail($id);
