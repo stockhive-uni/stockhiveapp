@@ -71,7 +71,12 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
     Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
     Route::post('/logistics/{id}/delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
-    Route::post('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
+    Route::get('/logistics/overdelivery', [LogisticsController::class, 'overDelivery'])->name('logistics.overdelivery');
+
+
+
+
+
 
 
    

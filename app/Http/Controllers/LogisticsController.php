@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+
 use Illuminate\Http\Request;
+use App\Models\Order;
 use App\Models\DeliveredItem;
 use App\Models\DeliveryNote;
 
@@ -20,6 +21,13 @@ class LogisticsController extends Controller
     }
 
 
+
+    public function overDelivery()
+    {
+        return view('logistics.overdelivery');
+    }
+
+    
     public function show($orderId)
     {
        
