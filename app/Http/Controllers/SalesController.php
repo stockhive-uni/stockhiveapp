@@ -21,7 +21,11 @@ class SalesController extends Controller
     }
 
     public function startSale() {
-        return view('Sales.sales');
+        $items = DB::table('item')
+        ->select('id', 'name')
+        ->get();
+
+        return view('Sales.sales', compact('items'));
     }
 
     public function viewDetails(Request $request) {
