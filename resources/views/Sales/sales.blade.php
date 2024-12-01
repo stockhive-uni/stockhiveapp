@@ -56,8 +56,8 @@
                     basket.innerHTML += `<div>
                     <input class="id" type="hidden" name="id[]" value=${result.id}>
                     <p name="name">${result.name}</p>
-                    <input class="quantity-child" type="number" name="quantity[]" value=${quantity.value}>
-                    <p>Total: £${itemPrice}</p>
+                    <input class="quantity-child" type="number" name="quantity[]" value=${quantity.value} min="0">
+                    <p class="item-total">Total: £${itemPrice}</p>
                     <x-primary-button :classEnter="'remove-button'">Remove</x-primary-button>
                     </div>`;
 
@@ -73,6 +73,62 @@
                 }
             });
 
+            basket.addEventListener("input", function (event) {
+                // Gets parent div and relevant items
+                const newQuantity = event.target;
+                const parentNode = newQuantity.parentNode;
+                const id = parentNode.querySelector(".id");
+
+                // Gets selected item from id
+                var result = data.find(item => item.id === parseInt(id.value));
+                console.log(result);
+
+                // Old items total for item
+                const totalNode = parentNode.querySelector(".item-total");
+                var itemTotal = totalNode.innerHTML.replace("Total: £", "");
+
+                // Calculates amount that was previously in the box using total price / individual price
+                var originalQuantity = itemTotal / parseFloat(result.price);
+                console.log(parseFloat(result.price));
+                console.log(originalQuantity);
+
+                // Gets basket totals
+                var basketTotal = parseFloat(price.innerHTML.replace("Total: £", ""));
+                var allQuantity = parseInt(items.innerHTML.replace("Items: ", ""));
+
+                // items with old amount removed
+                var deletedQuantity = allQuantity - originalQuantity;
+
+                // Gets new quantity
+                var total = 0;
+                if (newQuantity.value != "" && newQuantity.value != null) {
+                    total = newQuantity.value;
+                }
+
+                // items with current amount added
+                var addedQuantity = deletedQuantity + parseInt(total);
+
+                // Adds the new amount to items
+                items.innerHTML = `Items: ${addedQuantity}`;
+
+
+
+                // total with old price removed
+                var deletedPrice = basketTotal - itemTotal;
+
+                // New price selected
+                var newPrice = parseInt(total) * result.price
+
+                // total with new price included
+                var addedQuantity = deletedPrice + newPrice;
+
+                // total with current amount added
+                price.innerHTML = `Total: £${addedQuantity}`;
+
+                // Updates individual item
+                totalNode.innerHTML = `Total: £${newPrice}`;
+            });
+
             basket.addEventListener("click", function (event) {
                 if (event.target.matches(".remove-button")) {
                     const parentNode = event.target.parentNode;
@@ -85,7 +141,7 @@
                     var id = parentNode.querySelector(".id");
                     var result = data.find(item => item.id === parseInt(id.value));
                     var allPrice = Math.round(parseFloat(price.innerHTML.replace("Total: £", "") * 100)) / 100;
-                    var newPrice = allPrice - (parseInt(result.price) * parseInt(quantityChild.value));
+                    var newPrice = allPrice - (parseFloat(result.price) * parseInt(quantityChild.value));
                     price.innerHTML = `Total: £${newPrice}`;
 
                     parentNode.remove();
