@@ -22,8 +22,10 @@ class SalesController extends Controller
 
     public function startSale() {
         $items = DB::table('item')
-        ->select('id', 'name')
-        ->get();
+            ->join('store_item', 'store_item.item_id', '=', 'item.id')
+            ->where('store_item.store_id', '=', Auth::User()->store_id)
+            ->select('item.id', 'item.name', 'store_item.price')
+            ->get();
 
         return view('Sales.sales', compact('items'));
     }
@@ -67,5 +69,17 @@ class SalesController extends Controller
 
         // Stream the PDF to the browser for download
         return $pdf->download('invoice-' . $id . '.pdf');
+    }
+
+    public function confirmTransaction(Request $request) {
+        // Process transaction
+        
+        $items = DB::table('item')
+        ->join('store_item', 'store_item.item_id', '=', 'item.id')
+        ->where('store_item.store_id', '=', Auth::User()->store_id)
+        ->select('item.id', 'item.name', 'store_item.price')
+        ->get();
+
+        return view('Sales.sales', compact('items'));
     }
 }
