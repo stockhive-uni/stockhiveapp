@@ -4,6 +4,7 @@
             {{ __('Order Details') }}
         </h2>
     </x-slot>
+
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Order ID: {{ $order->id }}</h1>
         <p><strong>User ID:</strong> {{ $order->user_id }}</p>
@@ -54,7 +55,6 @@
         </form>
     </div>
 
-
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h2 class="text-xl font-bold mb-4">Delivery Notes</h2>
         @forelse ($notesWithItems as $note)
@@ -67,6 +67,7 @@
                         <tr>
                             <th class="p-2">Item Name</th>
                             <th class="p-2">Delivered Quantity</th>
+                            <th class="p-2">Over Delivered Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +75,7 @@
                             <tr class="hover:bg-stockhive-grey">
                                 <td class="p-2">{{ $deliveredItem['name'] }}</td>
                                 <td class="p-2">{{ $deliveredItem['quantity'] }}</td>
+                                <td class="p-2">{{ $deliveredItem['over_delivered'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -83,6 +85,7 @@
             <p class="text-white text-center font-semibold py-4">No delivery notes available for this order.</p>
         @endforelse
     </div>
+
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h2 class="text-xl font-bold mb-4">Total Over Deliveries</h2>
         <p class="text-lg">Total Over Delivered Quantity: {{ $totalOverDeliveryQuantity }}</p>

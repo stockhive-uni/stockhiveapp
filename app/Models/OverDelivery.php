@@ -13,6 +13,8 @@ class OverDelivery extends Model
 
     protected $table = 'over_deliveries';
 
+    public $incrementing = false;
+    protected $primaryKey = 'delivery_note_id';
     protected $fillable = ['delivery_note_id', 'item_id', 'store_id', 'returned', 'quantity', 'date_time'];
 
     public function deliveryNote()

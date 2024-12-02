@@ -67,12 +67,13 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     // Logistics
 
-
     Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
     Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
-    Route::post('/logistics/overdelivery/store', [LogisticsController::class, 'storeOverDelivery'])->name('logistics.overdelivery.store');
+    Route::post('/logistics/overdelivery/return', [LogisticsController::class, 'markAsReturned'])->name('logistics.return');
     Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
-    Route::post('/logistics/{id}/delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
+    Route::get('/logistics/returned-items', [LogisticsController::class, 'returnedItems'])->name('logistics.returnedItems');
+    Route::post('/logistics/{id}/create-delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
+
 
     // Inventory
 
