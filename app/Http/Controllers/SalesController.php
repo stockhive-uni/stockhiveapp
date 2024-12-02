@@ -77,7 +77,8 @@ class SalesController extends Controller
         $quantities = $request->quantity;
         
         // Checks if order is null
-        if (count($ids) > 0) {
+        $message;
+        if (isset($ids)) {
             // Ensure they are numbers and not strings
             $ids = array_map('intval', $ids);
             $quantities = array_map('intval', $quantities);
@@ -115,6 +116,10 @@ class SalesController extends Controller
                     'price' => $price->price
                 ]);
             }
+            $message = "Transaction successfully processed";
+        }
+        else {
+            $message = "No items selected, transaction not processed";
         }
         
         $items = DB::table('item')
@@ -123,6 +128,6 @@ class SalesController extends Controller
             ->select('item.id', 'item.name', 'store_item.price')
             ->get();
 
-        return view('Sales.sales', compact('items'));
+        return view('Sales.sales', compact('items', 'message'));
     }
 }

@@ -18,6 +18,11 @@
         </div>
         <x-primary-button>Confirm Transaction</x-primary-button>
     </form>
+    @if (isset($message))
+        @if ($message != "" && $message != null)
+            <h3>{{ $message }}</h3>
+        @endif
+    @endif
 
     @vite(['resources/js/jquery.js'])
     
