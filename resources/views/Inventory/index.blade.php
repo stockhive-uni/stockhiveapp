@@ -8,11 +8,10 @@
         {{ __('Notifications') }}
     </h2>
 
-    @if(empty($lowStockItemWarning) && empty($spotCheckItemWarning) ) 
+    @if(($lowStockItemWarning == "[]") && ($spotCheckItemWarning == "[]") ) 
         <div>No Notifications.</div>
     @endif
-
-    @if (!empty($lowStockItemWarning))
+    @if ($lowStockItemWarning != "[]")
         <h3>Low Stock</h3>
     @endif
     @foreach ($lowStockItemWarning as $item) 
@@ -25,11 +24,10 @@
         </form>
     @endforeach
 
-    @if (!empty($spotCheckItemWarning))
+    @if ($spotCheckItemWarning != "[]")
     <h3>Spot Check</h3>
     @endif
     @foreach ($spotCheckItemWarning as $item) 
-    <h2>Spot Check</h2>
     <div>{{$item->item->name}}</div>
     <div>£{{$item->item->price}}</div>
     <div>{{$item->last_spot_checked}}</div>
