@@ -33,7 +33,7 @@
     <div>{{$item->last_spot_checked}}</div>
     <form method="GET" action="{{ route('inventory.spotCheck') }}">
         <input type="hidden" name="spotcheck" value="{{$item->id}}">
-        <x-primary-button>Complete</x-primary-button>
+        <input type='submit' value='Complete'>
     </form>
     @endforeach
 </x-app-layout>

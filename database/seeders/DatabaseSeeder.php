@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         Item::factory()->count(100)->create();
         User::factory()->count(100)->create();
+
+       // $this->call(OrderSeeder::class);
     }
 }

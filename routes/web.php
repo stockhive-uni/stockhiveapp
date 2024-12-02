@@ -60,12 +60,31 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])
-    ->name('sales');
+        ->name('sales');
+
+    Route::get('/sales/create-sale', [SalesController::class, 'startSale'])
+        ->name('sales.createSale');
+
+    Route::post('/sales/view-details', [SalesController::class, 'viewDetails'])
+        ->name('sales.viewDetails');
+
+    Route::any('/sales/download-invoice', [SalesController::class, 'downloadInvoice'])
+        ->name('sales.downloadInvoice');
+
+    Route::post('/sales/confirm-transaction', [SalesController::class, 'confirmTransaction'])
+        ->name('sales.confirmTransaction');
 
     // Logistics
+   
+  
+    Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
+    Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
+    Route::post('/logistics/{id}/delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
+    Route::post('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
 
-    Route::get('/logistics', [LogisticsController::class, 'index'])
-    ->name('logistics');
+
+   
+
 
     // Inventory
 

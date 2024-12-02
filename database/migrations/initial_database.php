@@ -171,11 +171,13 @@ return new class extends Migration
             ['id' => '5', 'name' => 'Home']
         ]);
 
+
         Schema::create('item', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->string('name');
-            $table->double('price');
-            $table->foreignID('department_id')->references('id')->on('department')->onDelete('cascade');
+            $table->id()->primary(); 
+            $table->string('name'); 
+            $table->double('price'); 
+            $table->foreignId('department_id')->constrained('department')->onDelete('cascade');
+            $table->timestamps(); 
         });
         DB::table('item')->insert([
             ['id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
@@ -210,7 +212,15 @@ return new class extends Migration
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('store_id')->references('id')->on('store')->onDelete('cascade');
             $table->timestamp('date_time');
+            $table->tinyInteger('fulfilled')->default(0);
+
         });
+     /*   DB::table('order')->insert([
+         //   ['id' => 1, 'user_id' => 1, 'store_id' => 1,  'date_time' => now(),'fulfilled'=>0,],
+      //      [ 'id' => 2,  'user_id' => 2,  'store_id' => 2,  'date_time' => now()->subDays(1),'fulfilled'=>0,],
+       //     [   'id' => 3,  'user_id' => 3,  'store_id' => 1,'date_time' => now()->subDays(2),'fulfilled'=>0,],
+        ]);*/
+        
 
         Schema::create('order_item', function (Blueprint $table) {
             $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
@@ -218,6 +228,16 @@ return new class extends Migration
             $table->integer('ordered');
             $table->double('price');
         });
+        
+        
+   /* 
+        DB::table('order_item')->insert([
+            [ 'order_id' => 1, 'item_id' => 1, 'ordered' => 10, 'price' => 5.99,],
+            [ 'order_id' => 1,'item_id' => 2, 'ordered' => 20,'price' => 3.49,],
+            [ 'order_id' => 2, 'item_id' => 3,'ordered' => 5, 'price' => 12.99,],
+            [  'order_id' => 3,  'item_id' => 1, 'ordered' => 15, 'price' => 4.99,],    
+        ]);  */
+              
 
         Schema::create('location', function (Blueprint $table) {
             $table->id()->primary();
@@ -251,12 +271,14 @@ return new class extends Migration
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
             $table->timestamp('date_time');
+            $table->timestamps();
         });
 
         Schema::create('delivered_item', function (Blueprint $table) {
             $table->foreignID('delivery_note_id')->references('id')->on('delivery_note')->onDelete('cascade');
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('quantity');
+            $table->timestamps();
         });
 
         Schema::create('over_deliveries', function (Blueprint $table) {
