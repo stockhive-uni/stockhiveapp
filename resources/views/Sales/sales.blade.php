@@ -29,8 +29,15 @@
             const searchResults = $("#search-results");
 
             searchBox.on("input", function () {
-                const query = $(this).val().toLowerCase();
-                const filteredResults = data.filter(item => item.name.toLowerCase().includes(query));
+                updatedQuery(this);
+            });
+
+            function updatedQuery(inputElement) {
+                var query = "";
+                if (inputElement != null) {
+                    query = $(inputElement).val().toLowerCase();
+                }
+                filteredResults = data.filter(item => item.name.toLowerCase().includes(query));
 
                 searchResults.empty();
 
@@ -41,7 +48,9 @@
                 } else {
                     searchResults.append("<option>No results found</option>");
                 }
-            });
+            }
+
+            updatedQuery(null);
 
             const basket = document.getElementById("basket");
             const addButton = document.getElementById("add-button");
