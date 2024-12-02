@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,27 +12,18 @@ class Order extends Model
     protected $table = 'order';
     protected $fillable = ['user_id', 'store_id', 'date_time', 'fulfilled'];
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
 
-public function items()
-{
-    return $this->hasMany(OrderItem::class, 'order_id', 'id');
-}
+    public function deliveryNotes()
+    {
+        return $this->hasMany(DeliveryNote::class);
+    }
 
-public function deliveryNotes()
-{
-    return $this->hasMany(DeliveryNote::class, 'order_id', 'id');
-}
-
-public function deliveredItems()
-{
-    return $this->hasMany(DeliveredItem::class);
-}
-
-public function item()
-{
-    return $this->belongsTo(Item::class);
-}
-
-
- 
+    public function deliveredItems()
+    {
+        return $this->hasMany(DeliveredItem::class);
+    }
 }

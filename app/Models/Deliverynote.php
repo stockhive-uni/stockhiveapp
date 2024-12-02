@@ -17,19 +17,24 @@ class Deliverynote extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
-    public function deliveredItems(): HasMany
+    public function deliveredItems()
     {
-        return $this->hasMany(DeliveredItem::class, 'delivery_note_id', 'id');
+        return $this->hasMany(DeliveredItem::class, 'delivery_note_id');
     }
-public function item()
-{
-    return $this->belongsTo(Item::class);
-}
 
-public function deliveryNote()
-{
-    return $this->belongsTo(DeliveryNote::class);
-}
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 
+    public function deliveryNote()
+    {
+        return $this->belongsTo(DeliveryNote::class);
+    }
+
+    public function overDeliveries()
+    {
+        return $this->hasMany(OverDelivery::class);
+    }
 }
 

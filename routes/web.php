@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
-->middleware(['auth', 'verified']);
+    ->middleware(['auth', 'verified']);
 
 
 
@@ -30,15 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(function () {
-  
+
     // Stock Management
 
     Route::get('/stock-management', [ItemController::class, 'index'])
         ->name('stock-management');
-  
+
     Route::get('/stock-management/sort', [StockSortController::class, 'sort'])
         ->name('stock-management.sort');
 
@@ -63,29 +63,21 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])
-    ->name('sales');
+        ->name('sales');
 
     // Logistics
-   
-  
+
+
     Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
+    Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
+    Route::post('/logistics/overdelivery/store', [LogisticsController::class, 'storeOverDelivery'])->name('logistics.overdelivery.store');
     Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
     Route::post('/logistics/{id}/delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
-    Route::get('/logistics/overdelivery', [LogisticsController::class, 'overDelivery'])->name('logistics.overdelivery');
-
-
-
-
-
-
-
-   
-
 
     // Inventory
 
     Route::get('/inventory', [InventoryController::class, 'index'])
-    ->name('inventory');
+        ->name('inventory');
 
     // Admin
 
