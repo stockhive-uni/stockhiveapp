@@ -74,6 +74,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::any('/sales/download-invoice', [SalesController::class, 'downloadInvoice'])
         ->name('sales.downloadInvoice');
 
+    Route::post('/sales/confirm-transaction', [SalesController::class, 'confirmTransaction'])
+        ->name('sales.confirmTransaction');
+
     // Logistics
    
   

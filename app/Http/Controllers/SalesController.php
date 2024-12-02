@@ -21,7 +21,13 @@ class SalesController extends Controller
     }
 
     public function startSale() {
-        return view('Sales.sales');
+        $items = DB::table('item')
+            ->join('store_item', 'store_item.item_id', '=', 'item.id')
+            ->where('store_item.store_id', '=', Auth::User()->store_id)
+            ->select('item.id', 'item.name', 'store_item.price')
+            ->get();
+
+        return view('Sales.sales', compact('items'));
     }
 
     public function viewDetails(Request $request) {
@@ -63,5 +69,65 @@ class SalesController extends Controller
 
         // Stream the PDF to the browser for download
         return $pdf->download('invoice-' . $id . '.pdf');
+    }
+
+    public function confirmTransaction(Request $request) {
+        // Get items from request
+        $ids = $request->id;
+        $quantities = $request->quantity;
+        
+        // Checks if order is null
+        $message;
+        if (isset($ids)) {
+            // Ensure they are numbers and not strings
+            $ids = array_map('intval', $ids);
+            $quantities = array_map('intval', $quantities);
+
+            $totals = [];
+
+            // Creates a dictionary for duplicate items
+            foreach ($ids as $index => $id) {
+                if (isset($totals[$id])) {
+                    $totals[$id] += $quantities[$index];
+                } else {
+                    $totals[$id] = $quantities[$index];
+                }
+            }
+
+            $randomCard = random_int(1000000000000000, 9999999999999999);
+            $lastId = DB::table('transaction')->insertGetId([
+                'user_id' => Auth::User()->id,
+                'store_id' => Auth::User()->store_id,
+                'card' => $randomCard
+            ]);
+
+            // Inserts for each item bought
+            foreach ($totals as $key => $value) {
+                $price = DB::table('item')
+                    ->join('store_item', 'store_item.item_id', '=', 'item.id')
+                    ->select('store_item.price')
+                    ->where ('item.id', $key)
+                    ->first();
+
+                DB::table('transaction_item')->insert([
+                    'transaction_id' => $lastId,
+                    'item_id' => $key,
+                    'quantity' => $value,
+                    'price' => $price->price
+                ]);
+            }
+            $message = "Transaction successfully processed";
+        }
+        else {
+            $message = "No items selected, transaction not processed";
+        }
+        
+        $items = DB::table('item')
+            ->join('store_item', 'store_item.item_id', '=', 'item.id')
+            ->where('store_item.store_id', '=', Auth::User()->store_id)
+            ->select('item.id', 'item.name', 'store_item.price')
+            ->get();
+
+        return view('Sales.sales', compact('items', 'message'));
     }
 }
