@@ -3,9 +3,11 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class SalesTest extends TestCase {
     protected $transactionId; // Placeholder for the transaction ID
+    protected $storeId;
     use RefreshDatabase;
 
     public function test_login_as_salesperson() {
@@ -18,7 +20,26 @@ class SalesTest extends TestCase {
 
     // Testing to ensure salesperson can make a sale.
     public function test_make_sale() {
-        return false; // Placeholder
+        // Auth
+        $user = User::where('email', 'test@email.com')->first();
+        $this->actingAs($user);
+        $this->storeId = 1;
+        // Get items
+        $items = DB::table('item')
+            ->join('store_item', 'store_item.item_id', '=', 'item.id')
+            ->where('store_item.store_id', $user->store_id)
+            ->select('item.id', 'item.name', 'store_item.price')
+            ->limit(3) 
+            ->get();
+        $data = [
+            'id' => $items->pluck('id')->toArray(),
+            'quantity' => [2, 3, 8]
+        ];
+        // Response
+        $response = $this->post(route('sales.confirmTransaction'), $data);
+        $response->assertStatus(200);
+        $response->assertViewIs('Sales.sales');
+        $response->assertViewHas('message', 'Transaction successfully processed');
     }
 
     // Testing to ensure sales person can view transaction details. 
