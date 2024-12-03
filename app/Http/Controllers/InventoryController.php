@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\store_item;
+use App\Models\store_item_storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,16 +23,22 @@ class InventoryController extends Controller
         ->select('item.name AS itemName', 'item.price', 'department.name AS departmentName','store_item.low-stock-amount AS lowStockNum','store_item_storage.quantity')
         ->get();
 
+
         //spot check for items query needed here
-        $spotCheckItemWarning = store_item::with(['store', 'item'])
-        ->where('store_id', '=', Auth::user()->store_id)
+        $spotCheckItemWarning = store_item_storage::with(['store_item', 'store_item.store', 'store_item.item'])
+        ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
+        ->join('store', 'store_item.store_id', '=', 'store_id')
+        ->join('item', 'store_item.item_id', '=', 'item.id')
+        ->join('department', 'item.department_id', '=', 'department.id')
+        ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
         ->limit(5)
         ->get();
 
-
         return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning]);
     }
+
+
 
     public function spotCheck(Request $request) {
         //goes to spot check page where info is put into it, and then a post request is made to come back here and update the table, then redirect back to the inventory home page.
@@ -60,7 +67,18 @@ class InventoryController extends Controller
 
         //update quantity from spot check
 
-        //maybe make it so it checks if the row exists, if it doesnt it creates it with all the data?
         DB::table('store_item_storage')->where(['quantity' => $request->input('SpotCheckNum')]);
+    }
+
+    public function updateCheck() {
+        //here we load the inventory from delivered orders
+
+        $inventoryFromStorage = store_item_storage::with('location')
+        ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
+        ->join('item', 'store_item.item_id', '=' , 'item.id')
+        ->where('store_item.store_id', '=', Auth::user()->store_id)
+        ->get();
+
+        return view('Inventory.update', ['inventoryFromStorage' => $inventoryFromStorage]);
     }
 }

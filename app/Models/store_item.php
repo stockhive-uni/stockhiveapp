@@ -20,7 +20,7 @@ class store_item extends Model
     }
 
     public function store_item_storage() {
-        return $this->belongsTo(store_item_storage::class, '');
+        return $this->belongsTo(store_item_storage::class, 'id');
     }
 
 }

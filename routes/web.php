@@ -98,6 +98,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/inventory/confirm-check', [InventoryController::class, 'confirmCheck'])
     ->name('inventory.confirmCheck');
 
+    Route::get('/inventory/update', [InventoryController::class, 'updateCheck'])
+    ->name('inventory.update');
+
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])

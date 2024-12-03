@@ -36,4 +36,8 @@
         <input type='submit' value='Complete'>
     </form>
     @endforeach
+
+    <form method='GET' action='{{route('inventory.update')}}'>
+        <x-primary-button>Update Stock</x-primary-button>
+    </form>
 </x-app-layout>

@@ -13,5 +13,7 @@ class store_item_storage extends Model
         return $this->belongsTo(location::class, 'location_id');
     }
 
-    
+    public function store_item() {
+        return $this->belongsTo(store_item::class, 'store_item_id');
+    }
 }
