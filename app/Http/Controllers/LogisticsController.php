@@ -105,7 +105,20 @@ class LogisticsController extends Controller
         return redirect()->route('logistics.overdelivery')->with('success', 'Selected overdelivered items have been marked as returned.');
     }
 
-
+    private function updateStoreItemStorage($itemId, $locationId, $quantity)
+    {
+        \DB::table('store_item_storage')->updateOrInsert(
+            [
+                'store_item_id' => $itemId,
+                'location_id' => $locationId,
+            ],
+            [
+                'quantity' => \DB::raw("quantity + $quantity"),
+                'expiration_date' => now()->addDays(30), 
+            ]
+        );
+    }
+    
 
     public function createDeliveryNote(Request $request, $id)
     {
@@ -114,34 +127,37 @@ class LogisticsController extends Controller
             'items.*.id' => 'required|exists:item,id',
             'items.*.quantity' => 'required|integer|min:0',
         ]);
-
-
+    
         $order = Order::with('items')->findOrFail($id);
-
-
+    
         $deliveryNote = DeliveryNote::create([
             'user_id' => auth()->id(),
             'order_id' => $order->id,
             'date_time' => now(),
         ]);
-
+    
         foreach ($validated['items'] as $item) {
-
             $orderItem = $order->items->where('item_id', $item['id'])->first();
             $orderedQuantity = $orderItem->ordered;
-
+    
             $deliveredBefore = DeliveredItem::whereHas('deliveryNote', function ($query) use ($order) {
                 $query->where('order_id', $order->id);
             })->where('item_id', $item['id'])->sum('quantity');
-
-            if ($deliveredBefore + $item['quantity'] >= $orderedQuantity) {
-                $overDeliveredForCurrentNote = ($orderedQuantity >= $deliveredBefore) ? abs($orderedQuantity - ($deliveredBefore + $item['quantity'])) : $item['quantity'];
-
-                ($orderedQuantity);
-                error_log($deliveredBefore);
-                error_log($item['quantity']);
-                error_log($overDeliveredForCurrentNote);
-
+    
+            $remainingToOrder = max(0, $orderedQuantity - $deliveredBefore);
+    
+            $deliveredQuantity = $item['quantity'];
+            $overDeliveredForCurrentNote = max(0, $deliveredQuantity - $remainingToOrder);
+    
+            DeliveredItem::create([
+                'delivery_note_id' => $deliveryNote->id,
+                'item_id' => $item['id'],
+                'quantity' => $deliveredQuantity,
+            ]);
+    
+            $this->updateStoreItemStorage($item['id'], 3, $deliveredQuantity); 
+    
+            if ($overDeliveredForCurrentNote > 0) {
                 OverDelivery::create([
                     'delivery_note_id' => $deliveryNote->id,
                     'item_id' => $item['id'],
@@ -150,20 +166,15 @@ class LogisticsController extends Controller
                     'quantity' => $overDeliveredForCurrentNote,
                     'date_time' => now(),
                 ]);
+                    $this->updateStoreItemStorage($item['id'], 5, $overDeliveredForCurrentNote); 
             }
-
-            DeliveredItem::create([
-                'delivery_note_id' => $deliveryNote->id,
-                'item_id' => $item['id'],
-                'quantity' => $item['quantity'],
-            ]);
-
-
         }
-
+    
         return redirect()->route('logistics.show', ['id' => $id])
             ->with('success', 'Delivery Note Created and Overdeliveries Recorded.');
     }
+    
+    
 
     public function storeOverDelivery($deliveryNoteId, $itemId, $deliveredQuantity, $storeId)
     {
