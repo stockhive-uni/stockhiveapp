@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -40,10 +40,13 @@ class ItemController extends Controller
     public function chosenItems(Request $request) 
     {
         if ($request->has("Order")) {
-            //selected item ids from stock are then fetched again 
-            $stock = Item::whereIn('id', $request->items)->with('department')->paginate(3)->onEachSide(1); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
+            $items = DB::table('item')
+            ->join('store_item', 'store_item.item_id', '=', 'item.id')
+            ->where('store_item.store_id', '=', Auth::User()->store_id)
+            ->select('item.id', 'item.name', 'store_item.price')
+            ->get();
 
-            return (view('StockManager.order', ['items' => $stock, 'allItems' => $request->items]));
+            return view('StockManager.order', compact('items'));
         }
         else {
             $stock = null;
