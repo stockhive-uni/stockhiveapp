@@ -6,6 +6,15 @@
     </x-slot>
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
+        <form action="{{ route('logistics') }}" method="GET" class="inline-block">
+            @csrf
+            <x-primary-button class="mb-4">Back to Dashboard</x-primary-button>
+        </form>
+        <form action="{{ route('logistics.returnedOverDeliveries') }}" method="GET" class="inline-block">
+            @csrf
+            <x-primary-button class="mb-4">Returned Over Deliveries</x-primary-button>
+        </form>
+
         @if(session('success'))
             <div class="text-green-500 font-semibold mb-4">
                 {{ session('success') }}
@@ -41,8 +50,12 @@
                                 </td>
                                 <td class="py-2 px-4">{{ $overDelivery->delivery_note_id }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->item->name }}</td>
-                                <td class="py-2 px-4">{{ $overDelivery->deliveryNote->order->orderItems->firstWhere('item_id', $overDelivery->item_id)->ordered }}</td>
-                                <td class="py-2 px-4">{{ $overDelivery->deliveryNote->deliveredItems->firstWhere('item_id', $overDelivery->item_id)->quantity }}</td>
+                                <td class="py-2 px-4">
+                                    {{ $overDelivery->deliveryNote->order->orderItems->firstWhere('item_id', $overDelivery->item_id)->ordered }}
+                                </td>
+                                <td class="py-2 px-4">
+                                    {{ $overDelivery->deliveryNote->deliveredItems->firstWhere('item_id', $overDelivery->item_id)->quantity }}
+                                </td>
                                 <td class="py-2 px-4">{{ $overDelivery->quantity }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->returned ? 'Yes' : 'No' }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->date_time }}</td>
