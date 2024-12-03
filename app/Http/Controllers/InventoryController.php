@@ -30,8 +30,10 @@ class InventoryController extends Controller
         ->join('store', 'store_item.store_id', '=', 'store_id')
         ->join('item', 'store_item.item_id', '=', 'item.id')
         ->join('department', 'item.department_id', '=', 'department.id')
+        ->join('location', 'location.id', '=', 'store_item_storage.location_id')
         ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
+        ->select('item.name AS itemName', 'item.price', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location')
         ->limit(5)
         ->get();
 
@@ -73,10 +75,14 @@ class InventoryController extends Controller
     public function updateCheck() {
         //here we load the inventory from delivered orders
 
-        $inventoryFromStorage = store_item_storage::with('location')
+        $inventoryFromStorage = DB::table('store_item_storage')
         ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
         ->join('item', 'store_item.item_id', '=' , 'item.id')
+        ->join('department', 'item.department_id', '=', 'department.id')
+        ->join('location', 'store_item_storage.location_id', '=', 'location.id')
         ->where('store_item.store_id', '=', Auth::user()->store_id)
+        ->where('location.name', '=', 'Warehouse')
+        ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity')
         ->get();
 
         return view('Inventory.update', ['inventoryFromStorage' => $inventoryFromStorage]);

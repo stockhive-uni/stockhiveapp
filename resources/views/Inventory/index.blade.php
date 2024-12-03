@@ -28,8 +28,8 @@
     <h3>Spot Check</h3>
     @endif
     @foreach ($spotCheckItemWarning as $item) 
-    <div>{{$item->item->name}}</div>
-    <div>£{{$item->item->price}}</div>
+    <div>{{$item->itemName}}</div>
+    <div>£{{$item->price}}</div>
     <div>{{$item->last_spot_checked}}</div>
     <form method="GET" action="{{ route('inventory.spotCheck') }}">
         <input type="hidden" name="spotcheck" value="{{$item->id}}">
