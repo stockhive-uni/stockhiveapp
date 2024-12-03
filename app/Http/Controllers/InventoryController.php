@@ -73,6 +73,8 @@ class InventoryController extends Controller
         //update quantity from spot check
 
         DB::table('store_item_storage')->where('store_item_id', '=', $request->input('stockID'))->update(['quantity' => $request->input('SpotCheckNum')]);
+
+        return redirect()->route('inventory');
     }
 
     public function updateCheck() {
@@ -97,5 +99,7 @@ class InventoryController extends Controller
         foreach ($request->input('checkbox') as $checked) {
             store_item_storage::where('store_item_id', '=', $checked)->update(['location_id' => 4]);
         }
+
+        return redirect()->route('inventory');
     }
 }
