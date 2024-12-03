@@ -62,6 +62,7 @@ class ItemController extends Controller
                     ->where('Transaction_Item.item_id', $id)
                     ->select('Transaction_Item.quantity', 'Transaction_Item.price', 'Transaction.date_time')
                     ->get();
+
                 if ($query->isNotEmpty()) {
                     $data = [];
                     // Iterate through transactions.
@@ -85,6 +86,17 @@ class ItemController extends Controller
                     $allresults[] = [
                         'item_name' => $item->name,  // Item name
                         'data' => $data, // Item information per month.
+                    ];
+                }
+                else {
+                    $data = [];
+                    $data[0] = [
+                        'total' => 0,
+                        'month' => 0,
+                    ];
+                    $allresults[] = [
+                        'item_name' => $item->name,
+                        'data' => $data,
                     ];
                 }
             } 
