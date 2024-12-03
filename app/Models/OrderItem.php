@@ -20,7 +20,7 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Item::class, 'item_id');
     }
-
+    
     public function deliveredItems()
     {
         return $this->hasMany(DeliveredItem::class, 'order_item_id', 'id');

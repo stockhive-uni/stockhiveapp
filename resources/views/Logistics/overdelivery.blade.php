@@ -24,7 +24,9 @@
                             <th class="p-2">Select</th>
                             <th class="p-2">Delivery Note ID</th>
                             <th class="p-2">Item Name</th>
-                            <th class="p-2">Quantity</th>
+                            <th class="p-2">Ordered Quantity</th>
+                            <th class="p-2">Delivered Quantity</th>
+                            <th class="p-2">Over Delivered Quantity</th>
                             <th class="p-2">Returned</th>
                             <th class="p-2">Date/Time</th>
                         </tr>
@@ -37,8 +39,10 @@
                                         name="over_deliveries[{{ $overDelivery->delivery_note_id }}][{{ $overDelivery->item_id }}]"
                                         value="1" @if($overDelivery->returned) checked @endif>
                                 </td>
-                                <td class="py-2 px-4">{{ $overDelivery->deliveryNote->id }}</td>
+                                <td class="py-2 px-4">{{ $overDelivery->delivery_note_id }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->item->name }}</td>
+                                <td class="py-2 px-4">{{ $overDelivery->deliveryNote->order->orderItems->firstWhere('item_id', $overDelivery->item_id)->ordered }}</td>
+                                <td class="py-2 px-4">{{ $overDelivery->deliveryNote->deliveredItems->firstWhere('item_id', $overDelivery->item_id)->quantity }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->quantity }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->returned ? 'Yes' : 'No' }}</td>
                                 <td class="py-2 px-4">{{ $overDelivery->date_time }}</td>
@@ -50,14 +54,8 @@
                     <x-primary-button type="submit">Mark Selected as Returned</x-primary-button>
                 </div>
             @else
-                <p class="text-center text-gray-500">No overdeliveries found.</p>
+                <p class="text-center font-semibold">No overdeliveries found!</p>
             @endif
         </form>
-        <div class="flex justify-end gap-4 mt-6 lg:w-[90%] w-full m-auto">
-            <form action="{{ route('logistics') }}" method="GET">
-                @csrf
-                <x-primary-button>Back to Dashboard</x-primary-button>
-            </form>
-        </div>
     </div>
 </x-app-layout>

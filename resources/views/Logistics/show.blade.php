@@ -38,7 +38,6 @@
                             <td class="p-2">{{ $item['ordered'] }}</td>
                             <td class="p-2">{{ $item['delivered'] }}</td>
                             <td class="p-2">{{ $item['over_delivered'] }}</td>
-
                             <td class="p-2">
                                 <input type="number" name="items[{{ $item['id'] }}][quantity]" min="0" value="0"
                                     class="p-2 rounded-lg bg-stockhive-grey-dark text-white border border-accent focus:ring focus:ring-accent w-full">
