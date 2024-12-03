@@ -51,7 +51,8 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
         ->name('stock-management.toOverview');
-    Route::any('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
+    
+        Route::any('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
         ->name('stock-management.ShowOrderHistory');
 
     Route::get('/stock-management/search', [searchController::class, 'search'])
@@ -93,6 +94,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
     ->name('inventory.spotCheck');
+
+    Route::post('/inventory/confirm-check', [InventoryController::class, 'confirmCheck'])
+    ->name('inventory.confirmCheck');
 
     // Admin
 

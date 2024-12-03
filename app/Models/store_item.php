@@ -8,6 +8,7 @@ class store_item extends Model
 {
     //
 
+    public $timestamps = false;
     protected $table = 'store_item';
 
     public function store() {
@@ -17,4 +18,9 @@ class store_item extends Model
     public function item() {
         return $this->belongsTo(Item::class, 'item_id');
     }
+
+    public function store_item_storage() {
+        return $this->belongsTo(store_item_storage::class, '');
+    }
+
 }
