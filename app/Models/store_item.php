@@ -8,7 +8,7 @@ class store_item extends Model
 {
     //
 
-    public $timestamps = false;
+    public $timestamps = false; //learnt how to disable timestamps which were causing issues when updating records here: https://stackoverflow.com/questions/19937565/disable-laravels-eloquent-timestamps
     protected $table = 'store_item';
 
     public function store() {

@@ -101,6 +101,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/inventory/update', [InventoryController::class, 'updateCheck'])
     ->name('inventory.update');
 
+    Route::post('/inventory/updated', [InventoryController::class, 'updateInventory'])
+    ->name('inventory.updated');
+
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])

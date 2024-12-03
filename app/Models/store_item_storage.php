@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class store_item_storage extends Model
 {
     //
+    public $timestamps = false;
     protected $table = "store_item_storage";
 
     public function location() {
