@@ -29,7 +29,7 @@
                                 <x-primary-button>View Order</x-primary-button>
                                 <form action="{{ route('logistics.show', $order->id) }}" method="GET" class="inline-block">
                                     @csrf
-                                    <x-primary-button>View Order</x-primary-button>
+                                    <x-primary-button>Create delivery Note</x-primary-button>
                                 </form>
                                 <form action="{{ route('logistics.overdelivery') }}" method="GET" class="inline-block">
                                     @csrf
