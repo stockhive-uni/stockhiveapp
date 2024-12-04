@@ -25,7 +25,11 @@
                             <td class="py-2 px-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</td>
                             <td class="py-2 px-4">{{ $order->date_time }}</td>
                             <td class="py-2 px-4 flex justify-center items-center gap-4">
-                                <x-primary-button>View Order</x-primary-button>
+                                <form action="{{route('stock-management.ShowOrderHistory')}}" method="GET">
+                                    @csrf
+                                    <input type='hidden' name="order" value='{{$order->id}}'></input>
+                                    <x-primary-button>View Order</x-primary-button>
+                                </form>
                                 <form action="{{ route('logistics.show', $order->id) }}" method="GET" class="inline-block">
                                     @csrf
                                     <x-primary-button>Create delivery Note</x-primary-button>
