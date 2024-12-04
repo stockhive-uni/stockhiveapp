@@ -7,14 +7,15 @@
     <form action="{{route('stock-management.store')}}" method='POST'>
             @csrf
             @forelse($items as $collection )
+                @php $iteration = 0; @endphp
                 @forelse($collection as $item)
                     <div>{{$item->id}}</div>
                     <div>{{$item->name}}</div>
                     <div>£{{$item->price}}</div>
                     <div>{{$item->department->name}}</div>
-                    <input type='hidden' name='ItemQty[{{$item->id}}]' value='{{$ItemQty[$item->id]}}'>{{$ItemQty[$item->id]}}</input>
+                    <input type='hidden' name='ItemQty[{{$item->id}}]' value='{{$ItemQty[$iteration]}}'>{{$ItemQty[$iteration]}}</input>
                     <input type='hidden' name='checkbox[]' value='{{$item->id}}'></input>
-        
+                    @php $iteration++; @endphp
                 @empty
                 <div>empty</div>
                 @endforelse
