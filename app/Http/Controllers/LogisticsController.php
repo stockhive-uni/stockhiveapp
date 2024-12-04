@@ -37,7 +37,7 @@ class LogisticsController extends Controller
 
     public function show($orderId)
     {
-        $order = Order::with(['items.item', 'deliveryNotes.deliveredItems'])->findOrFail($orderId);
+        $order = Order::with(['user', 'items.item', 'deliveryNotes.deliveredItems'])->findOrFail($orderId);
 
         $items = $order->items->map(function ($orderItem) use ($order) {
             $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {

@@ -11,19 +11,18 @@
                 class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                 <thead>
                     <tr>
-                        <th class="py-2 px-4">Order ID</th>
-                        <th class="py-2 px-4">User ID</th>
-                        <th class="py-2 px-4">Store ID</th>
+                    <th class="py-2 px-4">Order ID</th>
+                    <th class="py-2 px-4">Name</th>
                         <th class="py-2 px-4">Date/Time</th>
                         <th class="py-2 px-4">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
                         <tr>
-                            <td class="py-2 px-4">{{ $order->id }}</td>
-                            <td class="py-2 px-4">{{ $order->user_id }}</td>
-                            <td class="py-2 px-4">{{ $order->store_id }}</td>
+                        <td class="py-2 px-4">{{ $order->id }}</td>
+                            <td class="py-2 px-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</td>
                             <td class="py-2 px-4">{{ $order->date_time }}</td>
                             <td class="py-2 px-4 flex justify-center items-center gap-4">
                                 <x-primary-button>View Order</x-primary-button>
