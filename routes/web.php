@@ -67,7 +67,7 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/sales/create-sale', [SalesController::class, 'startSale'])
         ->name('sales.createSale');
 
-    Route::post('/sales/view-details', [SalesController::class, 'viewDetails'])
+    Route::get('/sales/view-details', [SalesController::class, 'viewDetails'])
         ->name('sales.viewDetails');
 
     Route::any('/sales/download-invoice', [SalesController::class, 'downloadInvoice'])

@@ -49,7 +49,7 @@ class SalesTest extends TestCase {
         $this->actingAs($user);
         $this->transactionId = 1; // Define transaction ID from info on DB
         // Get response
-        $response = $this->post(route('sales.viewDetails'), ['id' => $this->transactionId]);
+        $response = $this->get(route('sales.viewDetails', ['id' => $this->transactionId]));
         $response->assertStatus(200);
         $response->assertViewIs('Sales.transaction-details');
         $response->assertViewHas(['transaction', 'items']);
