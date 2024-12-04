@@ -215,11 +215,7 @@ return new class extends Migration
             $table->tinyInteger('fulfilled')->default(0);
 
         });
-     /*   DB::table('order')->insert([
-         //   ['id' => 1, 'user_id' => 1, 'store_id' => 1,  'date_time' => now(),'fulfilled'=>0,],
-      //      [ 'id' => 2,  'user_id' => 2,  'store_id' => 2,  'date_time' => now()->subDays(1),'fulfilled'=>0,],
-       //     [   'id' => 3,  'user_id' => 3,  'store_id' => 1,'date_time' => now()->subDays(2),'fulfilled'=>0,],
-        ]);*/
+ 
         
 
         Schema::create('order_item', function (Blueprint $table) {
@@ -230,15 +226,8 @@ return new class extends Migration
         });
         
         
-   /* 
-        DB::table('order_item')->insert([
-            [ 'order_id' => 1, 'item_id' => 1, 'ordered' => 10, 'price' => 5.99,],
-            [ 'order_id' => 1,'item_id' => 2, 'ordered' => 20,'price' => 3.49,],
-            [ 'order_id' => 2, 'item_id' => 3,'ordered' => 5, 'price' => 12.99,],
-            [  'order_id' => 3,  'item_id' => 1, 'ordered' => 15, 'price' => 4.99,],    
-        ]);  */
-              
 
+       
         Schema::create('location', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
@@ -247,7 +236,8 @@ return new class extends Migration
             ['id' => '1', 'name' => 'Freezer'],
             ['id' => '2', 'name' => 'Fridge'],
             ['id' => '3', 'name' => 'Warehouse'],
-            ['id' => '4', 'name' => 'Floor']
+            ['id' => '4', 'name' => 'Floor'],
+            ['id' => '5', 'name' => 'Return_bay']
         ]);
 
         Schema::create('store_item', function (Blueprint $table) {
