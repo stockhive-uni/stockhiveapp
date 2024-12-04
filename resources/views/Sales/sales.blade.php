@@ -1,26 +1,35 @@
 <x-app-layout>
-    <div>
-        <p id="total">Total: £0</p>
-        <p id="items">Items: 0</p>
-    </div>
-    <div>
-        <input type="text" id="search-box" placeholder="Search items" />
+    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <h1 class="text-2xl text-center">Add items to basket</h1>
+        <input type="text" id="search-box" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg w-full my-4" placeholder="Search items" />
         <label for="search-results">Item</label>
-        <select id="search-results"></select>
+
+        <select id="search-results" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg"></select>
         <label for="quantity">Quantity</label>
-        <input id="quantity" type="number" min ="0" value="0">
+
+        <input id="quantity" class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" type="number" min ="0" value="0">
         <x-primary-button :nameEnter="'add-button'" :idEnter="'add-button'">Add</x-primary-button>
     </div>
     <form action="{{ route('sales.confirmTransaction') }}" method="POST">
+    <div class="lg:w-[85%] m-auto px-4">
+            <x-primary-button class="float-right">Confirm Transaction</x-primary-button>
+        </div>
         @csrf
-        <div id="basket">
+        <div id="basket" class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+            <h1 class="text-2xl text-white text-center">Basket</h1>
             <!-- Items are placed in this div -->
         </div>
-        <x-primary-button>Confirm Transaction</x-primary-button>
+        <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <h1 class="text-2xl text-center">Cart information</h1>
+        <p id="total">Total: £0</p>
+        <p id="items">Items: 0</p>
+    </div>
     </form>
     @if (isset($message))
         @if ($message != "" && $message != null)
-            <h3>{{ $message }}</h3>
+            <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+                <h3>{{ $message }}</h3>
+            </div>
         @endif
     @endif
 
@@ -70,7 +79,7 @@
                     basket.innerHTML += `<div>
                     <input class="id" type="hidden" name="id[]" value=${result.id}>
                     <p name="name">${result.name}</p>
-                    <input class="quantity-child" type="number" name="quantity[]" value=${quantity.value} min="0">
+                    <input class="quantity-child text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" type="number" name="quantity[]" value=${quantity.value} min="0">
                     <p class="item-total">Total: £${itemPrice}</p>
                     <x-primary-button :classEnter="'remove-button'">Remove</x-primary-button>
                     </div>`;
