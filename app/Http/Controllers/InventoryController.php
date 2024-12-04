@@ -33,7 +33,7 @@ class InventoryController extends Controller
         ->join('location', 'location.id', '=', 'store_item_storage.location_id')
         ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
-        ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location')
+        ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location', 'store_item.last_spot_checked as last_spot_checked')
         ->limit(2)
         ->distinct()
         ->get();
