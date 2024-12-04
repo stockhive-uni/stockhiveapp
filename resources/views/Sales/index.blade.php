@@ -28,15 +28,13 @@
                     <th>{{ $item->first_name }} {{$item->last_name}}</th>
                     <th>{{ $item->date_time }}</th>
                     <th>
-                    <form action="{{ route('sales.viewDetails') }}" method="POST">
-                        @csrf
+                    <form action="{{ route('sales.viewDetails') }}" method="GET">
                         <input type="hidden" value="{{ $item->id }}" name="id">
                         <x-primary-button>Show Details</x-primary-button>
                     </form>
                     </th>
                     <th>
-                    <form action="{{ route('sales.downloadInvoice') }}" method="POST">
-                        @csrf
+                    <form action="{{ route('sales.downloadInvoice') }}" method="GET">
                         <input type="hidden" value="{{ $item->id }}" name="id">
                         <x-primary-button>Download</x-primary-button>
                     </form>
