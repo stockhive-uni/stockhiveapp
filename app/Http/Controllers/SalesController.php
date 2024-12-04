@@ -77,7 +77,7 @@ class SalesController extends Controller
         $quantities = $request->quantity;
         
         // Checks if order is null
-        $message;
+        $message = null;
         if (isset($ids)) {
             // Ensure they are numbers and not strings
             $ids = array_map('intval', $ids);
