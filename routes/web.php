@@ -22,8 +22,6 @@ Route::get('/', function () {
 Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard')
     ->middleware(['auth', 'verified']);
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,10 +49,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/stock-management/store', [WarehouseOrderController::class, 'store'])
         ->name('stock-management.store');
 
-    Route::get('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
+    Route::post('/stock-management/overview', [WarehouseOrderController::class, 'toOverview'])
         ->name('stock-management.toOverview');
-
-    Route::any('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
+    
+        Route::any('/stock-management/order-history', [dashboardController::class, 'ShowOrderHistory'])
         ->name('stock-management.ShowOrderHistory');
 
     Route::get('/stock-management/search', [searchController::class, 'search'])
@@ -94,6 +92,18 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/inventory', [InventoryController::class, 'index'])
         ->name('inventory');
+
+    Route::get('/inventory/spotCheck', [InventoryController::class, 'spotCheck'])
+    ->name('inventory.spotCheck');
+
+    Route::post('/inventory/confirm-check', [InventoryController::class, 'confirmCheck'])
+    ->name('inventory.confirmCheck');
+
+    Route::get('/inventory/update', [InventoryController::class, 'updateCheck'])
+    ->name('inventory.update');
+
+    Route::post('/inventory/updated', [InventoryController::class, 'updateInventory'])
+    ->name('inventory.updated');
 
     // Admin
 

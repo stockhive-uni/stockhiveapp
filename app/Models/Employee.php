@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Employee extends Model
 {
+    use HasFactory;
     //when making database calls this is the table it will access when models are referenced
     protected $table = 'users';
 

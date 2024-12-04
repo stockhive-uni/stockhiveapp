@@ -246,11 +246,12 @@ return new class extends Migration
             $table->foreignID('item_id')->references('id')->on('item')->onDelete('cascade');
             $table->integer('low-stock-amount');
             $table->double('price');
+            $table->timestamp('last_spot_checked');
         });
 
         Schema::create('store_item_storage', function (Blueprint $table) {
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
-            $table->double('quantity');
+            $table->integer('quantity');
             $table->foreignID('location_id')->references('id')->on('location')->onDelete('cascade');
             $table->timestamp('expiration_date')->nullable();
         });
