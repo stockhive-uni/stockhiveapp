@@ -105,6 +105,12 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/inventory/updated', [InventoryController::class, 'updateInventory'])
     ->name('inventory.updated');
 
+    Route::get('/inventory/remove', [InventoryController::class, 'remove'])
+    ->name('inventory.remove');
+
+    Route::post('/inventory/removed', [InventoryController::class, 'removeFromFloor'])
+    ->name('inventory.removeFromFloor');
+
     // Admin
 
     Route::get('/admin', [AdminController::class, 'index'])

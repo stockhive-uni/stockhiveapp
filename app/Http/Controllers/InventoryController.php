@@ -90,6 +90,7 @@ class InventoryController extends Controller
         ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity', 'store_item_storage.store_item_id AS IdOfItem')
         ->get();
 
+
         return view('Inventory.add', ['inventoryFromStorage' => $inventoryFromStorage]);
     }
 
@@ -124,10 +125,59 @@ class InventoryController extends Controller
 
 
         }
-
-        
-        dd($request);
-        //update the field to floor if the amount is the same, otherwise we edit the current field to reflect the amount in storage, and the amount we moved to the floor
         return redirect()->route('inventory');
+    }
+
+    public function remove() {
+
+        $InventoryFromFloor = DB::table('store_item_storage')
+        ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
+        ->join('item', 'store_item.item_id', '=' , 'item.id')
+        ->join('department', 'item.department_id', '=', 'department.id')
+        ->join('location', 'store_item_storage.location_id', '=', 'location.id')
+        ->where('store_item.store_id', '=', Auth::user()->store_id)
+        ->where('location.name', '=', 'Floor')
+        ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity', 'store_item_storage.store_item_id AS IdOfItem')
+        ->get();
+
+    
+        return view('Inventory.remove', ['InventoryFromFloor' => $InventoryFromFloor]);
+    }
+
+    public function removeFromFloor(Request $request) {
+        
+        //get items
+        $checkbox = $request->input('checkbox');
+        $QtyOnFloor = $request->input('QtyOnFloor');
+        $toRemove = $request->input('ItemQtyRemove');
+
+        if ($checkbox) {
+
+            foreach ($checkbox as $item) {
+
+                if ($QtyOnFloor[$item] == $toRemove[$item]) {
+
+                    //removes floor record
+                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
+
+                    //adds removed amount back to the storage record
+                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->increment('quantity', $toRemove[$item]); //updates it back to storage
+                }
+                else {
+                    //modifies the quantity of the floor record
+                    $modifyFloorRecord = store_item_storage::where('store_item_id', '=', $item)
+                    ->where('location_id', '=', 4)
+                    ->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
+
+                    //adds quantity to the storage record
+                    $AddToStorageRecord = store_item_storage::where('store_item_id', '=', $item)
+                    ->where('location_id', '=', 4)
+                    ->increment('quantity', $toRemove[$item]);
+
+                  
+                }
+            }
+            return redirect()->route('inventory');
+        }
     }
 }

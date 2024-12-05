@@ -8,6 +8,10 @@
         <form method='GET' action='{{route('inventory.addToFloor')}}'>
             <x-primary-button>Storage To Floor</x-primary-button>
         </form>
+
+        <form method='GET' action='{{route('inventory.remove')}}'>
+            <x-primary-button>Floor To Storage</x-primary-button>
+        </form>
     </div>
 
     <div class="py-12">
