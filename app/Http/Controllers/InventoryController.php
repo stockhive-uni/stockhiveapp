@@ -161,7 +161,12 @@ class InventoryController extends Controller
                     store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
 
                     //adds removed amount back to the storage record
-                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->increment('quantity', $toRemove[$item]); //updates it back to storage
+                    $addrecord = store_item_storage::create([
+                        'store_item_id' => $item,
+                        'quantity' => $toRemove[$item],
+                        'location_id' => 3,
+                    ]);
+                    $addrecord->save();
                 }
                 else {
                     //modifies the quantity of the floor record
