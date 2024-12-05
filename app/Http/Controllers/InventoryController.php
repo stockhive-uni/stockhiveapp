@@ -77,8 +77,8 @@ class InventoryController extends Controller
         return redirect()->route('inventory');
     }
 
-    public function updateCheck() {
-        //here we load the inventory from delivered orders
+    public function AddToFloor() {
+        //here we load the inventory specifically with location id in storage
 
         $inventoryFromStorage = DB::table('store_item_storage')
         ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
@@ -90,16 +90,44 @@ class InventoryController extends Controller
         ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity', 'store_item_storage.store_item_id AS IdOfItem')
         ->get();
 
-        return view('Inventory.update', ['inventoryFromStorage' => $inventoryFromStorage]);
+        return view('Inventory.add', ['inventoryFromStorage' => $inventoryFromStorage]);
     }
 
     public function updateInventory(Request $request) {
 
-        //here we use the id and update the location to the shop floor.
-        foreach ($request->input('checkbox') as $checked) {
-            store_item_storage::where('store_item_id', '=', $checked)->update(['location_id' => 4]);
+        //get items
+        $checkbox = $request->input('checkbox');
+        $maxQty = $request->input('maxQty');
+        $toAdd = $request->input('ItemQtyAdd');
+
+        if ($checkbox) {
+            foreach ($checkbox as $item) {
+                
+                //if statement comparing the maxqty and the add qty to determine what happens to the record
+                if ($maxQty[$item] == $toAdd[$item]) {
+                    store_item_storage::where('store_item_id', '=', $item)->update(['location_id' => 4]);
+                }
+                else {
+                    //creating a new record for the floor, removing the qty from the storage record and including it in the 
+                    $createAddFloor = store_item_storage::create([
+                        'store_item_id' => $item,
+                        'quantity' => $toAdd[$item],
+                        'location_id' => 4,
+                    ]);
+
+                    $createAddFloor->save();
+
+                    //edit quantity in current one
+                    store_item_storage::where('store_item_id', '=', $item)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+                }
+            }
+
+
         }
 
+        
+        dd($request);
+        //update the field to floor if the amount is the same, otherwise we edit the current field to reflect the amount in storage, and the amount we moved to the floor
         return redirect()->route('inventory');
     }
 }

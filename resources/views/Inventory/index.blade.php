@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
     <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[1200px] m-auto p-3 mt-2">
-        <form method='GET' action='{{route('inventory.update')}}'>
-            <x-primary-button>Update Stock</x-primary-button>
+        <form method='GET' action='{{route('inventory.addToFloor')}}'>
+            <x-primary-button>Storage To Floor</x-primary-button>
         </form>
     </div>
 
