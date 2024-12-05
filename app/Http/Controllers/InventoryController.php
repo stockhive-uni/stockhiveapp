@@ -109,7 +109,7 @@ class InventoryController extends Controller
                     store_item_storage::where('store_item_id', '=', $item)->update(['location_id' => 4]);
                 }
                 else {
-                    //creating a new record for the floor, removing the qty from the storage record and including it in the 
+                    //creating a new record for the floor, removing the qty from the storage record and including it in the floor
                     $createAddFloor = store_item_storage::create([
                         'store_item_id' => $item,
                         'quantity' => $toAdd[$item],
@@ -119,7 +119,7 @@ class InventoryController extends Controller
                     $createAddFloor->save();
 
                     //edit quantity in current one
-                    store_item_storage::where('store_item_id', '=', $item)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
                 }
             }
 
@@ -171,7 +171,7 @@ class InventoryController extends Controller
 
                     //adds quantity to the storage record
                     $AddToStorageRecord = store_item_storage::where('store_item_id', '=', $item)
-                    ->where('location_id', '=', 4)
+                    ->where('location_id', '=', 3)
                     ->increment('quantity', $toRemove[$item]);
 
                   
