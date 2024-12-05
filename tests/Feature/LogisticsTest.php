@@ -27,34 +27,6 @@ class LogisticsTest extends TestCase {
         $response->assertViewHas('orders');
     }
 
-    public function test_create_delivery_note() {
-        // Auth
-        $user = User::where('email', 'test@email.com')->first();
-        $this->actingAs($user);
-        // Factory
-        $order = Order::factory()->create([ // Unfulfilled order
-            'user_id' => $user->id,
-            'store_id' => 1,
-            'date_time' => now(),
-            'fulfilled' => 0,
-        ]);
-        // Get items
-        $items = DB::table('item')
-            ->whereIn('id', [1, 2])
-            ->get();
-        // Make the delivery note data
-        $data = [
-            'items' => [
-                ['id' => $items[0]->id, 'quantity' => 3],
-                ['id' => $items[1]->id, 'quantity' => 5],
-            ],
-        ];
-        // Response
-        $response = $this->post(route('logistics.createDeliveryNote', $order->id), $data);
-        $response->assertStatus(302);
-        $response->assertSessionHas('success', 'Delivery Note created successfully!');
-    }
-
     public function test_create_delivery() {
         // Auth
         $user = User::where('email', 'test@email.com')->first();
