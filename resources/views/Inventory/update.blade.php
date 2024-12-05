@@ -32,7 +32,7 @@
                                     <td>{{$inventoryItem->quantity}}</td>
                                     <td>{{$inventoryItem->departmentName}}</td>
                                     <td>{{$inventoryItem->locationName}}</td> <!-- upon add then change warehouse to floor -->
-                                    <td><input type='checkbox' name='checkbox[]' value='{{$inventoryItem->IdOfItem}}'></input></td>
+                                    <td><input type='checkbox' name='checkbox[]' class="form-checkbox h-5 w-5 bg-stockhive-grey-dark text-accent rounded border-2" value='{{$inventoryItem->IdOfItem}}'></input></td>
                                 @endforeach
                         </div>
                     </form>
