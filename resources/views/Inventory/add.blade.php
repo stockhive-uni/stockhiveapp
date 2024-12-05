@@ -32,7 +32,7 @@
                                         <td>£{{$inventoryItem->price}}</td>
                                         <td>{{$inventoryItem->quantity}}</td>
                                         <input type='hidden' name='maxQty[{{$inventoryItem->IdOfItem}}]' value="{{$inventoryItem->quantity}}"></input>
-                                        <td><input type='number' class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" name='ItemQtyAdd[{{$inventoryItem->IdOfItem}}]' value='{{$inventoryItem->quantity}}' min=0 max={{$inventoryItem->quantity}}></td>
+                                        <td><input type='number' class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" name='ItemQtyAdd[{{$inventoryItem->IdOfItem}}]' value='{{$inventoryItem->quantity}}' min=1 max={{$inventoryItem->quantity}}></td>
                                         <td>{{$inventoryItem->departmentName}}</td>
                                         <td>{{$inventoryItem->locationName}}</td> <!-- upon add then change warehouse to floor -->         
                                         <td><input type='checkbox' name='checkbox[{{$inventoryItem->IdOfItem}}]' class="form-checkbox h-5 w-5 bg-stockhive-grey-dark text-accent rounded border-2" value='{{$inventoryItem->IdOfItem}}'></input></td>

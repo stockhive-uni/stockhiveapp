@@ -103,23 +103,56 @@ class InventoryController extends Controller
 
         if ($checkbox) {
             foreach ($checkbox as $item) {
-                
                 //if statement comparing the maxqty and the add qty to determine what happens to the record
                 if ($maxQty[$item] == $toAdd[$item]) {
-                    store_item_storage::where('store_item_id', '=', $item)->update(['location_id' => 4]);
+                    //probably need an if in case the item already exists
+                    $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
+
+                    if ($exists != "[]") {
+                        //if item exists on shop floor, then the items headed to floor are added on top.
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->increment('quantity', $toAdd[$item]); //increment floor record
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->delete(); //delete storage record
+                    }
+                    else {
+
+                        //updates storage record
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+
+                        
+                        //creates record and then adds 
+                        $createAddFloor = store_item_storage::create([
+                            'store_item_id' => $item,
+                            'quantity' => $toAdd[$item],
+                            'location_id' => 4,
+                        ]);
+                        $createAddFloor->save();
+                    }
                 }
                 else {
                     //creating a new record for the floor, removing the qty from the storage record and including it in the floor
-                    $createAddFloor = store_item_storage::create([
-                        'store_item_id' => $item,
-                        'quantity' => $toAdd[$item],
-                        'location_id' => 4,
-                    ]);
 
-                    $createAddFloor->save();
+                    //check if record already exists
+                    $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
 
-                    //edit quantity in current one
-                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+                    if ($exists != "[]") {
+                        //updates storage record
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+
+                        //increment record on the floor
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->increment('quantity', $toAdd[$item]);
+                    }
+                    else {
+
+                        //updates storage record
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+
+                        $createAddFloor = store_item_storage::create([
+                            'store_item_id' => $item,
+                            'quantity' => $toAdd[$item],
+                            'location_id' => 4,
+                        ]);
+                        $createAddFloor->save();
+                    }
                 }
             }
 
@@ -145,42 +178,68 @@ class InventoryController extends Controller
     }
 
     public function removeFromFloor(Request $request) {
-        
         //get items
         $checkbox = $request->input('checkbox');
         $QtyOnFloor = $request->input('QtyOnFloor');
         $toRemove = $request->input('ItemQtyRemove');
 
-        if ($checkbox) {
+        if (isset($checkbox)) {
 
             foreach ($checkbox as $item) {
+                
+                    if ($QtyOnFloor[$item] == $toRemove[$item]) {
+                        //if quantity record exists
+                        $exists = store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->get();
 
-                if ($QtyOnFloor[$item] == $toRemove[$item]) {
+                        if ($exists != "[]") {
+                            //removes floor record
+                            store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
+                            
+                            //add change on top of storage record
+                            store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->increment('quantity', $toRemove[$item]);
+                        }
+                        else {
 
-                    //removes floor record
-                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
+                        //removes floor record
+                         store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
 
-                    //adds removed amount back to the storage record
-                    $addrecord = store_item_storage::create([
-                        'store_item_id' => $item,
-                        'quantity' => $toRemove[$item],
-                        'location_id' => 3,
-                    ]);
-                    $addrecord->save();
-                }
-                else {
-                    //modifies the quantity of the floor record
-                    $modifyFloorRecord = store_item_storage::where('store_item_id', '=', $item)
-                    ->where('location_id', '=', 4)
-                    ->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
+                                   //adds removed amount back to the storage record
+                         $addrecord = store_item_storage::create([
+                            'store_item_id' => $item,
+                            'quantity' => $toRemove[$item],
+                            'location_id' => 3,
+                        ]);
+                        $addrecord->save();
 
-                    //adds quantity to the storage record
-                    $AddToStorageRecord = store_item_storage::where('store_item_id', '=', $item)
-                    ->where('location_id', '=', 3)
-                    ->increment('quantity', $toRemove[$item]);
+                        //removes floor record
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
+                        }
+                    }
+                    else {
 
-                  
-                }
+                        //check storage exists
+                        $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
+
+                        //check that it exists
+                        $exists = store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->get();
+                        if($exists != "[]") {
+                            
+                            //updates floor amount
+                            store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
+                            
+                            //updates storage amount
+                            store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->increment('quantity', $toRemove[$item]);
+                        }
+                        else {
+                            //adds removed amount back to the storage record
+                          $addstoragerecord = store_item_storage::create([
+                            'store_item_id' => $item,
+                            'quantity' => $toRemove[$item],
+                            'location_id' => 3,
+                        ]);
+                        $addstoragerecord->save();
+                        }
+                    }   
             }
             return redirect()->route('inventory');
         }
