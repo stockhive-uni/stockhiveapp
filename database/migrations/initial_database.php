@@ -281,13 +281,6 @@ return new class extends Migration
             $table->timestamp('date_time');
         });
 
-        Schema::create('store_item_price_change', function (Blueprint $table) {
-            $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
-            $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->double('old_price');
-            $table->double('new_price');
-        });
-
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
