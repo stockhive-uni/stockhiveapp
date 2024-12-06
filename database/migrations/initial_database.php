@@ -373,8 +373,6 @@ return new class extends Migration
         Schema::dropIfExists('delivery_note');
         Schema::dropIfExists('delivered_item');
         Schema::dropIfExists('over_deliveries');
-        Schema::dropIfExists('store_item_location_change');
-        Schema::dropIfExists('store_item_price_change');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('cache');
