@@ -20,6 +20,9 @@
             </tbody>
         </table>
         <form action="{{ route('stock-management.downloadReport') }}" method="GET">
+            @foreach ($allresults as $item)
+                <input type="hidden" name="items[]" value="{{ $item['item_id'] }}">
+            @endforeach
             <x-primary-button>Download Report</x-primary-button>
         </form>
     </div>

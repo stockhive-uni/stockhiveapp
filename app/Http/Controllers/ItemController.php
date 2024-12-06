@@ -6,6 +6,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ItemController extends Controller
 {
@@ -87,6 +88,7 @@ class ItemController extends Controller
                     }
                      // Add the item's monthly data
                     $allresults[] = [
+                        'item_id' => $item->id,
                         'item_name' => $item->name,  // Item name
                         'data' => $data, // Item information per month.
                     ];
@@ -107,58 +109,62 @@ class ItemController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Item $item)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Item $item)
-    {
-        //
-    }
-
     public function downloadReport(Request $request){
-        $id = $request->id;
+        $stock = Item::whereIn('id', $request->items)->with('department')->get();
+        $allresults = array();
+        // Loop through all items.
+        foreach ($stock as $item) {
+            $id=$item->id;
+            $query = DB::table('Transaction_Item') // Use laravel's query builder. https://www.google.com/search?client=firefox-b-d&q=laravel+query+builder
+                ->join('Transaction', 'Transaction_Item.transaction_id', '=', 'Transaction.id')
+                ->where('Transaction_Item.item_id', $id)
+                ->select('Transaction_Item.quantity', 'Transaction_Item.price', 'Transaction.date_time')
+                ->get();
 
-        $transaction = Transaction::where('transaction.id', $id)
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->join('store', 'transaction.store_id', '=', 'store.id')
-            ->select('transaction.id', 'users.first_name', 'users.last_name', 'transaction.date_time', 'transaction.card', 'store.location')
-            ->first();
+            if ($query->isNotEmpty()) {
+                $data = [];
+                // Iterate through transactions.
+                foreach ($query as $transaction) {
+                    $quantity = $transaction->quantity;
+                    $price = $transaction->price;
+                    $date = $transaction->date_time;
+                    // Get the month from date
+                    $month = date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
+                    // Store the data in an array, group by month.
+                    if (!isset($data[$month])) {
+                        $data[$month] = [
+                            'total' => 0, 
+                            'month' => $month,
+                        ];
+                    }
+                    // Set the total for the month.
+                    $data[$month]['total'] += $quantity * $price;
+                }
+                 // Add the item's monthly data
+                $allresults[] = [
+                    'item_id' => $item->id,
+                    'item_name' => $item->name,  // Item name
+                    'data' => $data, // Item information per month.
+                ];
+            }
+            else {
+                $data = [];
+                $data[0] = [
+                    'total' => 0,
+                    'month' => 0,
+                ];
+                $allresults[] = [
+                    'item_name' => $item->name,
+                    'data' => $data,
+                ];
+            }
+        }
 
-        $items = DB::table('transaction_item')
-            ->where('transaction_id', $id)
-            ->join('item', 'item.id', '=', 'transaction_item.item_id')
-            ->select('transaction_item.quantity', 'transaction_item.price', 'item.name')
-            ->get();
-
-        $pdf = Pdf::loadView('Sales.invoice', compact('transaction', 'items'));
+        $pdf = Pdf::loadView('StockManager.download-report', compact('allresults'));
 
         // Stream the PDF to the browser for download
-        return $pdf->download('invoice-' . $id . '.pdf');
+        return $pdf->download('report.pdf');
 
-                // return $pdf->download('report.pdf');
+        // return $pdf->download('report.pdf');
     }
 }
