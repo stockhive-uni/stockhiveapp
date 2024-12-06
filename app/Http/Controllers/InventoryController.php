@@ -34,12 +34,17 @@ class InventoryController extends Controller
         ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
         ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location', 'store_item.last_spot_checked as last_spot_checked')
-        ->limit(2)
+        ->limit(3)
         ->distinct()
         ->get();
 
-
-        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning]);
+        //gets items that arent in the store_item_storage table, showing that there is no stock of it.
+        $noStockWarning = store_item::with(['store', 'item', 'item.department'])
+        ->leftJoin('store_item_storage', 'store_item.id', '=','store_item_storage.store_item_id') //selects records that have matches with the store_item_storage table
+        ->whereNull('store_item_storage.store_item_id')
+        ->limit(3) //reverses the selection, so only selects records that have no matches.
+        ->get(); 
+        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning, 'noStockWarning' => $noStockWarning]);
     }
 
 
@@ -50,7 +55,7 @@ class InventoryController extends Controller
         ->where('store_id', '=', Auth::user()->store_id)
         ->where('id', '=', $request->input('spotcheck'))
         ->OrderBy('last_spot_checked', 'asc')
-        ->limit(2)
+        ->limit(3)
         ->get();
         //updating time on 
         
