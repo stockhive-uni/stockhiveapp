@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller
 {
@@ -160,11 +161,30 @@ class ItemController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('StockManager.download-report', compact('allresults'));
-
-        // Stream the PDF to the browser for download
-        return $pdf->download('report.pdf');
-
-        // return $pdf->download('report.pdf');
+        Excel::create('Filename', function($excel) {
+            $excel->sheet('Report', function($sheet) {
+                $sheet->row(1, ["Item ID", "Name", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Aug", "Nov", "Dec"]);
+                foreach ($allresults as $item) {
+                    $sheet->appendRow([
+                        $item['item_id'],
+                        $item['item_name'],
+                        $item['data']['01']['total'] ?? 0,
+                        $item['data']['02']['total'] ?? 0,
+                        $item['data']['03']['total'] ?? 0,
+                        $item['data']['04']['total'] ?? 0,
+                        $item['data']['05']['total'] ?? 0,
+                        $item['data']['06']['total'] ?? 0,
+                        $item['data']['07']['total'] ?? 0,
+                        $item['data']['08']['total'] ?? 0,
+                        $item['data']['09']['total'] ?? 0,
+                        $item['data']['10']['total'] ?? 0,
+                        $item['data']['11']['total'] ?? 0,
+                        $item['data']['12']['total'] ?? 0
+                    ]);
+                }
+        
+            });
+        
+        })->download('xls');
     }
 }
