@@ -217,11 +217,25 @@ class LogisticsController extends Controller
                 $this->updateStoreItemStorage($item['id'], 5, $overDeliveredForCurrentNote);
             }
         }
+        $isFulfilled = $order->items->every(function ($orderItem) use ($order) {
+            $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {
+                return $note->deliveredItems->where('item_id', $orderItem->item_id);
+            })->sum('quantity');
+
+            return $deliveredQuantity >= $orderItem->ordered;
+        });
+
+        if ($isFulfilled) {
+            $order->fulfilled = 1;
+            $order->save();
+
+            return redirect()->route('logistics')
+                ->with('success', 'Order fulfilled and Delivery Note created successfully.');
+        }
 
         return redirect()->route('logistics.show', ['id' => $id])
-            ->with('success', 'Delivery Note Created and Overdeliveries Recorded.');
+            ->with('success', 'Delivery Note created successfully.');
     }
-
     public function storeOverDelivery($deliveryNoteId, $itemId, $deliveredQuantity, $storeId)
     {
 
