@@ -108,7 +108,7 @@ class InventoryController extends Controller
                     //probably need an if in case the item already exists
                     $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
 
-                    if ($exists != "[]") {
+                    if (!isset($exists)) {
                         //if item exists on shop floor, then the items headed to floor are added on top.
                         store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->increment('quantity', $toAdd[$item]); //increment floor record
                         store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->delete(); //delete storage record
@@ -134,7 +134,7 @@ class InventoryController extends Controller
                     //check if record already exists
                     $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
 
-                    if ($exists != "[]") {
+                    if (!isset($exists)) {
                         //updates storage record
                         store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
 
@@ -155,8 +155,6 @@ class InventoryController extends Controller
                     }
                 }
             }
-
-
         }
         return redirect()->route('inventory');
     }
@@ -191,7 +189,7 @@ class InventoryController extends Controller
                         //if quantity record exists
                         $exists = store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->get();
 
-                        if ($exists != "[]") {
+                        if (!isset($exists)) {
                             //removes floor record
                             store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
                             
@@ -210,19 +208,14 @@ class InventoryController extends Controller
                             'location_id' => 3,
                         ]);
                         $addrecord->save();
-
-                        //removes floor record
-                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
                         }
                     }
                     else {
 
-                        //check storage exists
-                        $exists =   store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->get();
-
                         //check that it exists
                         $exists = store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->get();
-                        if($exists != "[]") {
+                        
+                        if(!isset($exists)) {
                             
                             //updates floor amount
                             store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
@@ -231,7 +224,10 @@ class InventoryController extends Controller
                             store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->increment('quantity', $toRemove[$item]);
                         }
                         else {
-                            //adds removed amount back to the storage record
+                        //updates floor amount
+                        store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
+                            
+                        //adds removed amount back to the storage record
                           $addstoragerecord = store_item_storage::create([
                             'store_item_id' => $item,
                             'quantity' => $toRemove[$item],
