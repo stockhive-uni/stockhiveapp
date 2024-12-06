@@ -250,6 +250,7 @@ return new class extends Migration
         });
 
         Schema::create('store_item_storage', function (Blueprint $table) {
+            $table->id();
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
             $table->integer('quantity');
             $table->foreignID('location_id')->references('id')->on('location')->onDelete('cascade');

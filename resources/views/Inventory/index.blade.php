@@ -5,8 +5,12 @@
         </h2>
     </x-slot>
     <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[1200px] m-auto p-3 mt-2">
-        <form method='GET' action='{{route('inventory.update')}}'>
-            <x-primary-button>Update Stock</x-primary-button>
+        <form method='GET' action='{{route('inventory.addToFloor')}}'>
+            <x-primary-button>Storage To Floor</x-primary-button>
+        </form>
+
+        <form method='GET' action='{{route('inventory.remove')}}'>
+            <x-primary-button>Floor To Storage</x-primary-button>
         </form>
     </div>
 
@@ -53,6 +57,26 @@
                     <form method="GET" action="{{ route('inventory.spotCheck') }}">
                         <input type="hidden" name="spotcheck" value="{{$item->id}}">
                         <x-primary-button>Complete</x-primary-button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endforeach
+
+        @foreach ($noStockWarning as $item) 
+        <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[800px] m-auto p-3 mt-2">
+            <div class='flex justify-between'>
+                <div>
+                    <div class='text-xl'>No Stock</div>
+                    <div>{{$item->item->name}}</div>
+                    <div>£{{$item->item->price}}</div>
+                    <div>{{$item->item->department->name}}</div>
+                </div>
+    
+                <div class='self-center'>
+                    <form method="GET" action="{{ route('stock-management') }}">
+                        <input type="hidden" name="spotcheck" value="{{$item->id}}">
+                        <x-primary-button>Order</x-primary-button>
                     </form>
                 </div>
             </div>
