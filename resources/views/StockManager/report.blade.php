@@ -19,6 +19,9 @@
                 @endforeach
             </tbody>
         </table>
+        <form action="{{ route('stock-management.downloadReport') }}" method="GET">
+            <x-primary-button>Download Report</x-primary-button>
+        </form>
     </div>
 
     <!-- Chart.JS scripting -->

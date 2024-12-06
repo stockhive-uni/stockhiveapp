@@ -138,4 +138,27 @@ class ItemController extends Controller
     {
         //
     }
+
+    public function downloadReport(Request $request){
+        $id = $request->id;
+
+        $transaction = Transaction::where('transaction.id', $id)
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->join('store', 'transaction.store_id', '=', 'store.id')
+            ->select('transaction.id', 'users.first_name', 'users.last_name', 'transaction.date_time', 'transaction.card', 'store.location')
+            ->first();
+
+        $items = DB::table('transaction_item')
+            ->where('transaction_id', $id)
+            ->join('item', 'item.id', '=', 'transaction_item.item_id')
+            ->select('transaction_item.quantity', 'transaction_item.price', 'item.name')
+            ->get();
+
+        $pdf = Pdf::loadView('Sales.invoice', compact('transaction', 'items'));
+
+        // Stream the PDF to the browser for download
+        return $pdf->download('invoice-' . $id . '.pdf');
+
+                // return $pdf->download('report.pdf');
+    }
 }

@@ -58,11 +58,13 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/search', [searchController::class, 'search'])
         ->name('stock-management.search');
 
+    Route::any('stock-management/download-report', [ItemController::class, 'downloadReport'])
+        ->name('stock-management.downloadReport');
+
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])
         ->name('sales');
-   
 
     Route::get('/sales/create-sale', [SalesController::class, 'startSale'])
         ->name('sales.createSale');
