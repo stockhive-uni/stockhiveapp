@@ -250,6 +250,7 @@ return new class extends Migration
         });
 
         Schema::create('store_item_storage', function (Blueprint $table) {
+            $table->id();
             $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
             $table->integer('quantity');
             $table->foreignID('location_id')->references('id')->on('location')->onDelete('cascade');
@@ -278,13 +279,6 @@ return new class extends Migration
             $table->boolean('returned');
             $table->integer('quantity');
             $table->timestamp('date_time');
-        });
-
-        Schema::create('store_item_price_change', function (Blueprint $table) {
-            $table->foreignID('store_item_id')->references('id')->on('store_item')->onDelete('cascade');
-            $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->double('old_price');
-            $table->double('new_price');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -379,8 +373,6 @@ return new class extends Migration
         Schema::dropIfExists('delivery_note');
         Schema::dropIfExists('delivered_item');
         Schema::dropIfExists('over_deliveries');
-        Schema::dropIfExists('store_item_location_change');
-        Schema::dropIfExists('store_item_price_change');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
         Schema::dropIfExists('cache');

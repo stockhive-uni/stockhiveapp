@@ -91,8 +91,4 @@ class LogisticsTest extends TestCase {
         $response = $this->get(route('logistics.show', $order->id));
         $response->assertSuccessful();
     }
-
-    public function test_view_delivery() {
-        return false; // Placeholder
-    }
 }

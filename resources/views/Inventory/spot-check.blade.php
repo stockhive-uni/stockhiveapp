@@ -25,7 +25,7 @@
                         <td>{{$Item->item->name}}</td>
                         <td>{{$Item->item->department->name}}</td>
                         <input type='hidden' name='stockID' value='{{$Item->id}}'>
-                        <td><input type='number' class='text-black' name='SpotCheckNum' min ="0" value="0"></td>
+                        <td><input type='number' class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" name='SpotCheckNum' min ="1" value="1"></td>
                         <td><x-primary-button>Confirm</x-primary-button><td>
                     </form>
                     @endforeach

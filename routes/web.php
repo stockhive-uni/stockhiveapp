@@ -99,11 +99,17 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/inventory/confirm-check', [InventoryController::class, 'confirmCheck'])
     ->name('inventory.confirmCheck');
 
-    Route::get('/inventory/update', [InventoryController::class, 'updateCheck'])
-    ->name('inventory.update');
+    Route::get('/inventory/update', [InventoryController::class, 'addToFloor'])
+    ->name('inventory.addToFloor');
 
     Route::post('/inventory/updated', [InventoryController::class, 'updateInventory'])
     ->name('inventory.updated');
+
+    Route::get('/inventory/remove', [InventoryController::class, 'remove'])
+    ->name('inventory.remove');
+
+    Route::post('/inventory/removed', [InventoryController::class, 'removeFromFloor'])
+    ->name('inventory.removeFromFloor');
 
     // Admin
 

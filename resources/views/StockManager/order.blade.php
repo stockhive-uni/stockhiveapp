@@ -8,7 +8,7 @@
         <label for="search-results">Item</label>
         <select id="search-results"></select>
         <label for="quantity">Quantity</label>
-        <input id="quantity" type="number" min ="0" value="0">
+        <input id="quantity" type="number"  class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" min ="0" value="0">
         <x-primary-button :nameEnter="'add-button'" :idEnter="'add-button'">Add</x-primary-button>
     </div>
     <form action="{{ route('stock-management.toOverview') }}" method="POST">

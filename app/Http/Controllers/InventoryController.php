@@ -34,12 +34,17 @@ class InventoryController extends Controller
         ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
         ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location', 'store_item.last_spot_checked as last_spot_checked')
-        ->limit(2)
+        ->limit(3)
         ->distinct()
         ->get();
 
-
-        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning]);
+        //gets items that arent in the store_item_storage table, showing that there is no stock of it.
+        $noStockWarning = store_item::with(['store', 'item', 'item.department'])
+        ->leftJoin('store_item_storage', 'store_item.id', '=','store_item_storage.store_item_id') //selects records that have matches with the store_item_storage table
+        ->whereNull('store_item_storage.store_item_id')
+        ->limit(3) //reverses the selection, so only selects records that have no matches.
+        ->get(); 
+        return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning, 'noStockWarning' => $noStockWarning]);
     }
 
 
@@ -50,7 +55,7 @@ class InventoryController extends Controller
         ->where('store_id', '=', Auth::user()->store_id)
         ->where('id', '=', $request->input('spotcheck'))
         ->OrderBy('last_spot_checked', 'asc')
-        ->limit(2)
+        ->limit(3)
         ->get();
         //updating time on 
         
@@ -77,8 +82,8 @@ class InventoryController extends Controller
         return redirect()->route('inventory');
     }
 
-    public function updateCheck() {
-        //here we load the inventory from delivered orders
+    public function AddToFloor() {
+        //here we load the inventory specifically with location id in storage
 
         $inventoryFromStorage = DB::table('store_item_storage')
         ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
@@ -90,16 +95,81 @@ class InventoryController extends Controller
         ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity', 'store_item_storage.store_item_id AS IdOfItem')
         ->get();
 
-        return view('Inventory.update', ['inventoryFromStorage' => $inventoryFromStorage]);
+
+        return view('Inventory.add', ['inventoryFromStorage' => $inventoryFromStorage]);
     }
 
     public function updateInventory(Request $request) {
 
-        //here we use the id and update the location to the shop floor.
-        foreach ($request->input('checkbox') as $checked) {
-            store_item_storage::where('store_item_id', '=', $checked)->update(['location_id' => 4]);
-        }
+        //get items
+        $checkbox = $request->input('checkbox');
+        $maxQty = $request->input('maxQty');
+        $toAdd = $request->input('ItemQtyAdd');
 
+        foreach ($checkbox as $item) {
+            if ($checkbox[$item] == $maxQty[$item]) {
+                //delete current record
+                store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->delete();
+            }
+            else {
+                //if different amounts
+                store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 3)->update(['quantity' => $maxQty[$item] - $toAdd[$item]]);
+            }
+
+                //checks record exists
+                $updated = store_item_storage::firstOrCreate(['store_item_id' => $item, 'location_id' => 4], ['quantity' => 0]);
+                
+                //updates the storage query with correct quantity
+                $updated->increment('quantity', $toAdd[$item]);
+       
+                   store_item_storage::where('quantity', '=', 0)->delete();
+        }
         return redirect()->route('inventory');
+    }
+
+    public function remove() {
+
+        $InventoryFromFloor = DB::table('store_item_storage')
+        ->join('store_item', 'store_item.id', '=', 'store_item_storage.store_item_id')
+        ->join('item', 'store_item.item_id', '=' , 'item.id')
+        ->join('department', 'item.department_id', '=', 'department.id')
+        ->join('location', 'store_item_storage.location_id', '=', 'location.id')
+        ->where('store_item.store_id', '=', Auth::user()->store_id)
+        ->where('location.name', '=', 'Floor')
+        ->select('item.name AS itemName', 'department.name AS departmentName', 'location.name AS locationName', 'store_item.*', 'store_item_storage.quantity', 'store_item_storage.store_item_id AS IdOfItem')
+        ->get();
+
+    
+        return view('Inventory.remove', ['InventoryFromFloor' => $InventoryFromFloor]);
+    }
+
+    public function removeFromFloor(Request $request) {
+        //get items
+        $checkbox = $request->input('checkbox');
+        $QtyOnFloor = $request->input('QtyOnFloor');
+        $toRemove = $request->input('ItemQtyRemove');
+
+        if (isset($checkbox)) {
+
+            foreach ($checkbox as $item) {
+                
+                if ($checkbox[$item] == $toRemove[$item]) {
+                    //delete floor record if it is the full amount
+                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->delete();
+                }
+                else {
+                    store_item_storage::where('store_item_id', '=', $item)->where('location_id', '=', 4)->update(['quantity' => $QtyOnFloor[$item] - $toRemove[$item]]);
+                }
+
+                //checks record exists
+                $updated = store_item_storage::firstOrCreate(['store_item_id' => $item, 'location_id' => 3], ['quantity' => 0]); //discovered this way of checking if a record exists or not, if it doesnt it still creates it: https://laravel.com/docs/11.x/eloquent#retrieving-or-creating-models
+                
+                //updates the storage query with correct quantity
+                $updated->increment('quantity', $toRemove[$item]);
+
+                store_item_storage::where('quantity', '=', 0)->delete();
+            }
+            return redirect()->route('inventory');
+        }
     }
 }
