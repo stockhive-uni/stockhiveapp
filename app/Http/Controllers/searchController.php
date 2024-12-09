@@ -13,6 +13,6 @@ class searchController extends Controller
         //search based off of query
         $searchAnswers = Item::where('name', 'like', "%". $request->search . "%")->paginate(10)->onEachSide(1);
         $searchQuery = $request->search;
-        return (view('StockManager.search', ['searchAnswers' => $searchAnswers, 'searchQuery' => $searchQuery]));
+        return (view('StockManager.search', ['items' => $searchAnswers, 'searchQuery' => $searchQuery]));
     } 
 }
