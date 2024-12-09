@@ -14,11 +14,7 @@
         <x-primary-button>Search</x-primary-button>
     </form>
     
-    <form action='{{route('stock-management.chosenItems')}}' method='GET'>
-        @if (!empty($searchAnswers))
-        <x-primary-button>Create Order</x-primary-button>
-        @endif
-        @forelse ($searchAnswers as $item)
+    @forelse ($searchAnswers as $item)
         <tr>
             <td>{{ $item->id }}</td>
             <td>{{ $item->name }}</td>
@@ -34,5 +30,4 @@
         @empty
         <div>No search results.</div>
     @endforelse
-    </form>
 </x-app-layout>
