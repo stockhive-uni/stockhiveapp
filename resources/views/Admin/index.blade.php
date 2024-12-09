@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h1 class="font-semibold text-3xl text-center py-4 text-gray-800 leading-tight">
             {{ __('Admin') }}
-        </h2>
+        </h1>
     </x-slot>
     @if($employees->isNotEmpty())
     <div class="lg:p-8 md:p-4 p-2 my-4 bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto text-white">

@@ -34,7 +34,7 @@
             @if($items->isNotEmpty())
             <div class="p-8 my-4 bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
                 <h2 class="text-2xl text-center text-white">Actions:</h2>
-                <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
+                <div class="flex justify-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                     <x-primary-button nameEnter="Order">Start Order</x-primary-button>
                     <x-primary-button nameEnter="Report">Generate Reports</x-primary-button>
                 </div>
