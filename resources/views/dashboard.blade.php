@@ -12,7 +12,10 @@
                     <p class="text-xl"><span class="font-bold">Name:</span> {{Auth::user()->first_name }} {{Auth::user()->last_name}}</p>
                     <p class="text-xl"><span class="font-bold">Email:</span> {{ Auth::user()->email }}</p>
                     <p class="text-xl"><span class="font-bold">Employee ID:</span> {{ Auth::user()->id}}</p>
-                </div>    
+                    <form action="{{ route('profile.edit') }}" method="GET">
+                        <x-primary-button>Go to Settings</x-primary-button>
+                    </form>
+                </div>
             </div>
             <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
