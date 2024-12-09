@@ -24,7 +24,7 @@
             <td>{{ $item->name }}</td>
             <td>£{{ $item->price }}</td>
             <td>{{ $item->department->name }}</td>
-            <td><form method='POST' action="{{route('stock-management.report')}}">
+            <td><form method='POST' action="{{route('stock-management.chosenItems')}}">
                 @csrf
                 <input type="hidden" name="reports[]" value="{{ $item->id }}"></input>
                 <x-primary-button>Generate Report</x-primary-button>
