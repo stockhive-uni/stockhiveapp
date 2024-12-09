@@ -1,7 +1,10 @@
 # Using StockHive
 
 ## Cloning
-Clone the files to any folder on your computer, the location doesn't matter.
+Clone the project files to your xampp htdocs.
+```sh
+git clone https://github.com/stockhive-uni/stockhiveapp && cd stockhiveapp/
+```
 
 ## Setup
 ### Installing packages
