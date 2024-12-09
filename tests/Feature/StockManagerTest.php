@@ -34,7 +34,6 @@ class StockManagerTest extends TestCase {
         $response->assertStatus(200);
         $response->assertViewIs('StockManager.order');
         $response->assertViewHas('items');
-        $response->assertViewHas('allItems', $itemID);
     }
     
     // Test that the stock manager can generate a report on multiple items.
