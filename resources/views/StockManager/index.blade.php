@@ -1,4 +1,6 @@
 <x-app-layout>
+    @php global $permissions; @endphp
+    @include('components.get-permissions', ['id' => Auth::User()->id])
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Order From Warehouse') }}
@@ -24,7 +26,9 @@
             @if($items->isNotEmpty())
             <div class="flex justify-between items-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
                 <x-paginate :items="$items"/>
-                <x-primary-button nameEnter="Order">Start Order</x-primary-button>
+                @if (in_array("1", $permissions))
+                    <x-primary-button nameEnter="Order">Start Order</x-primary-button>
+                @endif
                 <div>
                     <x-primary-button nameEnter="Report">Generate Reports</x-primary-button>
                     @if (isset($error))
