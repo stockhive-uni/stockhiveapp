@@ -29,12 +29,14 @@
                 @if (in_array("1", $permissions))
                     <x-primary-button nameEnter="Order">Start Order</x-primary-button>
                 @endif
-                <div>
-                    <x-primary-button nameEnter="Report">Generate Reports</x-primary-button>
-                    @if (isset($error))
-                        <p class="error">{{ $error }}</p>
-                    @endif
-                </div>
+                @if (in_array("4", $permissions))
+                    <div>
+                        <x-primary-button nameEnter="Report">Generate Reports</x-primary-button>
+                        @if (isset($error))
+                            <p class="error">{{ $error }}</p>
+                        @endif
+                    </div>
+                @endif
             </div>
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
