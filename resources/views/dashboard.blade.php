@@ -14,23 +14,36 @@
                     <p class="text-xl"><span class="font-bold">Employee ID:</span> {{ Auth::user()->id}}</p>
                 </div>    
             </div>
-            <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <span>Order History:</span>
-                    <!-- if statement here -->
-                    @foreach ($orderHistory as $order)
-                        <form action="{{route('stock-management.ShowOrderHistory')}}" method="GET">
-                            <div>{{$order->id}}</div>
-                            <div>{{$order->users->first_name}}</div>
-                            <div>{{$order->users->last_name}}</div>
-                            <div>Types of Item: {{$order->order_item->count()}}</div>
+
+            <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+                <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Order Date</th>
+                            <th>Date Time</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <span>Order History:</span>
+                        @foreach ($orderHistory as $order)
+                        <form>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->users->first_name}}</td>
+                            <td>{{$order->users->last_name}}</td>
+                            <td>{{$order->order_item->count()}}</td>
                             <input type='hidden' name="order" value='{{$order->id}}'></input>
-                            <div>{{$order->date_time}}</div> <!-- maybe change this for diffForHumans() command? -->
-                            <x-primary-button>Details</x-primary-button>
+                            <td>{{$order->date_time}}</td>
+                            <td><x-primary-button>Details</x-primary-button></td>
                         </form>
-                    @endforeach
-                </div>  
-            </div>
+                        @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+                
         </div>
     </div>
 </x-app-layout>

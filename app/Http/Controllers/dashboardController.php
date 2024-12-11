@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Models\warehouseOrder;
 use Illuminate\Support\Facades\DB;
