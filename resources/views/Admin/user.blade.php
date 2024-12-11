@@ -22,25 +22,27 @@
                 <x-primary-button class="mt-4 md:mt-0">Save Settings</x-primary-button>
             </div>
         </form>
-        <form action="{{ route('admin.toggleAccountActivation') }}" method="POST">
-            @csrf
-            <input type="hidden" name="id" value="{{ $user['id'] }}">
-            <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
-            <x-primary-button>
-            @php
-            if ($user['password'] == null) {
-                echo "Activate Account";
-            } else {
-                echo "Deactivate Account";
-            }
-            @endphp
-            </x-primary-button>
-            </div>
-            @if ($user['password'] == null)
-            <h2>Password</h2>
-            <input type="password" name="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent">
-            @endif
-        </form>
+        @if (in_array("16", $permissions))
+            <form action="{{ route('admin.toggleAccountActivation') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id" value="{{ $user['id'] }}">
+                <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                <x-primary-button>
+                @php
+                if ($user['password'] == null) {
+                    echo "Activate Account";
+                } else {
+                    echo "Deactivate Account";
+                }
+                @endphp
+                </x-primary-button>
+                </div>
+                @if ($user['password'] == null)
+                <h2>Password</h2>
+                <input type="password" name="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent">
+                @endif
+            </form>
+        @endif
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <h2 class="text-2xl text-white text-center">Active Permissions:</h2>

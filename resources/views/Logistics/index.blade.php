@@ -1,4 +1,6 @@
 <x-app-layout>
+    @php global $permissions; @endphp
+    @include('components.get-permissions', ['id' => Auth::User()->id])
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Logistics Dashboard') }}
@@ -7,10 +9,12 @@
 
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    @if (in_array("10", $permissions))
        <form action="{{ route('logistics.overdelivery') }}" method="GET" class="inline-block">
-                                @csrf
-                                <x-primary-button>Overdeliveries</x-primary-button>
-                            </form>
+            @csrf
+            <x-primary-button>Overdeliveries</x-primary-button>
+        </form>
+    @endif
 @if($orders->isNotEmpty())
         <div class="overflow-x-auto w-full">
             <table
@@ -35,10 +39,12 @@
                                     <input type='hidden' name="order" value='{{$order->id}}'></input>
                                     <x-primary-button>View Order</x-primary-button>
                                 </form>
-                                <form action="{{ route('logistics.show', $order->id) }}" method="GET" class="inline-block">
-                                    @csrf
-                                    <x-primary-button>Create delivery Note</x-primary-button>
-                                </form>
+                                @if (in_array("7", $permissions))
+                                    <form action="{{ route('logistics.show', $order->id) }}" method="GET" class="inline-block">
+                                        @csrf
+                                        <x-primary-button>Create delivery Note</x-primary-button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
