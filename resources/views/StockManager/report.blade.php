@@ -22,6 +22,13 @@
             </tbody>
         </table>
     </div>
+    <form action="{{ route('stock-management.downloadReport') }}" method="GET">
+        @foreach ($items as $item)
+            <input type="hidden" name="items[]" value="{{ $item }}">
+        @endforeach
+        <x-primary-button>Download Report</x-primary-button>
+    </form>
+
 
     <!-- Chart.JS scripting -->
     <script>
@@ -43,7 +50,7 @@
         const datasets = rawData.map((item, index) => ({
             label: item.item_name,
                 data: labels.map((month, index) => { // Map the data to the labels
-                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1).toString());
+                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1));
                 return monthlyData ? monthlyData.total : 0;
             }),
             backgroundColor: colors[index % colors.length], // Chooses a colour based on the item (index)
@@ -89,7 +96,7 @@
                             stacked: true
                         },
                         y: {
-                            stacked: true
+                            stacked: false
                         }
                     }
                 }
