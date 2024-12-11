@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalesController;
-use App\Http\Controllers\reportController;
 use App\Http\Controllers\searchController;
 use App\Http\Middleware\CheckUserCategory;
 use App\Http\Controllers\ProfileController;
