@@ -30,7 +30,7 @@
                     <tbody>
                         <span>Order History:</span>
                         @foreach ($orderHistory as $order)
-                        <form>
+                        <form action="{{route('stock-management.ShowOrderHistory')}}" method="GET">
                             <td>{{$order->id}}</td>
                             <td>{{$order->users->first_name}}</td>
                             <td>{{$order->users->last_name}}</td>
