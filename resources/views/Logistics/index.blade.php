@@ -5,12 +5,14 @@
         </h2>
     </x-slot>
 
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
-    <form action="{{ route('logistics.overdelivery') }}" method="GET" class="inline-block">
+
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+       <form action="{{ route('logistics.overdelivery') }}" method="GET" class="inline-block">
                                 @csrf
                                 <x-primary-button>Overdeliveries</x-primary-button>
                             </form>
-        @if($orders->isNotEmpty())
+@if($orders->isNotEmpty())
+        <div class="overflow-x-auto w-full">
             <table
                 class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                 <thead>
@@ -19,7 +21,6 @@
                         <th class="py-2 px-4">Name</th>
                         <th class="py-2 px-4">Date/Time</th>
                         <th class="py-2 px-4">Actions</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -43,8 +44,10 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
         @else
             <p class="text-white text-center font-semibold py-4">No orders available.</p>
         @endif
     </div>
+    <br>
 </x-app-layout>
