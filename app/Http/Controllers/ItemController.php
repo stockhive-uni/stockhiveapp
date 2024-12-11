@@ -76,7 +76,7 @@ class ItemController extends Controller
                             $price = $transaction->price;
                             $date = $transaction->date_time;
                             // Get the month from date
-                            $month = date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
+                            $month = (int) date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
                             // Store the data in an array, group by month.
                             if (!isset($data[$month])) {
                                 $data[$month] = [
@@ -137,7 +137,7 @@ class ItemController extends Controller
                     $price = $transaction->price;
                     $date = $transaction->date_time;
                     // Get the month from date
-                    $month = date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
+                    $month = (int) date('m', strtotime($date)); // Getting date using strtotime: https://www.php.net/manual/en/function.strtotime.php
                     // Store the data in an array, group by month.
                     if (!isset($data[$month])) {
                         $data[$month] = [

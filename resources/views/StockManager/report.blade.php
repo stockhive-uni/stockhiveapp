@@ -29,6 +29,7 @@
         <x-primary-button>Download Report</x-primary-button>
     </form>
 
+
     <!-- Chart.JS scripting -->
     <script>
         // Get data from PHP and parse it
@@ -49,7 +50,7 @@
         const datasets = rawData.map((item, index) => ({
             label: item.item_name,
                 data: labels.map((month, index) => { // Map the data to the labels
-                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1).toString());
+                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1));
                 return monthlyData ? monthlyData.total : 0;
             }),
             backgroundColor: colors[index % colors.length], // Chooses a colour based on the item (index)
@@ -95,7 +96,7 @@
                             stacked: true
                         },
                         y: {
-                            stacked: true
+                            stacked: false
                         }
                     }
                 }
