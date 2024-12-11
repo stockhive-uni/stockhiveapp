@@ -2,17 +2,16 @@
     @php global $permissions; @endphp
     @include('components.get-permissions', ['id' => Auth::User()->id])
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h1 class="font-semibold text-3xl text-white text-center leading-tight">
             {{ __('Inventory') }}
-        </h2>
+        </h1>
     </x-slot>
-    
     @if (in_array("11", $permissions))
         <div class="bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[1200px] m-auto p-3 mt-2">
+            <h2 class="text-center text-white text-2xl">Actions:</h2>
             <form method='GET' action='{{route('inventory.addToFloor')}}'>
                 <x-primary-button>Storage To Floor</x-primary-button>
             </form>
-
             <form method='GET' action='{{route('inventory.remove')}}'>
                 <x-primary-button>Floor To Storage</x-primary-button>
             </form>
