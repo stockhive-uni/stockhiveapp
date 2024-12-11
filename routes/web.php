@@ -58,6 +58,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/search', [searchController::class, 'search'])
         ->name('stock-management.search');
 
+    Route::get('/stock-management/download-report', [ItemController::class, 'downloadReport'])
+        ->name('stock-management.downloadReport');
+
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])

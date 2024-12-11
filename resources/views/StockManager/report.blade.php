@@ -22,6 +22,12 @@
             </tbody>
         </table>
     </div>
+    <form action="{{ route('stock-management.downloadReport') }}" method="GET">
+        @foreach ($items as $item)
+            <input type="hidden" name="items[]" value="{{ $item }}">
+        @endforeach
+        <x-primary-button>Download Report</x-primary-button>
+    </form>
 
     <!-- Chart.JS scripting -->
     <script>
