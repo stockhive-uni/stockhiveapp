@@ -1,16 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h1 class="font-semibold text-3xl text-center text-white leading-tight">
             {{ __('Floor To Storage') }}
-        </h2>
+        </h1>
     </x-slot>
     @if ($InventoryFromFloor != '[]') 
-    <div class='bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[1200px] m-auto p-3 mt-2 py-12'>
+    <div class='bg-stockhive-grey-dark text-white overflow-hidden shadow-sm md:rounded-lg max-w-[1200px] m-auto p-3 mt-2 py-12'>
         <form method='POST' action='{{route('inventory.removeFromFloor')}}'>
-            <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg text-white">
-                    <div>
+                    <div class="md:px-16">
                         <x-primary-button>Remove</x-primary-button>
                     </div>
+        <div class="overflow-x-auto w-full">
+            <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg text-white">
                     @csrf
                 <thead>
                     <tr>
@@ -41,6 +42,7 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
         </form>
     </div>
     @else

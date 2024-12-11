@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h1 class="font-semibold text-3xl text-white text-center leading-tight">
             {{ __('Spot Check') }}
-        </h2>
+        </h1>
     </x-slot>
 
     <div class='bg-stockhive-grey-dark text-white overflow-hidden shadow-sm sm:rounded-lg max-w-[1200px] m-auto p-3 mt-2 py-12'>

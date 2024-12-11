@@ -1,11 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h1 class="font-semibold text-3xl text-center text-white leading-tight">
             {{ __('Returned Over Deliveries') }}
-        </h2>
+        </h1>
     </x-slot>
 
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <form action="{{ route('logistics') }}" method="GET" class="inline-block">
             @csrf
             <x-primary-button class="mb-4">Back to Dashboard</x-primary-button>
@@ -18,6 +18,7 @@
         <h3 class="text-center font-bold mb-4">List of Returned Over Deliveries</h3>
 
         @if($returnedOverDeliveries->isNotEmpty())
+        <div class="overflow-x-auto w-full">
             <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                 <thead>
                     <tr>
@@ -42,6 +43,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         @else
             <p class="text-center font-semibold">No returned overdeliveries found!</p>
         @endif

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <h1 class="text-center text-3xl">Transaction details</h1>
         <h3 class="text-xl py-1">Transaction ID: {{ $transaction->id }}</h3>
         <h3 class="text-xl py-1">Sold by: {{ $transaction->first_name}} {{ $transaction->last_name }}</h3>
