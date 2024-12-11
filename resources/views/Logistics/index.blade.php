@@ -39,7 +39,7 @@
                                     <input type='hidden' name="order" value='{{$order->id}}'></input>
                                     <x-primary-button>View Order</x-primary-button>
                                 </form>
-                                @if (in_array("1", $permissions))
+                                @if (in_array("7", $permissions))
                                     <form action="{{ route('logistics.show', $order->id) }}" method="GET" class="inline-block">
                                         @csrf
                                         <x-primary-button>Create delivery Note</x-primary-button>

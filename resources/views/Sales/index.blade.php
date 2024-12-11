@@ -14,7 +14,7 @@
                 <x-primary-button>Create New Sale</x-primary-button>
             </form>
         </div>
-      @endif
+    @endif
         <div class="overflow-x-auto w-full">
     <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs md:border-spacing-8 bg-stockhive-grey rounded-lg">
         <thead>
