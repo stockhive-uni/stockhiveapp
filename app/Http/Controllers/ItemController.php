@@ -105,7 +105,7 @@ class ItemController extends Controller
                         ];
                     }
                 } 
-                return view('StockManager.report', ['allresults' => $allresults]);
+                return view('StockManager.report', ['allresults' => $allresults, 'items' => $request->items]);
             }
             else {
                 $items = Item::with('department')
