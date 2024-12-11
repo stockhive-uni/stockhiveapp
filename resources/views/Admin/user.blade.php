@@ -1,39 +1,51 @@
 <x-app-layout>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <form action="{{ route('admin.updateSettings') }}" method="POST">
             @csrf
             <h1 class="text-xl">ID: {{ ($user['id']) }}</h1>
-            <div class="flex items-center space-x-4">
-                <h2>First Name:</h2>
-                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="first_name" value="{{ ($user['first_name']) }}" class="form-input">
-                <h2>Last Name:</h2>
-                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="last_name" value="{{ ($user['last_name']) }}" class="form-input">
-                <h2>Email:</h2>
-                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="email" value="{{ ($user['email']) }}" class="form-input">
-                <input type="hidden" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="id" value ="{{ $user['id'] }}">
-                <x-primary-button>Save Settings</x-primary-button>
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                <div class="flex flex-col">
+                    <h2 class="mb-2">First Name:</h2>
+                    <input type="text" class="w-full bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="first_name" value="{{ ($user['first_name']) }}">
+                </div>
+                <div class="flex flex-col">
+                    <h2 class="mb-2">Last Name:</h2>
+                    <input type="text" class="w-full bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="last_name" value="{{ ($user['last_name']) }}">
+                </div>
+                <div class="flex flex-col">
+                    <h2 class="mb-2">Email:</h2>
+                    <input type="text" class="w-full bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="email" value="{{ ($user['email']) }}">
+                </div>
+            </div>
+            <div class="mt-4 flex flex-col md:flex-row md:items-center">
+            <input type="hidden" name="id" value="{{ $user['id'] }}">
+                <x-primary-button class="mt-4 md:mt-0">Save Settings</x-primary-button>
             </div>
         </form>
-        <form action="{{ route('admin.toggleAccountActivation') }}" method="POST">
-            @csrf
-            <input type="hidden" name="id" value="{{ $user['id'] }}">
-            <x-primary-button>
-            @php
-            if ($user['password'] == null) {
-                echo "Activate Account";
-            } else {
-                echo "Deactivate Account";
-            }
-            @endphp
-            </x-primary-button>
-            @if ($user['password'] == null)
-            <h2>Password</h2>
-            <input type="password" name="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent">
-            @endif
-        </form>
+        @if (in_array("16", $permissions))
+            <form action="{{ route('admin.toggleAccountActivation') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id" value="{{ $user['id'] }}">
+                <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+                <x-primary-button>
+                @php
+                if ($user['password'] == null) {
+                    echo "Activate Account";
+                } else {
+                    echo "Deactivate Account";
+                }
+                @endphp
+                </x-primary-button>
+                </div>
+                @if ($user['password'] == null)
+                <h2>Password</h2>
+                <input type="password" name="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent">
+                @endif
+            </form>
+        @endif
     </div>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
-        <h1 class="text-2xl font-bold text-center">Active Permissions</h1>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <h2 class="text-2xl text-white text-center">Active Permissions:</h2>
         @php global $permissions; @endphp
         @include('components.get-permissions', ['id' => $user['id']])
 
@@ -48,7 +60,8 @@
             </div>
         @endforeach
     </div>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+        <h2 class="text-white text-center text-2xl">Edit permissions:</h2>
         @if ($user['id'] == Auth::user()->id)
         <h2 class="text-error">You cannot edit your own permissions</h2>
         @else

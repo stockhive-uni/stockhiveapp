@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalesController;
-use App\Http\Controllers\reportController;
 use App\Http\Controllers\searchController;
 use App\Http\Middleware\CheckUserCategory;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +57,9 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/stock-management/search', [searchController::class, 'search'])
         ->name('stock-management.search');
 
+    Route::get('/stock-management/download-report', [ItemController::class, 'downloadReport'])
+        ->name('stock-management.downloadReport');
+
     // Sales
 
     Route::get('/sales', [SalesController::class, 'index'])
@@ -99,11 +101,17 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/inventory/confirm-check', [InventoryController::class, 'confirmCheck'])
     ->name('inventory.confirmCheck');
 
-    Route::get('/inventory/update', [InventoryController::class, 'updateCheck'])
-    ->name('inventory.update');
+    Route::get('/inventory/update', [InventoryController::class, 'addToFloor'])
+    ->name('inventory.addToFloor');
 
     Route::post('/inventory/updated', [InventoryController::class, 'updateInventory'])
     ->name('inventory.updated');
+
+    Route::get('/inventory/remove', [InventoryController::class, 'remove'])
+    ->name('inventory.remove');
+
+    Route::post('/inventory/removed', [InventoryController::class, 'removeFromFloor'])
+    ->name('inventory.removeFromFloor');
 
     // Admin
 

@@ -1,7 +1,9 @@
 <x-app-layout>
-    <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    <div class="bg-stockhive-grey-dark text-white shadow-sm lg:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <!-- Display chart -->
-        <canvas id="chart-report" height="100%"></canvas>
+        <canvas id="chart-report" class="w-full h-full"></canvas>
+    </div>
+    <div class="bg-stockhive-grey-dark text-white shadow-sm lg:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <!-- Display the data -->
         <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
             <thead>
@@ -20,6 +22,13 @@
             </tbody>
         </table>
     </div>
+    <form action="{{ route('stock-management.downloadReport') }}" method="GET">
+        @foreach ($items as $item)
+            <input type="hidden" name="items[]" value="{{ $item }}">
+        @endforeach
+        <x-primary-button>Download Report</x-primary-button>
+    </form>
+
 
     <!-- Chart.JS scripting -->
     <script>
@@ -41,7 +50,7 @@
         const datasets = rawData.map((item, index) => ({
             label: item.item_name,
                 data: labels.map((month, index) => { // Map the data to the labels
-                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1).toString());
+                const monthlyData = Object.values(item.data).find(d => d.month === (index + 1));
                 return monthlyData ? monthlyData.total : 0;
             }),
             backgroundColor: colors[index % colors.length], // Chooses a colour based on the item (index)
@@ -87,7 +96,7 @@
                             stacked: true
                         },
                         y: {
-                            stacked: true
+                            stacked: false
                         }
                     }
                 }

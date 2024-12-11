@@ -1,24 +1,41 @@
 <x-app-layout>
-    <div>
-        <div>
-            <p id="total">Total: £0</p>
-            <p id="items">Items: 0</p>
+    <div class="p-8 my-4 text-white text-xl bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
+        <h2 class="text-2xl text-white text-center">Search</h2>
+        <div class="flex justify-center">
+            <input type="text" id="search-box" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent p-2" placeholder="Search items" />
         </div>
-        <input type="text" id="search-box" placeholder="Search items" />
+    </div>
+    <div class="p-8 my-4 text-white text-xl bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
+        <div class="md:flex md:justify-center md:gap-4">
         <label for="search-results">Item</label>
-        <select id="search-results"></select>
+        <br class="display-block md:hidden">
+        <select class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent p-2" id="search-results"></select>
+        <br class="display-block md:hidden">
         <label for="quantity">Quantity</label>
-        <input id="quantity" type="number" min ="0" value="0">
+        <br class="display-block md:hidden">
+        <input id="quantity" type="number"  class="text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" min ="0" value="0">
+        </div>
+    </div>
+    <div class="p-8 my-4 text-white text-xl bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
+        <h2 class="text-2xl text-center text-white">Actions:</h2>
+        <div class="flex justify-center gap-8 my-4 border-grey bg-stockhive-grey rounded-lg p-4 border-2 m-auto w-[90%] text-right">
         <x-primary-button :nameEnter="'add-button'" :idEnter="'add-button'">Add</x-primary-button>
+        </div>
     </div>
     <form action="{{ route('stock-management.toOverview') }}" method="POST">
         <input type="hidden" id="hidden-total" name="total" value=0>
         <input type="hidden" id="hidden-items" name="items" value=0>
         @csrf
-        <div id="basket">
+        <div id="basket" class="p-8 my-4 text-white text-xl bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
+            <h2 class="text-2xl text-center text-white">Basket:</h2>
             <!-- Items are placed in this div -->
         </div>
-        <x-primary-button>Confirm Items</x-primary-button>
+        <div class="p-8 my-4 text-white text-xl bg-stockhive-grey-dark lg:rounded-lg w-full lg:w-[85%] m-auto">
+            <h2 class="text-2xl text-white text-center">Summary:</h2>
+            <p id="total">Total: £0</p>
+            <p id="items">Items: 0</p>
+            <x-primary-button>Confirm Items</x-primary-button>
+        </div>
     </form>
 
     @vite(['resources/js/jquery.js'])
@@ -69,7 +86,7 @@
                     basket.innerHTML += `<div>
                     <input class="id" type="hidden" name="id[]" value=${result.id}>
                     <p name="name">${result.name}</p>
-                    <input class="quantity-child" type="number" name="quantity[]" value=${quantity.value} min="0">
+                    <input class="quantity-child text-white bg-stockhive-grey hover:shadow-bxs hover:border-accent transition-all hover:ring-accent p-2 rounded-lg" type="number" name="quantity[]" value=${quantity.value} min="0">
                     <p class="item-total">Total: £${itemPrice}</p>
                     <x-primary-button :classEnter="'remove-button'">Remove</x-primary-button>
                     </div>`;
@@ -168,4 +185,5 @@
             });
         });
     </script>
+    <br>
 </x-app-layout>
