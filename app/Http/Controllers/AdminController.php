@@ -90,18 +90,32 @@ class AdminController extends Controller
         $password = Hash::make($request->password); 
         $roles = $request->roles;
 
-        $id = Employee::insertGetId([
-            'store_id' => Auth::user()->store_id, 'first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'password' => $password, 'remember_token' => ''
-        ]);
-
-        foreach ($roles as $role) {
-            DB::table('user_role')->insert([
-                ['user_id' => $id, 'role_id' => $role]
+        if ($roles != null && $password != null && $email != null && $last_name != null && $first_name != null && trim($password) != "" && trim($email) != "" && trim($last_name) != "" && trim($first_name) != "") {
+            $exists = Employee::where('email', '=', $email);
+            if ($exists != null) {
+                return (view('Admin.new-user', ['error' => "Account not created, duplicate email"]));
+            }
+            $id = Employee::insertGetId([
+                'store_id' => Auth::user()->store_id,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'email' => $email,
+                'password' => $password,
+                'remember_token' => ''
             ]);
+
+            foreach ($roles as $role) {
+                DB::table('user_role')->insert([
+                    ['user_id' => $id, 'role_id' => $role]
+                ]);
+            }
+            
+            $user = Employee::where('id', $id)->with('store')->get();
+            $user = $user[0];
+            return (view('Admin.user', ['user' => $user]));
         }
-        
-        $user = Employee::where('id', $id)->with('store')->get();
-        $user = $user[0];
-        return (view('Admin.user', ['user' => $user]));
+        else {
+            return (view('Admin.new-user', ['error' => "Account not created, missing field"]));
+        }
     }
 }

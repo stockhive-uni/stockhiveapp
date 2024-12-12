@@ -51,6 +51,9 @@
                 </tbody>
             </table>
         <x-primary-button>Create User</x-primary-button>
+        @if (isset($error))
+        <p class="error">{{ $error }}</p>
+        @endif
     </form>
 </div>
 </x-app-layout>
