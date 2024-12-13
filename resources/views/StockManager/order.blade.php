@@ -35,6 +35,9 @@
             <p id="total">Total: £0</p>
             <p id="items">Items: 0</p>
             <x-primary-button>Confirm Items</x-primary-button>
+            @if (isset($error))
+            <p class="error">{{ $error }}</p>
+            @endif
         </div>
     </form>
 
