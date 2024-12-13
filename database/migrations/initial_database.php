@@ -21,7 +21,9 @@ return new class extends Migration
         });
         DB::table('store')->insert([
             ['id' => '1', 'location' => 'Sheffield', 'postcode' => 'S1 2NH'],
-            ['id' => '2', 'location' => 'Leeds', 'postcode' => 'LS2 7DA']
+            ['id' => '2', 'location' => 'Leeds', 'postcode' => 'LS1 4DY'],
+            ['id' => '3', 'location' => 'Manchester', 'postcode' => 'M11 3DL'],
+            ['id' => '4', 'location' => 'Liverpool', 'postcode' => 'L18 1DG']
         ]);
 
         Schema::create('users', function (Blueprint $table) {
@@ -151,13 +153,6 @@ return new class extends Migration
             $table->timestamp('date_time');
             $table->string('card');
         });
-        DB::table('transaction')->insert([
-            ['id' => '1', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-11-12 15:22:45', 'card' => 'example'],
-            ['id' => '2', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-10-23 11:36:43', 'card' => 'example'],
-            ['id' => '3', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-09-07 09:34:14', 'card' => 'example'],
-            ['id' => '4', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2023-11-15 13:13:59', 'card' => 'example'],
-            ['id' => '5', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2022-10-01 12:01:00', 'card' => 'example']
-        ]);
 
         Schema::create('department', function (Blueprint $table) {
             $table->id()->primary();
@@ -171,7 +166,6 @@ return new class extends Migration
             ['id' => '5', 'name' => 'Home']
         ]);
 
-
         Schema::create('item', function (Blueprint $table) {
             $table->id()->primary(); 
             $table->string('name'); 
@@ -183,10 +177,28 @@ return new class extends Migration
             ['id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
             ['id' => '2', 'name' => 'Orange', 'price' => '0.99', 'department_id' => '1'],
             ['id' => '3', 'name' => 'Pear', 'price' => '0.99', 'department_id' => '1'],
-            ['id' => '4', 'name' => 'Pepsi', 'price' => '1.50', 'department_id' => '2'],
-            ['id' => '5', 'name' => 'Pepsi Max', 'price' => '1.20', 'department_id' => '2'],
-            ['id' => '6', 'name' => 'Fuck Laravel T-Shirt', 'price' => '0', 'department_id' => '3'],
-            ['id' => '7', 'name' => 'Christmas Tree', 'price' => '24.99', 'department_id' => '4']
+            ['id' => '4', 'name' => 'Banana', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '5', 'name' => 'Kiwi', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '6', 'name' => 'Pepsi', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '7', 'name' => 'Pepsi Max', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '8', 'name' => 'Water', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '9', 'name' => 'Orange Juice', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '10', 'name' => 'Milk', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '11', 'name' => 'Shirt', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '12', 'name' => 'Socks', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '13', 'name' => 'Pants', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '14', 'name' => 'Trousers', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '15', 'name' => 'Hat', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '16', 'name' => 'Christmas Tree', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '17', 'name' => 'Stocking', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '18', 'name' => 'Christmas Card', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '19', 'name' => 'Wreath', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '20', 'name' => 'Other Christmas Item', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '21', 'name' => 'Chair', 'price' => '0.99', 'department_id' => '5'],
+            ['id' => '22', 'name' => 'Table', 'price' => '0.99', 'department_id' => '5'],
+            ['id' => '23', 'name' => 'Lamp', 'price' => '0.99', 'department_id' => '5'],
+            ['id' => '24', 'name' => 'Other Lamp', 'price' => '0.99', 'department_id' => '5'],
+            ['id' => '25', 'name' => 'Another Lamp?!', 'price' => '0.99', 'department_id' => '5']
         ]);
 
         Schema::create('transaction_item', function (Blueprint $table) {
@@ -195,17 +207,6 @@ return new class extends Migration
             $table->integer('quantity');
             $table->double('price');
         });
-        DB::table('transaction_item')->insert([
-            ['transaction_id' => '1', 'item_id' => '1', 'quantity' => '10', 'price' => '12.43'],
-            ['transaction_id' => '1', 'item_id' => '2', 'quantity' => '6', 'price' => '12.43'],
-            ['transaction_id' => '1', 'item_id' => '3', 'quantity' => '2', 'price' => '12.43'],
-            ['transaction_id' => '2', 'item_id' => '1', 'quantity' => '4', 'price' => '12.43'],
-            ['transaction_id' => '3', 'item_id' => '1', 'quantity' => '1', 'price' => '12.43'],
-            ['transaction_id' => '3', 'item_id' => '2', 'quantity' => '2', 'price' => '12.43'],
-            ['transaction_id' => '3', 'item_id' => '3', 'quantity' => '6', 'price' => '12.43'],
-            ['transaction_id' => '4', 'item_id' => '4', 'quantity' => '3', 'price' => '12.43'],
-            ['transaction_id' => '5', 'item_id' => '5', 'quantity' => '1', 'price' => '12.43']
-        ]);
 
         Schema::create('order', function (Blueprint $table) {
             $table->id()->primary();
@@ -215,8 +216,6 @@ return new class extends Migration
             $table->tinyInteger('fulfilled')->default(0);
 
         });
- 
-        
 
         Schema::create('order_item', function (Blueprint $table) {
             $table->foreignID('order_id')->references('id')->on('order')->onDelete('cascade');
@@ -224,9 +223,6 @@ return new class extends Migration
             $table->integer('ordered');
             $table->double('price');
         });
-        
-        
-
        
         Schema::create('location', function (Blueprint $table) {
             $table->id()->primary();
@@ -341,12 +337,12 @@ return new class extends Migration
             $table->timestamp('failed_at')->useCurrent();
         });
 
-        Artisan::call('db:seed');
-
-        for ($i = 1; $i < 108; $i++) {
-            DB::table('store_item')->insert([
-                ['id' => $i,'store_id' => '1', 'item_id' => $i, 'price' => '1', 'low-stock-amount' => '1']
-            ]);
+        for ($store = 1; $store < 5; $store++) {
+            for ($item = 1; $item < 26; $item++) {
+                DB::table('store_item')->insert([
+                    ['id' => ($item + (($store - 1)* 25)),'store_id' => $store, 'item_id' => $item, 'price' => '1.49', 'low-stock-amount' => '5']
+                ]);
+            }
         }
     }
 
