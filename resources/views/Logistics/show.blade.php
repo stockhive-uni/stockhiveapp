@@ -7,7 +7,6 @@
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Order ID: {{ $order->id }}</h1>
-        <p><strong>User ID:</strong> {{ $order->user_id }}</p>
         <p><strong>Order Date/Time:</strong> {{ $order->date_time }}</p>
         <p><strong>Name:</strong> {{ $order->user->first_name }} {{ $order->user->last_name }}</p>
         
@@ -53,6 +52,9 @@
 
             <div class="flex justify-end items-center gap-8 my-4 lg:w-[90%] w-full m-auto">
                 <x-primary-button class="mt-4">Create Delivery Note</x-primary-button>
+                @if (isset($error))
+                    <p class="error">{{ $error }}</p>
+                @endif
             </div>
         </form>
     </div>
