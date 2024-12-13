@@ -11,7 +11,7 @@ class AdminTest extends TestCase {
     // Log in with a user with admin perms (with an already created user)
     public function test_login_as_admin() {
         $response = $this->post('/login', [
-            'email' => 'test@email.com',
+            'email' => 'Manager1@email.com',
             'password' => '123'
         ]);
         $response->assertRedirect('/dashboard');
@@ -19,7 +19,7 @@ class AdminTest extends TestCase {
 
     // Test that the admin can go to the admin panel.
     public function test_admin_panel_load() {
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $response = $this->get(route('admin'));
         $response->assertStatus(200);
@@ -30,7 +30,7 @@ class AdminTest extends TestCase {
     // Update the user settings test
     public function test_update_user_settings() {
         // Log in as administrator
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Create a new employee
         $employee = Employee::factory()->create();
@@ -53,7 +53,7 @@ class AdminTest extends TestCase {
     // Add a new user
     public function test_add_user() {
         // Log in as administrator
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Get response
         $response = $this->post(route('admin.addNewUser'), [
@@ -72,7 +72,7 @@ class AdminTest extends TestCase {
 
     public function test_deactivate_account() {
         // Log in as administrator
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Create a new employee
         $employee = Employee::factory()->create();

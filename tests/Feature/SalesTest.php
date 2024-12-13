@@ -12,7 +12,7 @@ class SalesTest extends TestCase {
 
     public function test_login_as_salesperson() {
         $response = $this->post('/login', [
-            'email' => 'test@email.com',
+            'email' => 'Manager1@email.com',
             'password' => '123'
         ]);
         $response->assertRedirect('/dashboard');
@@ -21,7 +21,7 @@ class SalesTest extends TestCase {
     // Testing to ensure salesperson can make a sale.
     public function test_make_sale() {
         // Auth
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $this->storeId = 1;
         // Get items
@@ -45,7 +45,7 @@ class SalesTest extends TestCase {
     // Testing to ensure sales person can view transaction details. 
     public function test_view_transaction_details() {
         // Auth
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $this->transactionId = 1; // Define transaction ID from info on DB
         // Get response
@@ -57,7 +57,7 @@ class SalesTest extends TestCase {
 
     public function test_invoice_download() {
         // Auth
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $this->transactionId = 1;
         // Response
