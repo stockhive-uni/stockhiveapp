@@ -1,4 +1,6 @@
 <x-app-layout>
+    @php global $permissions; @endphp
+    @include('components.get-permissions', ['id' => Auth::User()->id])
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <form action="{{ route('admin.updateSettings') }}" method="POST">
             @csrf
@@ -46,10 +48,11 @@
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <h2 class="text-2xl text-white text-center">Active Permissions:</h2>
-        @php global $permissions; @endphp
-        @include('components.get-permissions', ['id' => $user['id']])
+        @php
+            $userPermissions = DB::select("SELECT DISTINCT permission.id, permission.name AS permissionName, category.name AS categoryName FROM permission, role_permission, user_role, category WHERE permission.id = role_permission.permission_id AND role_permission.role_id = user_role.role_id AND permission.category_id = category.id AND user_role.user_id = " . $user['id']);
+        @endphp
 
-        @foreach($permissions->groupBy('categoryName') as $category => $categoryPermissions)
+        @foreach(collect($userPermissions)->groupBy('categoryName') as $category => $categoryPermissions)
             <div class="mt-4">
                 <h1 class="font-bold text-xl">{{ $category }}</h1>
                 <ul class="flex items-center space-x-4">
