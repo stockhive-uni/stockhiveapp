@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+            <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
                         <tr>
@@ -47,13 +47,79 @@
                         </tr>
                     </tbody>
                 </table>
-
-                    <div>Number of sales:{{$numberOfSales}} </div>
-
-                    <div>Warehouse:{{$numberOfOrders}}</div>
-                
-                    <div>Items Sold:{{$numberOfItemsSold}}</div>
-
         </div>
+
+        <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div>
+                        Number of sales:{{$numberOfSales}}
+                    </div>
+                    <div>
+                        Warehouse:{{$numberOfOrders}}
+                    </div>
+                    <div>
+                        Items Sold:{{$numberOfItemsSold}}
+                    </div>
+                    <div class="w-[48%] m-auto">
+                        <canvas id="chart-info"></canvas>
+                    </div>
+        </div>
+
     </div>
+
+    <!-- Chart.JS scripting -->
+    <script>
+        const numberOfSales = <?php echo json_encode($numberOfSales); ?>;
+        const numberOfOrders = <?php echo json_encode($numberOfOrders); ?>;
+        const numberOfItemsSold = <?php echo json_encode($numberOfItemsSold); ?>;
+
+        const labels = ["Sales", "Orders", "Items Sold"];
+        let data = [numberOfSales, numberOfOrders, numberOfItemsSold];
+
+        // Colours used on bar chart.
+        const colors = [
+            '#ff4959', '#ff8c61', '#ffbf69', '#ffeb75', '#d3f261', '#a0e358', '#6cd352', '#4ccf4d', '#2bc94a', '#00c247', '#00b746', '#00a845'
+        ];
+
+        // Generate the chart
+        const salesOrderInfo = document.getElementById('chart-info').getContext('2d');
+        new Chart(
+            salesOrderInfo, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: '#000000',
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Order and Sales information',
+                            color: 'white',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                }
+            }
+        )
+    </script>
+
 </x-app-layout>
