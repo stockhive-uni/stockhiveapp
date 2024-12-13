@@ -72,6 +72,8 @@ $categories = array_map(function ($perm) {
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+
+                
             </div>
         </div>
     </div>
@@ -82,7 +84,6 @@ $categories = array_map(function ($perm) {
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-
         </div>
 
         <!-- Responsive Settings Options -->
@@ -91,6 +92,13 @@ $categories = array_map(function ($perm) {
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
+
+            @foreach ($categories as $category)
+            <?php $name = str_replace('-', ' ', $category); $name = ucwords($name); $active = explode('.', Route::currentRouteName())[0] == $category;  ?> <!-- Formats output to a more user friendly and readable format -->
+            <x-responsive-nav-link :href="route($category)" :active="$active">
+                {{ $name }}
+            </x-responsive-nav-link>
+            @endforeach
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
