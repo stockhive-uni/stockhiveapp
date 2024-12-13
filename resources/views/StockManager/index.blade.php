@@ -29,7 +29,7 @@
                     <x-primary-button>Sort</x-primary-button>
                 </form>
             </div>
-        </div>
+        </div> 
 
         <form action="{{ route('stock-management.chosenItems') }}" method="POST">
             @csrf
@@ -43,7 +43,7 @@
                 @if (in_array("4", $permissions))
                     <x-primary-button nameEnter="Report">Generate Reports</x-primary-button>
                         @if (isset($error))
-                            <p class="error">{{ $error }}</p>
+                            <p class="text-error">{{ $error }}</p>
                         @endif
                 </div>
                 @endif
