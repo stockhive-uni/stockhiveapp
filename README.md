@@ -7,7 +7,21 @@ git clone https://github.com/stockhive-uni/stockhiveapp && cd stockhiveapp/
 ```
 
 ## Setup
-### Installing packages
+### Xampp Configuration
+Execute these lines in the powershell. Change the path if your xampp is saved in a different location than specified.
+```sh
+Add-Content -Path "C:\xampp\php\php.ini" -Value "extension=sodium"
+Add-Content -Path "C:\xampp\php\php.ini" -Value "extension=zip"
+```
+
+### Installing Package Managers
+Ensure Composer and Node.js are installed on your computer
+
+https://getcomposer.org/download/
+
+https://nodejs.org/en/download/package-manager
+
+### Installing Packages
 Run the following commands in the terminal:
 ```sh
 npm install
