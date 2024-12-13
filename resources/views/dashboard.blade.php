@@ -33,14 +33,15 @@
                     <tbody>
                         <span>Order History:</span>
                         @foreach ($orderHistory as $order)
+                        <tr>
                         <form action="{{route('stock-management.ShowOrderHistory')}}" method="GET">
-                            <td>{{$order->id}}</td>
-                            <td>{{$order->users->first_name}}</td>
-                            <td>{{$order->users->last_name}}</td>
-                            <td>{{$order->order_item->count()}}</td>
+                            <th>{{$order->id}}</th>
+                            <th>{{$order->users->first_name}}</th>
+                            <th>{{$order->users->last_name}}</th>
+                            <th>{{$order->order_item->count()}}</th>
                             <input type='hidden' name="order" value='{{$order->id}}'></input>
-                            <td>{{$order->date_time}}</td>
-                            <td><x-primary-button>Details</x-primary-button></td>
+                            <th>{{$order->date_time}}</th>
+                            <th><x-primary-button>Details</x-primary-button></th>
                         </form>
                         @endforeach
                         </tr>

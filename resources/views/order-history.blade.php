@@ -35,12 +35,13 @@
             </thead>
             <tbody>
                 @foreach ($orderHistoryItems as $HistoryItem)
-                <td>{{$HistoryItem->order_id}}</td>
-                <td>{{$HistoryItem->name}}</td>
-                <td>{{$HistoryItem->ordered}}</td>
-                <td>£{{$HistoryItem->price}}</td>
-                @endforeach
+                <tr>
+                    <td>{{$HistoryItem->order_id}}</td>
+                    <td>{{$HistoryItem->name}}</td>
+                    <td>{{$HistoryItem->ordered}}</td>
+                    <td>£{{$HistoryItem->price}}</td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
