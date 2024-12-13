@@ -36,9 +36,36 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::table('users')->insert(
-            ['id' => '1', 'store_id' => '1', 'first_name' => 'First', 'last_name' => 'Last', 'email' => 'test@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18']
-        );
+        DB::table('users')->insert([
+            ['id' => '1', 'store_id' => '1', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '2', 'store_id' => '1', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '3', 'store_id' => '1', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '4', 'store_id' => '1', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '5', 'store_id' => '1', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '6', 'store_id' => '1', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '7', 'store_id' => '1', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '8', 'store_id' => '2', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '9', 'store_id' => '2', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '10', 'store_id' => '2', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '11', 'store_id' => '2', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '12', 'store_id' => '2', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '13', 'store_id' => '2', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '14', 'store_id' => '2', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '15', 'store_id' => '3', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '16', 'store_id' => '3', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '17', 'store_id' => '3', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '18', 'store_id' => '3', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '19', 'store_id' => '3', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '20', 'store_id' => '3', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '21', 'store_id' => '3', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '22', 'store_id' => '4', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '23', 'store_id' => '4', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '24', 'store_id' => '4', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '25', 'store_id' => '4', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '26', 'store_id' => '4', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '27', 'store_id' => '4', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '28', 'store_id' => '4', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18']
+        ]);
 
         Schema::create('role', function (Blueprint $table) {
             $table->id()->primary();
@@ -142,9 +169,13 @@ return new class extends Migration
             $table->foreignID('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignID('role_id')->references('id')->on('role')->onDelete('cascade');
         });
-        DB::table('user_role')->insert([
-            ['user_id' => '1', 'role_id' => '1']
-        ]);
+        for ($store = 1; $store < 5; $store++) {
+            for ($role = 1; $role < 8; $role++) {
+                DB::table('user_role')->insert([
+                    ['user_id' => (($store - 1) * 7) + $role, 'role_id' => $role]
+                ]);
+            }
+        }
 
         Schema::create('transaction', function (Blueprint $table) {
             $table->id()->primary();
@@ -174,31 +205,31 @@ return new class extends Migration
             $table->timestamps(); 
         });
         DB::table('item')->insert([
-            ['id' => '1', 'name' => 'Apple', 'price' => '0.99', 'department_id' => '1'],
+            ['id' => '1', 'name' => 'Apple', 'price' => '0.49', 'department_id' => '1'],
             ['id' => '2', 'name' => 'Orange', 'price' => '0.99', 'department_id' => '1'],
-            ['id' => '3', 'name' => 'Pear', 'price' => '0.99', 'department_id' => '1'],
-            ['id' => '4', 'name' => 'Banana', 'price' => '0.99', 'department_id' => '1'],
-            ['id' => '5', 'name' => 'Kiwi', 'price' => '0.99', 'department_id' => '1'],
-            ['id' => '6', 'name' => 'Pepsi', 'price' => '0.99', 'department_id' => '2'],
+            ['id' => '3', 'name' => 'Pear', 'price' => '1.49', 'department_id' => '1'],
+            ['id' => '4', 'name' => 'Banana', 'price' => '1.99', 'department_id' => '1'],
+            ['id' => '5', 'name' => 'Kiwi', 'price' => '2.49', 'department_id' => '1'],
+            ['id' => '6', 'name' => 'Pepsi', 'price' => '0.49', 'department_id' => '2'],
             ['id' => '7', 'name' => 'Pepsi Max', 'price' => '0.99', 'department_id' => '2'],
-            ['id' => '8', 'name' => 'Water', 'price' => '0.99', 'department_id' => '2'],
-            ['id' => '9', 'name' => 'Orange Juice', 'price' => '0.99', 'department_id' => '2'],
-            ['id' => '10', 'name' => 'Milk', 'price' => '0.99', 'department_id' => '2'],
-            ['id' => '11', 'name' => 'Shirt', 'price' => '0.99', 'department_id' => '3'],
+            ['id' => '8', 'name' => 'Water', 'price' => '1.49', 'department_id' => '2'],
+            ['id' => '9', 'name' => 'Milk', 'price' => '1.99', 'department_id' => '2'],
+            ['id' => '10', 'name' => 'Pilk', 'price' => '2.49', 'department_id' => '2'],
+            ['id' => '11', 'name' => 'Shirt', 'price' => '0.49', 'department_id' => '3'],
             ['id' => '12', 'name' => 'Socks', 'price' => '0.99', 'department_id' => '3'],
-            ['id' => '13', 'name' => 'Pants', 'price' => '0.99', 'department_id' => '3'],
-            ['id' => '14', 'name' => 'Trousers', 'price' => '0.99', 'department_id' => '3'],
-            ['id' => '15', 'name' => 'Hat', 'price' => '0.99', 'department_id' => '3'],
-            ['id' => '16', 'name' => 'Christmas Tree', 'price' => '0.99', 'department_id' => '4'],
+            ['id' => '13', 'name' => 'Pants', 'price' => '1.49', 'department_id' => '3'],
+            ['id' => '14', 'name' => 'Trousers', 'price' => '1.99', 'department_id' => '3'],
+            ['id' => '15', 'name' => 'Hat', 'price' => '2.49', 'department_id' => '3'],
+            ['id' => '16', 'name' => 'Christmas Tree', 'price' => '0.49', 'department_id' => '4'],
             ['id' => '17', 'name' => 'Stocking', 'price' => '0.99', 'department_id' => '4'],
-            ['id' => '18', 'name' => 'Christmas Card', 'price' => '0.99', 'department_id' => '4'],
-            ['id' => '19', 'name' => 'Wreath', 'price' => '0.99', 'department_id' => '4'],
-            ['id' => '20', 'name' => 'Other Christmas Item', 'price' => '0.99', 'department_id' => '4'],
-            ['id' => '21', 'name' => 'Chair', 'price' => '0.99', 'department_id' => '5'],
+            ['id' => '18', 'name' => 'Christmas Card', 'price' => '1.49', 'department_id' => '4'],
+            ['id' => '19', 'name' => 'Wreath', 'price' => '1.99', 'department_id' => '4'],
+            ['id' => '20', 'name' => 'Other Christmas Item', 'price' => '2.49', 'department_id' => '4'],
+            ['id' => '21', 'name' => 'Chair', 'price' => '0.49', 'department_id' => '5'],
             ['id' => '22', 'name' => 'Table', 'price' => '0.99', 'department_id' => '5'],
-            ['id' => '23', 'name' => 'Lamp', 'price' => '0.99', 'department_id' => '5'],
-            ['id' => '24', 'name' => 'Other Lamp', 'price' => '0.99', 'department_id' => '5'],
-            ['id' => '25', 'name' => 'Another Lamp?!', 'price' => '0.99', 'department_id' => '5']
+            ['id' => '23', 'name' => 'Lamp', 'price' => '1.49', 'department_id' => '5'],
+            ['id' => '24', 'name' => 'Other Lamp', 'price' => '1.99', 'department_id' => '5'],
+            ['id' => '25', 'name' => 'Another Lamp?!', 'price' => '2.49', 'department_id' => '5']
         ]);
 
         Schema::create('transaction_item', function (Blueprint $table) {
@@ -338,10 +369,14 @@ return new class extends Migration
         });
 
         for ($store = 1; $store < 5; $store++) {
-            for ($item = 1; $item < 26; $item++) {
-                DB::table('store_item')->insert([
-                    ['id' => ($item + (($store - 1)* 25)),'store_id' => $store, 'item_id' => $item, 'price' => '1.49', 'low-stock-amount' => '5']
-                ]);
+            for ($category = 1; $category < 6; $category++) {
+                for ($item = 1; $item < 6; $item++) {
+                    $item_id = (($category - 1) * 5) + $item;
+                    $id = (($store - 1) * 25) + $item_id;
+                    DB::table('store_item')->insert([
+                        ['id' => $id, 'store_id' => $store, 'item_id' => $item_id, 'price' => (($category * 0.50) - 0.01), 'low-stock-amount' => (8 - $category)]
+                    ]);
+                }
             }
         }
     }
