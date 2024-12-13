@@ -47,6 +47,13 @@
                         </tr>
                     </tbody>
                 </table>
+
+                    <div>{{$numberOfSales}} </div>
+
+                    <div>{{$numberOfOrders}}</div>
+                
+                    <div>{{$numberOfItemsSold}}</div>
+
                 
         </div>
     </div>
