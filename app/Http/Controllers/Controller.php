@@ -4,6 +4,5 @@ namespace App\Http\Controllers;
 
 abstract class Controller
 {
-    // DO NOT DELETE THIS CONTROLLER
-    // It is essential.
+    // This is Controller.php, do not kill Controller.php
 }
