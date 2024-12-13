@@ -48,11 +48,11 @@
                     </tbody>
                 </table>
 
-                    <div>{{$numberOfSales}} </div>
+                    <div>Number of sales:{{$numberOfSales}} </div>
 
-                    <div>{{$numberOfOrders}}</div>
+                    <div>Warehouse:{{$numberOfOrders}}</div>
                 
-                    <div>{{$numberOfItemsSold}}</div>
+                    <div>Items Sold:{{$numberOfItemsSold}}</div>
 
                 
         </div>
