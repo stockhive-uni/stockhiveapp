@@ -79,12 +79,13 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
 
     Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
     Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
+    Route::post('/logistics/show', [LogisticsController::class, 'show'])->name('logistics.show');
+    Route::get('/logistics/show', [LogisticsController::class, 'show'])->name('logistics.show');
     Route::post('/logistics/process-delivery', [LogisticsController::class, 'processDelivery'])->name('logistics.processDelivery');
     Route::get('/logistics/returned-overdeliveries', [LogisticsController::class, 'returnedOverDeliveries'])->name('logistics.returnedOverDeliveries');
     Route::post('/logistics/overdelivery/return', [LogisticsController::class, 'markAsReturned'])->name('logistics.return');
-    Route::get('/logistics/{id}', [LogisticsController::class, 'show'])->name('logistics.show');
     Route::get('/logistics/returned-items', [LogisticsController::class, 'returnedItems'])->name('logistics.returnedItems');
-    Route::post('/logistics/{id}/create-delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
+    Route::post('/logistics/create-delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
 
 
     // Inventory

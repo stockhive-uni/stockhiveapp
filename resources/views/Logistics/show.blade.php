@@ -10,7 +10,7 @@
         <p><strong>User ID:</strong> {{ $order->user_id }}</p>
         <p><strong>Order Date/Time:</strong> {{ $order->date_time }}</p>
         <p><strong>Name:</strong> {{ $order->user->first_name }} {{ $order->user->last_name }}</p>
-        
+
 
 
         <form action="{{ route('logistics') }}" method="GET">
@@ -21,8 +21,11 @@
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h2 class="text-xl font-bold mb-4">Items in Order</h2>
-        <form method="POST" action="{{ route('logistics.createDeliveryNote', $order->id) }}">
+        <form method="POST" action="{{ route('logistics.createDeliveryNote') }}">
             @csrf
+            <!-- Include the order ID as a hidden field -->
+            <input type="hidden" name="order_id" value="{{ $order->id }}">
+
             <table
                 class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                 <thead>
@@ -55,6 +58,7 @@
                 <x-primary-button class="mt-4">Create Delivery Note</x-primary-button>
             </div>
         </form>
+
     </div>
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">

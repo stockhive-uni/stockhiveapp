@@ -35,8 +35,13 @@ class LogisticsController extends Controller
 
 
 
-    public function show($orderId)
+    public function show(Request $request)
     {
+        $orderId = $request->input('orderId');
+        if (!$orderId) {
+            return redirect()->route('dashboard');
+        }
+
         $order = Order::with(['user', 'items.item', 'deliveryNotes.deliveredItems'])->findOrFail($orderId);
 
         $items = $order->items->map(function ($orderItem) use ($order) {
@@ -84,6 +89,8 @@ class LogisticsController extends Controller
 
         return view('logistics.show', compact('order', 'items', 'notesWithItems', 'totalOverDeliveryQuantity'));
     }
+
+
 
     public function markAsReturned(Request $request)
     {
@@ -161,16 +168,17 @@ class LogisticsController extends Controller
         }
     }
 
-
-    public function createDeliveryNote(Request $request, $id)
+    public function createDeliveryNote(Request $request)
     {
+        $orderId = $request->input('order_id');
+
         $validated = $request->validate([
             'items' => 'required|array',
             'items.*.id' => 'required|exists:item,id',
             'items.*.quantity' => 'required|integer|min:0',
         ]);
 
-        $order = Order::with('items')->findOrFail($id);
+        $order = Order::with('items')->findOrFail($orderId);
 
         $deliveryNote = DeliveryNote::create([
             'user_id' => auth()->id(),
@@ -217,6 +225,7 @@ class LogisticsController extends Controller
                 $this->updateStoreItemStorage($item['id'], 5, $overDeliveredForCurrentNote);
             }
         }
+
         $isFulfilled = $order->items->every(function ($orderItem) use ($order) {
             $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {
                 return $note->deliveredItems->where('item_id', $orderItem->item_id);
@@ -233,9 +242,11 @@ class LogisticsController extends Controller
                 ->with('success', 'Order fulfilled and Delivery Note created successfully.');
         }
 
-        return redirect()->route('logistics.show', ['id' => $id])
+        return redirect()->route('logistics.show', ['id' => $orderId])
             ->with('success', 'Delivery Note created successfully.');
     }
+
+
     public function storeOverDelivery($deliveryNoteId, $itemId, $deliveredQuantity, $storeId)
     {
 
