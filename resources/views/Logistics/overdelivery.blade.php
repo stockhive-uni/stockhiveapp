@@ -7,11 +7,9 @@
 
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <form action="{{ route('logistics') }}" method="GET" class="inline-block">
-            @csrf
             <x-primary-button class="mb-4">Back to Dashboard</x-primary-button>
         </form>
         <form action="{{ route('logistics.returnedOverDeliveries') }}" method="GET" class="inline-block">
-            @csrf
             <x-primary-button class="mb-4">Returned Over Deliveries</x-primary-button>
         </form>
 
