@@ -10,7 +10,6 @@
     <div class="bg-stockhive-grey-dark text-white shadow-sm md:rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         @if (in_array("10", $permissions))
             <form action="{{ route('logistics.overdelivery') }}" method="GET" class="inline-block">
-                @csrf
                 <x-primary-button>Overdeliveries</x-primary-button>
             </form>
         @endif
@@ -35,7 +34,6 @@
                                 <td class="py-2 px-4">{{ $order->date_time }}</td>
                                 <td class="py-2 px-4 flex justify-center items-center gap-4">
                                     <form action="{{ route('stock-management.ShowOrderHistory') }}" method="GET">
-                                        @csrf
                                         <input type='hidden' name="order" value='{{$order->id}}'>
                                         <x-primary-button>View Order</x-primary-button>
                                     </form>

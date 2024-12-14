@@ -86,7 +86,6 @@ class LogisticsController extends Controller
         });
 
         $totalOverDeliveryQuantity = $items->sum('over_delivered');
-
         return view('logistics.show', compact('order', 'items', 'notesWithItems', 'totalOverDeliveryQuantity'));
     }
 

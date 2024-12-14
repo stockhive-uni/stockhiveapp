@@ -14,7 +14,6 @@
 
 
         <form action="{{ route('logistics') }}" method="GET">
-            @csrf
             <x-primary-button class="mt-4">Back to Dashboard</x-primary-button>
         </form>
     </div>
@@ -23,7 +22,6 @@
         <h2 class="text-xl font-bold mb-4">Items in Order</h2>
         <form method="POST" action="{{ route('logistics.createDeliveryNote') }}">
             @csrf
-            <!-- Include the order ID as a hidden field -->
             <input type="hidden" name="order_id" value="{{ $order->id }}">
 
             <table
