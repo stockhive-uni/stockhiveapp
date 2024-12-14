@@ -50,18 +50,26 @@
         </div>
 
         <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div>
-                        Number of sales:{{$numberOfSales}}
-                    </div>
-                    <div>
-                        Warehouse:{{$numberOfOrders}}
-                    </div>
-                    <div>
-                        Items Sold:{{$numberOfItemsSold}}
-                    </div>
-                    <div class="w-[48%] m-auto">
+                    <div class="w-[35%] m-auto">
                         <canvas id="chart-info"></canvas>
                     </div>
+
+                    <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                        <thead>
+                            <tr>
+                                <th>Sales</th>
+                                <th>Orders</th>
+                                <th>Items Sold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>{{$numberOfSales}}</th>
+                                <th>{{$numberOfOrders}}</th>
+                                <th>{{$numberOfItemsSold}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
         </div>
 
     </div>
@@ -75,7 +83,7 @@
         const labels = ["Sales", "Orders", "Items Sold"];
         let data = [numberOfSales, numberOfOrders, numberOfItemsSold];
 
-        // Colours used on bar chart.
+        // Colours used on doughnut chart.
         const colors = [
             '#ff4959', '#ff8c61', '#ffbf69', '#ffeb75', '#d3f261', '#a0e358', '#6cd352', '#4ccf4d', '#2bc94a', '#00c247', '#00b746', '#00a845'
         ];

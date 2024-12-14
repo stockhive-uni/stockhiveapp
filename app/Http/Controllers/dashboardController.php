@@ -27,7 +27,7 @@ class dashboardController extends Controller
         $numberOfItemsSold = DB::table('transaction_item')
         ->join('transaction', 'transaction.id', '=', 'transaction_item.transaction_id')
         ->where('transaction.store_id', '=', Auth::user()->store_id)
-        ->count();
+        ->sum('transaction_item.quantity');
 
         //calculate the total number of items ordered in that order
         return (view('dashboard', ['orderHistory' => $orderHistory, 'numberOfOrders' => $numberOfOrders, 'numberOfSales' => $numberOfSales, 'numberOfItemsSold' => $numberOfItemsSold]));
