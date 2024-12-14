@@ -115,6 +115,13 @@ class SalesController extends Controller
                     'quantity' => $value,
                     'price' => $price->price
                 ]);
+
+                DB::table('store_item_storage')
+                    ->join("store_item", "store_item.id", "=", "store_item_storage.store_item_id")
+                    ->join("item", "item.id", "=", "store_item.item_id")
+                    ->where("store_item_storage.location_id", "=", "4")
+                    ->where('item.id', $key)
+                    ->decrement('quantity', $value);
             }
             $message = "Transaction successfully processed";
         }

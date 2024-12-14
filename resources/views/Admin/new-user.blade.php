@@ -1,22 +1,33 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h1 class="font-semibold text-3xl text-white text-center leading-tight">
             {{ __('New User') }}
-        </h2>
+        </h1>
     </x-slot>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+    @if (isset($error))
+        <p class="text-error">{{ $error }}</p>
+    @endif
     <h1 class="text-2xl font-bold text-center pb-4">Info:</h1>
     <form action="{{ route('admin.addNewUser') }}" method="POST">
         @csrf
-        <div class="flex items-center space-x-2">
-            <h2>First Name:</h2>
-            <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="first_name">
-            <h2>Last Name:</h2>
-            <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="last_name">
-            <h2>Email:</h2>
-            <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="email">
-            <h2>Password:</h2>
-            <input type="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent"name="password">
+        <div class="lg:flex lg:items-center lg:space-x-2">
+            <div>
+                <h2>First Name:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="first_name">
+            </div>
+            <div>
+                <h2>Last Name:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="last_name">
+            </div>
+            <div>
+                <h2>Email:</h2>
+                <input type="text" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent" name="email">
+            </div>
+            <div>
+                <h2>Password:</h2>
+                <input type="password" class="bg-stockhive-grey rounded-lg text-white border-2 hover:shadow-bxs transition-all hover:border-accent"name="password">
+            </div>
         </div>
         <h1 class="text-2xl font-bold text-center py-8">Roles & Permissions:</h1>
             @csrf

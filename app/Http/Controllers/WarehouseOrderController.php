@@ -71,37 +71,48 @@ class WarehouseOrderController extends Controller
 
     public function toOverview(Request $request) 
     {
-        $ids = $request->id;
-        $quantities = $request->quantity;
-
-        $ids = array_map('intval', $ids);
-        $quantities = array_map('intval', $quantities);
-
-        $totals = [];
-
-        // Creates a dictionary for duplicate items
-        foreach ($ids as $index => $id) {
-            if (isset($totals[$id])) {
-                $totals[$id] += $quantities[$index];
-            } else {
-                $totals[$id] = $quantities[$index];
+        if ($request->id != null) {
+            $ids = $request->id;
+            $quantities = $request->quantity;
+    
+            $ids = array_map('intval', $ids);
+            $quantities = array_map('intval', $quantities);
+    
+            $totals = [];
+    
+            // Creates a dictionary for duplicate items
+            foreach ($ids as $index => $id) {
+                if (isset($totals[$id])) {
+                    $totals[$id] += $quantities[$index];
+                } else {
+                    $totals[$id] = $quantities[$index];
+                }
             }
+            ksort($totals);
+            
+            $ItemQty = array_values($totals);
+    
+            $totalPrice = $request->items;
+            $totalItems = count($totals);
+            $deliveryDate = now()->addDay(3);
+    
+            // Jacobs code
+            $stock = new Collection();
+            $collect =  Item::whereIn('id', array_keys($totals))->with('department')->get(); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
+            $stock->push($collect);
+    
+            //overview stuff here like total cost, delivery date, total items
+            return view('StockManager.overview',['items' => $stock, 'ItemQty' => $ItemQty, 'stock' => $stock, 'totalPrice' => $totalPrice, 'totalItems' => $totalItems, 'deliveryDate' => $deliveryDate]);
         }
-        ksort($totals);
-        
-        $ItemQty = array_values($totals);
+        else {
+            $items = DB::table('item')
+                ->join('store_item', 'store_item.item_id', '=', 'item.id')
+                ->where('store_item.store_id', '=', Auth::User()->store_id)
+                ->select('item.id', 'item.name', 'store_item.price')
+                ->get();
 
-        $totalPrice = $request->items;
-        $totalItems = count($totals);
-        $deliveryDate = now()->addDay(3);
-
-        // Jacobs code
-        $stock = new Collection();
-        $collect =  Item::whereIn('id', array_keys($totals))->with('department')->get(); //originally had this very inefficient as it would fetch querys one by one, until i found whereIn which goes through the array of item ids:https://laravel.com/docs/11.x/eloquent-collections#method-intersect 
-        $stock->push($collect);
-
-        //overview stuff here like total cost, delivery date, total items
-        return view('StockManager.overview',['items' => $stock, 'ItemQty' => $ItemQty, 'stock' => $stock, 'totalPrice' => $totalPrice, 'totalItems' => $totalItems, 'deliveryDate' => $deliveryDate]);
+            return view('StockManager.order', compact('items'), ["error" => "Order unsuccessful, no items were selected"]);
+        }
     }
 
     /**
