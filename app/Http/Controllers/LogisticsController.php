@@ -37,7 +37,7 @@ class LogisticsController extends Controller
 
     public function show(Request $request)
     {
-        $orderId = $request->input('orderId');
+        $orderId = $request->input('order');
         if (!$orderId) {
             return redirect()->route('logistics');
         }
