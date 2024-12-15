@@ -39,7 +39,7 @@
                                     </form>
                                     @if (in_array("7", $permissions))
                                         <form action="{{ route('logistics.show') }}" method="GET">
-                                            <input type="hidden" name="orderId" value="{{ $order->id }}">
+                                            <input type="hidden" name="order" value="{{ $order->id }}">
                                             <x-primary-button>Create Delivery Note</x-primary-button>
                                         </form>
                                     @endif
