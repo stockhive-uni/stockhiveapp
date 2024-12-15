@@ -44,7 +44,7 @@ class WarehouseOrderController extends Controller
         //insert into Order table
         DB::table('order')->insert([
             'user_id' => Auth::id(),
-            'store_id' => '1', //change this when store id is made properly
+            'store_id' => Auth::user()->store_id, //change this when store id is made properly
         ]
         );
 

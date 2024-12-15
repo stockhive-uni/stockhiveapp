@@ -34,7 +34,7 @@ class LoginTest extends TestCase {
     // Ensures that a user cannot login with an invalid password
     public function test_invalid_password() {
         $response = $this->post('/login', [
-            'email' => 'test@email.com',
+            'email' => 'Manager1@email.com',
             'password' => 'password' // Incorrect password
         ]);
         $response->assertSessionHasErrors();

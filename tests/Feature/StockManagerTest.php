@@ -11,7 +11,7 @@ class StockManagerTest extends TestCase {
     // Log in with a user with stock management perms (with an already created user)
     public function test_login_as_stock_manager() {
         $response = $this->post('/login', [
-            'email' => 'test@email.com',
+            'email' => 'Manager1@email.com',
             'password' => '123'
         ]);
         // Check that the user was redirected to the dashboard, meaning they are logged in
@@ -20,7 +20,7 @@ class StockManagerTest extends TestCase {
 
     // Test that the stock manager can select items and order.
     public function test_select_items_to_order() {
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Get items from the database
         $items = Item::whereIn('id', [1, 2, 3])->get();
@@ -38,7 +38,7 @@ class StockManagerTest extends TestCase {
     
     // Test that the stock manager can generate a report on multiple items.
     public function test_generate_report_multiple_items() {
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $items = Item::whereIn('id', [1, 2, 3])->get();
         $itemID = $items->pluck('id')->toArray();
@@ -72,7 +72,7 @@ class StockManagerTest extends TestCase {
 
     // Generate a test report on a single item.
     public function test_generate_report_singular_item() {
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         $items = Item::whereIn('id', [1, 2, 3])->get();
         $itemID = $items->pluck('id')->toArray();
