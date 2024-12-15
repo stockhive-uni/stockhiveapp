@@ -65,6 +65,7 @@ class ItemController extends Controller
                     $query = DB::table('Transaction_Item') // Use laravel's query builder. https://www.google.com/search?client=firefox-b-d&q=laravel+query+builder
                         ->join('Transaction', 'Transaction_Item.transaction_id', '=', 'Transaction.id')
                         ->where('Transaction_Item.item_id', $id)
+                        ->where('store_id', '=', Auth::user()->store_id)
                         ->select('Transaction_Item.quantity', 'Transaction_Item.price', 'Transaction.date_time')
                         ->get();
     
