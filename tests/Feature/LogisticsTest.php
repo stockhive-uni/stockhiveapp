@@ -88,7 +88,7 @@ class LogisticsTest extends TestCase {
         // Response
         $order->refresh();
         $this->assertEquals(1, $order->fulfilled);
-        $response = $this->get(route('logistics.show', $order->id));
+        $response = $this->get(route('logistics.show', ['order' => $order->id]));
         $response->assertSuccessful();
     }
 }
