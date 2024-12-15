@@ -24,7 +24,8 @@ class allowAccess
         $storeIdFromOrder = Order::where('id', '=', $orderIdFromURL)->value('store_id');
 
         if (Auth::user()->store_id != $storeIdFromOrder) {
-            redirect()->route('dashboard');
+            dd($storeIdFromOrder, Auth::user()->store_id);
+            return redirect()->route('dashboard');
         }        
 
         return $next($request);

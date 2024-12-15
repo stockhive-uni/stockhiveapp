@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Order;
-use App\Models\DeliveredItem;
 use App\Models\DeliveryNote;
 use App\Models\OverDelivery;
+use Illuminate\Http\Request;
+use App\Models\DeliveredItem;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LogisticsController extends Controller
 {
     public function index()
     {
         $orders = Order::where('fulfilled', 0)
+            ->where('store_id', '=', Auth::user()->store_id)
             ->orderBy('date_time', 'desc')
             ->get();
 

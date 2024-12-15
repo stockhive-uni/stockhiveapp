@@ -14,6 +14,7 @@ use App\Http\Controllers\StockSortController;
 use App\Http\Controllers\UsersSortController;
 use App\Http\Controllers\WarehouseOrderController;
 use App\Http\Middleware\allowAccess;
+use App\Http\Middleware\allowSalesAccess;
 
 Route::get('/', function () {
     return view('welcome');
@@ -71,6 +72,7 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
         ->name('sales.createSale');
 
     Route::get('/sales/view-details', [SalesController::class, 'viewDetails'])
+        ->middleware(allowSalesAccess::class)
         ->name('sales.viewDetails');
 
     Route::any('/sales/download-invoice', [SalesController::class, 'downloadInvoice'])
@@ -86,13 +88,12 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::get('/logistics/returned-overdeliveries', [LogisticsController::class, 'returnedOverDeliveries'])->name('logistics.returnedOverDeliveries');
     Route::get('/logistics/returned-items', [LogisticsController::class, 'returnedItems'])->name('logistics.returnedItems');
     Route::get('/logistics/returned-items', [LogisticsController::class, 'returnedItems'])->name('logistics.returnedItems');
-
     Route::post('/logistics/overdelivery/return', [LogisticsController::class, 'markAsReturned'])->name('logistics.return');
+    Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
+
     Route::middleware(allowAccess::class)->group(function () {
-        Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
         Route::get('/logistics/show', [LogisticsController::class, 'show'])->name('logistics.show');
         Route::post('/logistics/create-delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
-
     });
 
     // Inventory
