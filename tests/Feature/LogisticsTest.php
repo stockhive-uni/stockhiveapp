@@ -11,7 +11,7 @@ class LogisticsTest extends TestCase {
     
     public function test_display_unfulfilled_orders_on_page() {
         // Auth
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Create unfulfilled order
         Order::factory()->create([
@@ -29,7 +29,7 @@ class LogisticsTest extends TestCase {
 
     public function test_create_delivery() {
         // Auth
-        $user = User::where('email', 'test@email.com')->first();
+        $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Factory
         $order = Order::factory()->create([ // Unfulfilled order
