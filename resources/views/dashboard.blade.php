@@ -25,7 +25,6 @@
                             <th>Order ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th>Order Date</th>
                             <th>Date Time</th>
                             <th>Details</th>
                         </tr>
@@ -38,7 +37,6 @@
                             <th>{{$order->id}}</th>
                             <th>{{$order->users->first_name}}</th>
                             <th>{{$order->users->last_name}}</th>
-                            <th>{{$order->order_item->count()}}</th>
                             <input type='hidden' name="order" value='{{$order->id}}'></input>
                             <th>{{$order->date_time}}</th>
                             <th><x-primary-button>Details</x-primary-button></th>
@@ -46,42 +44,95 @@
                         @endforeach
                         </tr>
                     </tbody>
-                </table>
+                </table>              
         </div>
 
-        <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="w-[35%] m-auto">
-                        <canvas id="chart-info"></canvas>
+        <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
+            <div class="flex flex-wrap justify-between gap-8">
+                <div class="w-full lg:w-[45%]">
+                    <div class="w-[60%] m-auto">
+                        <canvas id="chart-info1"></canvas>
                     </div>
-
                     <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                         <thead>
                             <tr>
-                                <th>Sales</th>
-                                <th>Orders</th>
-                                <th>Items Sold</th>
+                                <th>Items Sold This Month</th>
+                                <th>Items Sold Last Month</th>
+                                <th>% Change</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th>{{$numberOfSales}}</th>
-                                <th>{{$numberOfOrders}}</th>
-                                <th>{{$numberOfItemsSold}}</th>
+                                <th>{{$ItemsSoldThisMonth}}</th>
+                                <th>{{$ItemsSoldLastMonth}}</th>
+                                <th>{{number_format(($ItemsSoldThisMonth/$ItemsSoldLastMonth)*100, 1)}}</th>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            
+                <div class="w-full lg:w-[45%]">
+                    <div class="w-[60%] m-auto">
+                        <canvas id="chart-info2"></canvas>
+                    </div>
+                    <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                        <thead>
+                            <tr>
+                                <th>Sales This Month</th>
+                                <th>Sales Last Month</th>
+                                <th>% Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>{{$salesThisMonth}}</th>
+                                <th>{{$salesLastMonth}}</th>
+                                <th>{{number_format(($salesThisMonth/$salesLastMonth)*100, 1)}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="w-[65%] m-auto">
+                <canvas id="chart-info3"></canvas>
+            </div>
+            <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
+                <thead>
+                    <tr>
+                        <th>Fulfilled Orders</th>
+                        <th>Deliveries needing attention</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{{$deliveriesMade}}</th>
+                        <th>{{$deliveriesToComplete}}</th>
+                    </tr>
+                </tbody>
+
+            </table>
         </div>
 
     </div>
 
     <!-- Chart.JS scripting -->
     <script>
-        const numberOfSales = <?php echo json_encode($numberOfSales); ?>;
-        const numberOfOrders = <?php echo json_encode($numberOfOrders); ?>;
-        const numberOfItemsSold = <?php echo json_encode($numberOfItemsSold); ?>;
+        const ItemsSoldThisMonth = <?php echo json_encode($ItemsSoldThisMonth); ?>;
+        const ItemsSoldLastMonth = <?php echo json_encode($ItemsSoldLastMonth); ?>;
 
-        const labels = ["Sales", "Orders", "Items Sold"];
-        let data = [numberOfSales, numberOfOrders, numberOfItemsSold];
+        const salesThisMonth = <?php echo json_encode($salesThisMonth); ?>;
+        const salesLastMonth = <?php echo json_encode($salesLastMonth); ?>;
+
+        const deliveriesMade = <?php echo json_encode($deliveriesMade); ?>;
+        const deliveriesToComplete = <?php echo json_encode($deliveriesToComplete); ?>;
+
+
+        const labels1 = ["Sold This Month", "Sold Last Month"];
+        let data1 = [ItemsSoldThisMonth, ItemsSoldLastMonth];
 
         // Colours used on doughnut chart.
         const colors = [
@@ -89,14 +140,14 @@
         ];
 
         // Generate the chart
-        const salesOrderInfo = document.getElementById('chart-info').getContext('2d');
+        const salesOrderInfo1 = document.getElementById('chart-info1').getContext('2d');
         new Chart(
-            salesOrderInfo, {
+            salesOrderInfo1, {
                 type: 'doughnut',
                 data: {
-                    labels: labels,
+                    labels: labels1,
                     datasets: [{
-                        data: data,
+                        data: data1,
                         backgroundColor: colors,
                         borderColor: '#000000',
                     }]
@@ -106,7 +157,96 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Order and Sales information',
+                            text: 'Items',
+                            color: 'white',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                }
+            }
+        )
+
+        const labels2 = ["Sales This Month", "Sales Last Month"];
+        let data2 = [salesThisMonth, salesLastMonth];
+
+        const salesOrderInfo2 = document.getElementById('chart-info2').getContext('2d');
+        //sales chart
+        new Chart(
+            salesOrderInfo2, {
+                type: 'doughnut',
+                data: {
+                    labels: labels2,
+                    datasets: [{
+                        data: data2,
+                        backgroundColor: colors,
+                        borderColor: '#000000',
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Sales',
+                            color: 'white',
+                            font: {
+                                size: 18
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: 'white',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                }
+            }
+        )
+
+        const labels3 = ["Fulfilled Orders", "Deliveries needing attention"];
+        let data3 = [deliveriesMade,deliveriesToComplete];
+
+        const salesOrderInfo3 = document.getElementById('chart-info3').getContext('2d');
+        //sales chart
+        new Chart(
+            salesOrderInfo3, {
+                type: 'bar',
+                data: {
+                    labels: labels3,
+                    datasets: [{
+                        label: 'Deliveries Overview',
+                        data: data3,
+                        backgroundColor: colors,
+                        borderColor: '#000000',
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Orders and deliveries',
                             color: 'white',
                             font: {
                                 size: 18

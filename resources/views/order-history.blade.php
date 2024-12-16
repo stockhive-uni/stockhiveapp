@@ -20,7 +20,7 @@
             </tr>
         </tbody>
     </table>
-    
+   
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <p>Items:</p>
