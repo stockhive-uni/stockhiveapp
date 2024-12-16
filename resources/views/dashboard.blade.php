@@ -104,7 +104,7 @@
 
         @if (in_array("7", $permissions))
         <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="w-[65%] m-auto">
+            <div class="w-[65%] m-auto flex self-center">
                 <canvas id="chart-info3"></canvas>
             </div>
             <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
@@ -129,26 +129,24 @@
 
     <!-- Chart.JS scripting -->
     <script>
-        const ItemsSoldThisMonth = <?php echo json_encode($ItemsSoldThisMonth); ?>;
-        const ItemsSoldLastMonth = <?php echo json_encode($ItemsSoldLastMonth); ?>;
+        document.addEventListener('DOMContentLoaded', function () {
 
-        const salesThisMonth = <?php echo json_encode($salesThisMonth); ?>;
-        const salesLastMonth = <?php echo json_encode($salesLastMonth); ?>;
+    
 
-        const deliveriesMade = <?php echo json_encode($deliveriesMade); ?>;
-        const deliveriesToComplete = <?php echo json_encode($deliveriesToComplete); ?>;
-
-
-        const labels1 = ["Sold This Month", "Sold Last Month"];
-        let data1 = [ItemsSoldThisMonth, ItemsSoldLastMonth];
-
+        const permissionsArray = <?php echo json_encode($permissions); ?>;
         // Colours used on doughnut chart.
         const colors = [
             '#ff4959', '#ff8c61', '#ffbf69', '#ffeb75', '#d3f261', '#a0e358', '#6cd352', '#4ccf4d', '#2bc94a', '#00c247', '#00b746', '#00a845'
         ];
 
         // Generate the chart
-        const salesOrderInfo1 = document.getElementById('chart-info1').getContext('2d');
+        if (permissionsArray.includes(5)) {
+            const ItemsSoldThisMonth = <?php echo json_encode($ItemsSoldThisMonth); ?>;
+            const ItemsSoldLastMonth = <?php echo json_encode($ItemsSoldLastMonth); ?>;
+
+            const labels1 = ["Sold This Month", "Sold Last Month"];
+            let data1 = [ItemsSoldThisMonth, ItemsSoldLastMonth];
+            const salesOrderInfo1 = document.getElementById('chart-info1').getContext('2d');
         new Chart(
             salesOrderInfo1, {
                 type: 'doughnut',
@@ -187,10 +185,16 @@
                 }
             }
         )
+        }
 
-        const labels2 = ["Sales This Month", "Sales Last Month"];
+        if (permissionsArray.includes(5)) {
+            const salesThisMonth = <?php echo json_encode($salesThisMonth); ?>;
+        const salesLastMonth = <?php echo json_encode($salesLastMonth); ?>;
+
+
+            const labels2 = ["Sales This Month", "Sales Last Month"];
         let data2 = [salesThisMonth, salesLastMonth];
-
+            
         const salesOrderInfo2 = document.getElementById('chart-info2').getContext('2d');
         //sales chart
         new Chart(
@@ -231,8 +235,12 @@
                 }
             }
         )
+        }
 
-        const labels3 = ["Fulfilled Orders", "Deliveries needing attention"];
+        if (permissionsArray.includes(7)) {
+            const deliveriesMade = <?php echo json_encode($deliveriesMade); ?>;
+            const deliveriesToComplete = <?php echo json_encode($deliveriesToComplete); ?>;
+            const labels3 = ["Fulfilled Orders", "Deliveries needing attention"];
         let data3 = [deliveriesMade,deliveriesToComplete];
 
         const salesOrderInfo3 = document.getElementById('chart-info3').getContext('2d');
@@ -276,6 +284,8 @@
                 }
             }
         )
+        }
+        });
     </script>
 
 </x-app-layout>
