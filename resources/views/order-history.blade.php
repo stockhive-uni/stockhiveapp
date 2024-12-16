@@ -20,7 +20,7 @@
             </tr>
         </tbody>
     </table>
-    
+   
     </div>
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
         <p>Items:</p>
@@ -35,12 +35,13 @@
             </thead>
             <tbody>
                 @foreach ($orderHistoryItems as $HistoryItem)
-                <td>{{$HistoryItem->order_id}}</td>
-                <td>{{$HistoryItem->name}}</td>
-                <td>{{$HistoryItem->ordered}}</td>
-                <td>£{{$HistoryItem->price}}</td>
-                @endforeach
+                <tr>
+                    <td>{{$HistoryItem->order_id}}</td>
+                    <td>{{$HistoryItem->name}}</td>
+                    <td>{{$HistoryItem->ordered}}</td>
+                    <td>£{{$HistoryItem->price}}</td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

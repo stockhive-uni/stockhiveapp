@@ -20,6 +20,7 @@ class InventoryController extends Controller
         ->join('item', 'store_item.item_id', '=' , 'item.id')
         ->join('department', 'item.department_id', '=','department.id')
         ->whereColumn('store_item_storage.quantity','<=','store_item.low-stock-amount') //found that using standard where does not work as that is only for comparing a field to something you entered, use whereColumn to compare to columns. Found here: https://laravel-code.tips/you-can-use-eloquent-wherecolumn-to-compare-columns-to-each-other/
+        ->where('store_item.store_id', '=', Auth::user()->store_id)
         ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName','store_item.low-stock-amount AS lowStockNum','store_item_storage.quantity')
         ->get();
 
@@ -32,6 +33,7 @@ class InventoryController extends Controller
         ->join('department', 'item.department_id', '=', 'department.id')
         ->join('location', 'location.id', '=', 'store_item_storage.location_id')
         ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
+        ->where('store_item.store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
         ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location', 'store_item.last_spot_checked as last_spot_checked')
         ->limit(3)

@@ -24,7 +24,7 @@
         </h2>
     
         
-        @if(($lowStockItemWarning == "[]") && ($spotCheckItemWarning == "[]") ) 
+        @if(($lowStockItemWarning == "[]") && ($spotCheckItemWarning == "[]") && ($noStockWarning == "[]")) 
         <div>No Notifications.</div>
     
         @endif

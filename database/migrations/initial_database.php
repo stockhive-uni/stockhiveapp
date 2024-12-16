@@ -37,35 +37,34 @@ return new class extends Migration
             $table->timestamps();
         });
         DB::table('users')->insert([
-            ['id' => '1', 'store_id' => '1', 'first_name' => 'First', 'last_name' => 'Last', 'email' => 'test@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '2', 'store_id' => '1', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '3', 'store_id' => '1', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '4', 'store_id' => '1', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '5', 'store_id' => '1', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '6', 'store_id' => '1', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '7', 'store_id' => '1', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '8', 'store_id' => '1', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '9', 'store_id' => '2', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '10', 'store_id' => '2', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '11', 'store_id' => '2', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '12', 'store_id' => '2', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '13', 'store_id' => '2', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '14', 'store_id' => '2', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '15', 'store_id' => '2', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '16', 'store_id' => '3', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '17', 'store_id' => '3', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '18', 'store_id' => '3', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '19', 'store_id' => '3', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '20', 'store_id' => '3', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '21', 'store_id' => '3', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '22', 'store_id' => '3', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '23', 'store_id' => '4', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '24', 'store_id' => '4', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '25', 'store_id' => '4', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '26', 'store_id' => '4', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '27', 'store_id' => '4', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '28', 'store_id' => '4', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
-            ['id' => '29', 'store_id' => '4', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18']
+            ['id' => '1', 'store_id' => '1', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '2', 'store_id' => '1', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '3', 'store_id' => '1', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '4', 'store_id' => '1', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '5', 'store_id' => '1', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '6', 'store_id' => '1', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '7', 'store_id' => '1', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin1@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '8', 'store_id' => '2', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '9', 'store_id' => '2', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '10', 'store_id' => '2', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '11', 'store_id' => '2', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '12', 'store_id' => '2', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '13', 'store_id' => '2', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '14', 'store_id' => '2', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin2@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '15', 'store_id' => '3', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '16', 'store_id' => '3', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '17', 'store_id' => '3', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '18', 'store_id' => '3', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '19', 'store_id' => '3', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '20', 'store_id' => '3', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '21', 'store_id' => '3', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin3@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '22', 'store_id' => '4', 'first_name' => 'Manager', 'last_name' => 'Name', 'email' => 'Manager4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '23', 'store_id' => '4', 'first_name' => 'Salesperson', 'last_name' => 'Name', 'email' => 'Salesperson4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '24', 'store_id' => '4', 'first_name' => 'Purchaser', 'last_name' => 'Name', 'email' => 'Purchaser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '25', 'store_id' => '4', 'first_name' => 'Stocker', 'last_name' => 'Name', 'email' => 'Stocker4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '26', 'store_id' => '4', 'first_name' => 'WarehouseOperator', 'last_name' => 'Name', 'email' => 'WarehouseOperator4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '27', 'store_id' => '4', 'first_name' => 'Optimiser', 'last_name' => 'Name', 'email' => 'Optimiser4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18'],
+            ['id' => '28', 'store_id' => '4', 'first_name' => 'Admin', 'last_name' => 'Name', 'email' => 'Admin4@email.com', 'password' => '$2y$10$i27yIT02tT4MPs4rvTiT7eJcJ6xdxIJHghyjGmWWwNDocTWKZ5NZe', 'created_at' => '2024-11-13 18:43:18', 'updated_at' => '2024-11-13 18:43:18']
         ]);
 
         Schema::create('role', function (Blueprint $table) {
@@ -185,6 +184,13 @@ return new class extends Migration
             $table->timestamp('date_time');
             $table->string('card');
         });
+        DB::table('transaction')->insert([
+            ['id' => '1', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-11-13 14:37:09', 'card' => 'example card'],
+            ['id' => '2', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-10-13 14:37:09', 'card' => 'example card'],
+            ['id' => '3', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-09-13 14:37:09', 'card' => 'example card'],
+            ['id' => '4', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-08-13 14:37:09', 'card' => 'example card'],
+            ['id' => '5', 'user_id' => '1', 'store_id' => '1', 'date_time' => '2024-07-13 14:37:09', 'card' => 'example card']
+        ]);
 
         Schema::create('department', function (Blueprint $table) {
             $table->id()->primary();
@@ -239,6 +245,39 @@ return new class extends Migration
             $table->integer('quantity');
             $table->double('price');
         });
+        DB::table('transaction_item')->insert([
+            ['transaction_id' => '1', 'item_id' => '1', 'quantity' => '1', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '2', 'quantity' => '2', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '3', 'quantity' => '3', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '4', 'quantity' => '4', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '5', 'quantity' => '5', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '6', 'quantity' => '6', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '7', 'quantity' => '7', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '8', 'quantity' => '8', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '9', 'quantity' => '9', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '10', 'quantity' => '10', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '11', 'quantity' => '11', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '12', 'quantity' => '12', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '13', 'quantity' => '13', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '14', 'quantity' => '14', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '15', 'quantity' => '15', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '16', 'quantity' => '16', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '17', 'quantity' => '17', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '18', 'quantity' => '18', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '19', 'quantity' => '19', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '20', 'quantity' => '20', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '21', 'quantity' => '21', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '22', 'quantity' => '22', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '23', 'quantity' => '23', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '24', 'quantity' => '24', 'price' => '0.49'],
+            ['transaction_id' => '1', 'item_id' => '25', 'quantity' => '25', 'price' => '0.49'],
+            ['transaction_id' => '2', 'item_id' => '1', 'quantity' => '5', 'price' => '1.49'],
+            ['transaction_id' => '2', 'item_id' => '2', 'quantity' => '2', 'price' => '0.99'],
+            ['transaction_id' => '2', 'item_id' => '3', 'quantity' => '10', 'price' => '0.49'],
+            ['transaction_id' => '3', 'item_id' => '1', 'quantity' => '2', 'price' => '0.99'],
+            ['transaction_id' => '4', 'item_id' => '1', 'quantity' => '13', 'price' => '1.99'],
+            ['transaction_id' => '5', 'item_id' => '1', 'quantity' => '7', 'price' => '1.49']
+        ]);
 
         Schema::create('order', function (Blueprint $table) {
             $table->id()->primary();
