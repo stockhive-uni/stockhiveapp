@@ -18,6 +18,7 @@
                 </div>
             </div>
 
+            @if (count($orderHistory) > 0)
             <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
@@ -44,8 +45,9 @@
                         @endforeach
                         </tr>
                     </tbody>
-                </table>              
+                </table>   
         </div>
+        @endif
 
         <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
             <div class="flex flex-wrap justify-between gap-8">
