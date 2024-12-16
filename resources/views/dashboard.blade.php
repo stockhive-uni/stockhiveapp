@@ -1,4 +1,6 @@
 <x-app-layout>
+    @php global $permissions; @endphp
+    @include('components.get-permissions', ['id' => Auth::User()->id])
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -17,7 +19,7 @@
                     </form>
                 </div>
             </div>
-
+            @if (in_array("1", $permissions))
             <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
                 <table class="border-separate border-2 m-auto my-4 lg:w-[90%] w-full text-center border-grey hover:border-accent transition-all hover:shadow-bxs border-spacing-2 md:border-spacing-8 bg-stockhive-grey rounded-lg">
                     <thead>
@@ -46,7 +48,9 @@
                     </tbody>
                 </table>              
         </div>
+        @endif
 
+        @if (in_array("5", $permissions))
         <div class="bg-stockhive-grey-dark text-white shadow-sm my-8 rounded-lg mt-8 lg:w-[85%] w-full m-auto p-4">
             <div class="flex flex-wrap justify-between gap-8">
                 <div class="w-full lg:w-[45%]">
@@ -94,8 +98,9 @@
                 </div>
             </div>
         </div>
+        @endif
 
-
+        @if (in_array("7", $permissions))
         <div class="bg-stockhive-grey-dark p-8 text-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="w-[65%] m-auto">
                 <canvas id="chart-info3"></canvas>
@@ -116,6 +121,7 @@
 
             </table>
         </div>
+        @endif
 
     </div>
 
