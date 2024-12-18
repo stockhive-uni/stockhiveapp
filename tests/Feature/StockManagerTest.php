@@ -53,12 +53,12 @@ class StockManagerTest extends TestCase {
         // Make sure all the data is returned in the report.
         $response->assertViewHas('allresults', function ($allresults) use ($itemID) {
             foreach($itemID as $id) {
-                $foundItem = false; // Check if the item is found in the results
+                $foundItem = false;
                 foreach($allresults as $result) { 
                     foreach ($result['data'] as $month => $data) {
                         if (isset($data['total'])) {
                             $foundItem = true;
-                            break 2;  // Break out of both loops (back to the first foreach) to continue for the next item.
+                            break 2;  // Break out of both loops - https://www.php.net/manual/en/control-structures.break.php - Adam
                         }
                     }
                 }
@@ -67,7 +67,7 @@ class StockManagerTest extends TestCase {
                 }
             }
             return true;
-        }, 'ERROR: No items were found when generating the report.');
+        });
     }
 
     // Generate a test report on a single item.
@@ -92,6 +92,6 @@ class StockManagerTest extends TestCase {
                 }
             }
             return false;
-        }, 'ERROR: No items were found when generating the report.'); // Add an error message for if the test fails.
+        });
     }
 }

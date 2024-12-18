@@ -14,7 +14,7 @@ class LogisticsTest extends TestCase {
         $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
         // Create unfulfilled order
-        Order::factory()->create([
+        Order::factory()->create([ // Learnt factories from Laravel Docs - https://laravel.com/docs/11.x/eloquent-factories#instantiating-models - Adam
             'user_id' => $user->id,
             'store_id' => 1,
             'date_time' => now(),
@@ -66,18 +66,15 @@ class LogisticsTest extends TestCase {
             ]);
         }
         // Check if fulfilled
-        $items = $order->items->map(function ($orderItem) use ($order) {
+        $items = $order->items->map(function ($orderItem) use ($order) { // Taken/Repurposed from Isaac's LogisticsController.php - Adam
             $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {
                 return $note->deliveredItems->where('item_id', $orderItem->item_id);
             })->sum('quantity');
-    
             $quantityLeft = $orderItem->ordered - $deliveredQuantity;
-    
             return [
                 'quantity_left' => $quantityLeft,
             ];
         });
-    
         $allFulfilled = $items->every(function ($item) {
             return $item['quantity_left'] <= 0;
         });
@@ -85,6 +82,7 @@ class LogisticsTest extends TestCase {
         if ($allFulfilled) {
             $order->update(['fulfilled' => 1]);
         }
+        
         // Response
         $order->refresh();
         $this->assertEquals(1, $order->fulfilled);

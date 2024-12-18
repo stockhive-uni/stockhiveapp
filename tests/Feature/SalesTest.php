@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 
 class SalesTest extends TestCase {
-    protected $transactionId; // Placeholder for the transaction ID
+    protected $transactionId; // Placeholder for the transaction ID - Adam
     protected $storeId;
     use RefreshDatabase;
 
@@ -23,7 +23,7 @@ class SalesTest extends TestCase {
         // Auth
         $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
-        $this->storeId = 1;
+        $this->storeId = 1; // Use the placeholder variable.
         // Get items
         $items = DB::table('item')
             ->join('store_item', 'store_item.item_id', '=', 'item.id')
@@ -47,7 +47,7 @@ class SalesTest extends TestCase {
         // Auth
         $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
-        $this->transactionId = 1; // Define transaction ID from info on DB
+        $this->transactionId = 1; 
         // Get response
         $response = $this->get(route('sales.viewDetails', ['id' => $this->transactionId]));
         $response->assertStatus(200);
@@ -63,6 +63,6 @@ class SalesTest extends TestCase {
         // Response
         $response = $this->post(route('sales.downloadInvoice'), ['id' => $this->transactionId]);
         $response->assertStatus(200);
-        $response->assertHeader('Content-Type', 'application/pdf');
+        $response->assertHeader('Content-Type', 'application/pdf'); // Ensure downloaded content is a PDF - https://stackoverflow.com/a/53937452 + https://laravel.com/docs/11.x/http-tests#assert-header - Adam
     }
 }
