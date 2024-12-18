@@ -44,6 +44,7 @@
     @vite(['resources/js/jquery.js'])
 
     <script defer>
+        // Used knowledge gained from creating sales - Rob
         document.addEventListener("DOMContentLoaded", function () {
             const data = {!! json_encode($items) !!}; // Parse php $items into javascript json
 
