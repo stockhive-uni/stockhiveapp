@@ -11,6 +11,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 
+     * Made this by reading and learning Laravel's default code - Rob
      */
     public function up(): void
     {

@@ -49,7 +49,7 @@ class SalesController extends Controller
     }
 
     public function downloadInvoice(Request $request) {
-        // https://bagisto.com/en/how-to-generate-a-pdf-in-laravel-view/
+        // https://bagisto.com/en/how-to-generate-a-pdf-in-laravel-view/ - Rob
 
         $id = $request->id;
 

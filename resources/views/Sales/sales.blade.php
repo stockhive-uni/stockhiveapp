@@ -36,6 +36,7 @@
     @vite(['resources/js/jquery.js'])
     
     <script defer>
+        // https://www.w3schools.com/jquery/default.asp - Rob
         document.addEventListener("DOMContentLoaded", function () {
             const data = {!! json_encode($items) !!}; // Parse php $items into javascript json
 
