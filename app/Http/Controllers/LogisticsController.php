@@ -17,7 +17,7 @@ class LogisticsController extends Controller
         // Displays orders that aren't fulfilled 
         $orders = Order::where('fulfilled', 0)
             ->where('store_id', '=', Auth::user()->store_id)
-            ->with('user') 
+            ->with('user')
             ->orderBy('date_time', 'desc')
             ->get();
 
@@ -29,8 +29,8 @@ class LogisticsController extends Controller
         $orderId = $request->input('order');
 
         if (!$orderId) {
-        return redirect()->route('logistics')->with('error', 'Order ID is required');
-    }
+            return redirect()->route('logistics')->with('error', 'Order ID is required');
+        }
 
         // Get order with related data
         $order = Order::with(['user', 'items.item', 'deliveryNotes.deliveredItems'])->findOrFail($orderId);//https://laravel.com/docs/11.x/eloquent
@@ -69,14 +69,15 @@ class LogisticsController extends Controller
         foreach ($order->deliveryNotes as $note) {
             $deliveredItems = [];
             foreach ($note->deliveredItems as $deliveredItem) {
+                $overDelivery = null;
                 // Get the corresponding over-delivery for the item
                 foreach ($overDeliveries as $od) {
                     if ($od->delivery_note_id === $note->id && $od->item_id === $deliveredItem->item_id) {
                         $overDelivery = $od;
-                        break;  
+                        break;
                     }
                 }
-        
+
                 // If an over-delivery exists, retrieve its quantity
                 $overDeliveredQuantity = $overDelivery ? $overDelivery->quantity : 0;
 
@@ -126,10 +127,10 @@ class LogisticsController extends Controller
 
             // Calculate the delivered quantity so far
             $deliveredQuantity = DeliveredItem::join('delivery_note', 'delivered_item.delivery_note_id', '=', 'delivery_note.id')
-            ->where('delivery_note.order_id', $order->id)
-            ->where('delivered_item.item_id', $item['id'])
-            ->sum('delivered_item.quantity');
-        
+                ->where('delivery_note.order_id', $order->id)
+                ->where('delivered_item.item_id', $item['id'])
+                ->sum('delivered_item.quantity');
+
 
             // Calculate remaining quantity needed for the order
             $remainingNeeded = max(0, $orderItem->ordered - $deliveredQuantity);
@@ -145,7 +146,7 @@ class LogisticsController extends Controller
                 $overDelivered = $item['quantity'];
             }
 
-            
+
             if ($validDelivery > 0) {
                 DB::table('delivered_item')->insert([
                     'delivery_note_id' => $deliveryNoteId,
@@ -176,7 +177,7 @@ class LogisticsController extends Controller
                 }
             }
 
-          
+
             if ($overDelivered > 0) {
                 DB::table('over_deliveries')->insert([
                     'delivery_note_id' => $deliveryNoteId,
@@ -193,11 +194,11 @@ class LogisticsController extends Controller
                     ->where('location_id', 5)
                     ->first();
 
-                    if ($existingRecord) {
-                        $newQuantity = $existingRecord->quantity + $overDelivered;
-                    } else {
-                        $newQuantity = $overDelivered;
-                    }
+                if ($existingRecord) {
+                    $newQuantity = $existingRecord->quantity + $overDelivered;
+                } else {
+                    $newQuantity = $overDelivered;
+                }
                 $newQuantity = max(0, $newQuantity);
 
 
@@ -236,16 +237,86 @@ class LogisticsController extends Controller
             $order->save();
         }
 
-        // Redirect to the order page or delivery notes list with a success message
+        // Redirect to the order page 
         return redirect()->route('logistics.showdeliverynotes', $order->id)->with('success', 'Delivery Note created successfully!');
     }
 
     public function showOverDeliveries()
     {
-        $overDeliveries = OverDelivery::where('returned', 0)
+        $overDeliveries = OverDelivery::with([
+            'deliveryNote.order.orderItems',
+            'deliveryNote.deliveredItems'
+        ])
+            ->where('returned', 0)
             ->where('store_id', Auth::user()->store_id)
             ->get();
 
-        return view('logistics.overdeliveries', compact('overDeliveries'));
+        return view('logistics.overdelivery', compact('overDeliveries'));
     }
+
+    public function returnedOverDeliveries()
+    {
+        $returnedOverDeliveries = OverDelivery::where('returned', true)
+            ->with(['deliveryNote', 'item', 'store'])
+            ->get();
+
+        return view('logistics.returned-overdeliveries', compact('returnedOverDeliveries'));
+    }
+
+    public function returnOverDeliveries(Request $request)
+    {
+       
+        $validated = $request->validate([
+            'over_deliveries' => 'required|array',
+        ]);
+
+        DB::transaction(function () use ($validated) {
+            foreach ($validated['over_deliveries'] as $deliveryNoteId => $items) {
+                foreach ($items as $itemId => $returned) {
+                    $overDelivery = OverDelivery::where('delivery_note_id', $deliveryNoteId)
+                        ->where('item_id', $itemId)
+                        ->first();
+
+                    if ($overDelivery && !$overDelivery->returned) {
+                   
+                        $overDelivery->returned = true;
+                        $overDelivery->save();
+
+                    
+                        $existingRecord = DB::table('store_item_storage')
+                            ->where('store_item_id', $itemId)
+                            ->where('location_id', 5) 
+                            ->first();
+
+                        
+                            if ($existingRecord) {
+                                $newQuantity = $existingRecord->quantity - $overDelivery->quantity;
+                                $newQuantity = max($newQuantity, 0); // Ensure quantity is not negative
+                            } else {
+                                $newQuantity = 0;
+                            }
+
+                        
+                        if ($existingRecord) {
+                            DB::table('store_item_storage')
+                                ->where('store_item_id', $itemId)
+                                ->where('location_id', 5)
+                                ->update(['quantity' => $newQuantity]);
+                        } else {
+                            DB::table('store_item_storage')->insert([
+                                'store_item_id' => $itemId,
+                                'location_id' => 5,
+                                'quantity' => $newQuantity,
+                            ]);
+                        }
+                    }
+                }
+            }
+        });
+
+        return redirect()->route('logistics.overdelivery')
+            ->with('success', 'Selected overdelivered items have been marked as returned and inventory updated.');
+    }
+
+
 }

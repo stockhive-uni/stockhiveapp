@@ -20,8 +20,9 @@ class Order extends Model
 
     public function deliveryNotes()
     {
-        return $this->hasMany(DeliveryNote::class);
+        return $this->hasMany(DeliveryNote::class, 'order_id');
     }
+    
 
     public function deliveredItems()
     {
