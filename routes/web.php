@@ -84,7 +84,7 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     // Logistics
 
     Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics');
-    Route::get('/logistics/showdeliverynotes', [LogisticsController::class, 'Showdeliverynotes'])->name('logistics.showdeliverynotes');
+    Route::get('/logistics/showdeliverynotes', [LogisticsController::class, 'ShowDeliveryNotes'])->name('logistics.showdeliverynotes');
     Route::post('/store-overdelivery', [LogisticsController::class, 'storeOverDelivery'])->name('logistics.storeOverDelivery');
     Route::post('/logistics/create-delivery-note', [LogisticsController::class, 'createDeliveryNote'])->name('logistics.createDeliveryNote');
     Route::get('/logistics/returned-overdeliveries', [LogisticsController::class, 'returnedOverDeliveries'])->name('logistics.returnedOverDeliveries');
@@ -92,10 +92,10 @@ Route::middleware(['auth', 'verified', CheckUserCategory::class])->group(functio
     Route::post('/logistics/overdelivery/return', [LogisticsController::class, 'returnOverDeliveries'])->name('logistics.return');
     Route::get('/logistics/overdelivery', [LogisticsController::class, 'showOverDeliveries'])->name('logistics.overdelivery');
 
-    Route::middleware(allowAccess::class)->group(function () {
-        Route::get('/logistics/show', [LogisticsController::class, 'show'])->name('logistics.show');
+    //Route::middleware(allowAccess::class)->group(function () {
+    //    Route::get('/logistics/show', [LogisticsController::class, 'show'])->name('logistics.show');
 
-    });
+    //});
 
    
     

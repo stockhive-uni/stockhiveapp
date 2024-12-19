@@ -8,7 +8,7 @@
     <div class="bg-stockhive-grey-dark text-white shadow-sm rounded-lg mt-8 lg:w-[85%] w-full m-auto p-6">
         <h1 class="text-2xl font-bold mb-4">Order ID: {{ $order->id }}</h1>
         <p><strong>Order Date/Time:</strong> {{ $order->date_time }}</p>
-        <p><strong>Name:</strong> {{ $order->first_name }} {{ $order->last_name }}</p>
+        <p><strong>Name:</strong> {{ $order->user->first_name }} {{ $order->user->last_name }}</p>
 
 
 
@@ -30,7 +30,7 @@
                         <th class="p-2">Item Name</th>
                         <th class="p-2">Ordered Quantity</th>
                         <th class="p-2">Delivered Quantity</th>
-                     <th class="p-2">Over Delivered Quantity</th>
+                        <th class="p-2">Over Delivered Quantity</th>
                         <th class="p-2">Arrived quantity</th>
                     </tr>
                 </thead>
