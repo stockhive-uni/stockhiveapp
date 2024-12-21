@@ -3,13 +3,16 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Deliverynote;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 
-class LogisticsTest extends TestCase {
+class LogisticsTest extends TestCase
+{
     use RefreshDatabase;
-    
-    public function test_display_unfulfilled_orders_on_page() {
+
+    public function test_display_unfulfilled_orders_on_page()
+    {
         // Auth
         $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
@@ -27,7 +30,8 @@ class LogisticsTest extends TestCase {
         $response->assertViewHas('orders');
     }
 
-    public function test_create_delivery() {
+    public function test_create_delivery()
+    {
         // Auth
         $user = User::where('email', 'Manager1@email.com')->first();
         $this->actingAs($user);
@@ -65,20 +69,20 @@ class LogisticsTest extends TestCase {
                 'quantity' => $quantity,
             ]);
         }
-        // Check if fulfilled
-        $items = $order->items->map(function ($orderItem) use ($order) { // Taken/Repurposed from Isaac's LogisticsController.php - Adam
-            $deliveredQuantity = $order->deliveryNotes->flatMap(function ($note) use ($orderItem) {
-                return $note->deliveredItems->where('item_id', $orderItem->item_id);
-            })->sum('quantity');
-            $quantityLeft = $orderItem->ordered - $deliveredQuantity;
-            return [
-                'quantity_left' => $quantityLeft,
-            ];
-        });
-        $allFulfilled = $items->every(function ($item) {
-            return $item['quantity_left'] <= 0;
-        });
-    
+
+        $allFulfilled = true;
+        foreach ($order->items as $orderItem) {
+            $deliveredQuantity = DeliveryNote::where('delivery_note.order_id', '=', $orderItem->order_id)
+                ->join('delivered_item', 'delivered_item.delivery_note_id', '=', 'delivery_note.id')
+                ->where('delivered_item.item_id', $orderItem->item_id)
+                ->sum('delivered_item.quantity');
+
+            if ($deliveredQuantity < $orderItem->ordered) {
+                $allFulfilled = false;
+            }
+            ;
+        }
+
         if ($allFulfilled) {
             $order->update(['fulfilled' => 1]);
         }
@@ -86,7 +90,7 @@ class LogisticsTest extends TestCase {
         // Response
         $order->refresh();
         $this->assertEquals(1, $order->fulfilled);
-        $response = $this->get(route('logistics.show', ['order' => $order->id]));
+        $response = $this->get(route('logistics.showdeliverynotes', ['order' => $order->id]));
         $response->assertSuccessful();
     }
 }

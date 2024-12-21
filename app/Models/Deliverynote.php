@@ -28,10 +28,7 @@ class Deliverynote extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function deliveryNote()
-    {
-        return $this->belongsTo(DeliveryNote::class);
-    }
+
 
     public function overDeliveries()
     {

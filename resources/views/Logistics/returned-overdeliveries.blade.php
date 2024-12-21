@@ -22,7 +22,6 @@
                     <tr>
                         <th class="p-2">Delivery Note ID</th>
                         <th class="p-2">Item Name</th>
-                        <th class="p-2">Delivered Quantity</th>
                         <th class="p-2">Over Delivered Quantity</th>
                         <th class="p-2">Returned</th>
                         <th class="p-2">Date/Time</th>
@@ -33,7 +32,6 @@
                         <tr class="hover:bg-stockhive-grey">
                             <td class="py-2 px-4">{{ $overDelivery->deliveryNote->id }}</td>
                             <td class="py-2 px-4">{{ $overDelivery->item->name }}</td>
-                            <td class="py-2 px-4">{{ $overDelivery->deliveryNote->deliveredItems->firstWhere('item_id', $overDelivery->item_id)->quantity }}</td>
                             <td class="py-2 px-4">{{ $overDelivery->quantity }}</td>
                             <td class="py-2 px-4">{{ $overDelivery->returned ? 'Yes' : 'No' }}</td>
                             <td class="py-2 px-4">{{ $overDelivery->date_time }}</td>
@@ -47,3 +45,4 @@
         @endif
     </div>
 </x-app-layout>
+//https://laravel-news.com/laravel-optional-helper
