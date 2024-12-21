@@ -118,6 +118,7 @@ class ItemController extends Controller
     }
 
     public function downloadReport(Request $request) {
+        // Used knowledge gained from downloading the invoice - Rob
         $stock = null;
         $stock = Item::whereIn('id', $request->items)->with('department')->get();
         $allresults = array();

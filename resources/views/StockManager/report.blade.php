@@ -32,22 +32,21 @@
 
     <!-- Chart.JS scripting -->
     <script>
-        // Get data from PHP and parse it
-        const rawData = JSON.parse('{!! json_encode($allresults, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!}');
-
-        // Create arrays for labels and data
+        // Get data from PHP and parse it through to JSON
+        const rawData = JSON.parse('{!! json_encode($allresults, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!}'); // https://www.php.net/manual/en/function.json-encode.php - Adam
+        // Labels as Months
         const labels = [
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
         let data = [];
 
-        // Colours used on bar chart.
+        // Colours :)
         const colors = [
             '#ff4959', '#ff8c61', '#ffbf69', '#ffeb75', '#d3f261', '#a0e358', '#6cd352', '#4ccf4d', '#2bc94a', '#00c247', '#00b746', '#00a845'
         ];
 
         // Iterate through the raw data and push to array
-        const datasets = rawData.map((item, index) => ({
+        const datasets = rawData.map((item, index) => ({ // JavaScript map, made with knowledge I have from using React/Next.JS - Adam
             label: item.item_name,
                 data: labels.map((month, index) => { // Map the data to the labels
                 const monthlyData = Object.values(item.data).find(d => d.month === (index + 1));
@@ -60,14 +59,14 @@
 
         // Generate the chart
         const reportChart = document.getElementById('chart-report').getContext('2d');
-        new Chart(
+        new Chart( // https://www.chartjs.org/docs/latest/getting-started/usage.html - Adam
             reportChart, {
-                type: 'line', // https://www.chartjs.org/docs/latest/charts/line.html
+                type: 'line', // https://www.chartjs.org/docs/latest/charts/line.html - Adam
                 data: {
                     labels: labels,
                     datasets: datasets
                 },
-                options: { // https://www.chartjs.org/docs/latest/configuration/
+                options: { // https://www.chartjs.org/docs/latest/configuration/ - Adam
                     responsive: true,
                     plugins: {
                         title: {
@@ -91,7 +90,7 @@
                         mode: 'index',
                         intersect: false
                     },
-                    scales: {
+                    scales: { 
                         x: {
                             stacked: true
                         },

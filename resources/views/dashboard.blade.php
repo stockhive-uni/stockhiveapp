@@ -141,7 +141,7 @@
 
         // Generate the chart
         if (permissionsArray.includes(5)) {
-            const ItemsSoldThisMonth = <?php echo json_encode($ItemsSoldThisMonth); ?>;
+            const ItemsSoldThisMonth = <?php echo json_encode($ItemsSoldThisMonth); ?>; // PHP to JS https://www.php.net/manual/en/function.json-encode.php - Adam
             const ItemsSoldLastMonth = <?php echo json_encode($ItemsSoldLastMonth); ?>;
 
             const labels1 = ["Sold This Month", "Sold Last Month"];
@@ -149,13 +149,13 @@
             const salesOrderInfo1 = document.getElementById('chart-info1').getContext('2d');
         new Chart(
             salesOrderInfo1, {
-                type: 'doughnut',
+                type: 'doughnut', // https://www.chartjs.org/docs/latest/charts/doughnut.html - Adam
                 data: {
                     labels: labels1,
                     datasets: [{
                         data: data1,
                         backgroundColor: colors,
-                        borderColor: '#000000',
+                        borderColor: '#000000', // Changing the colour from default (white) to black https://stackoverflow.com/a/65503304 - Adam
                     }]
                 },
                 options: { 
@@ -188,24 +188,22 @@
         }
 
         if (permissionsArray.includes(5)) {
-            const salesThisMonth = <?php echo json_encode($salesThisMonth); ?>;
+        const salesThisMonth = <?php echo json_encode($salesThisMonth); ?>; 
         const salesLastMonth = <?php echo json_encode($salesLastMonth); ?>;
-
-
-            const labels2 = ["Sales This Month", "Sales Last Month"];
+        const labels2 = ["Sales This Month", "Sales Last Month"];
         let data2 = [salesThisMonth, salesLastMonth];
             
         const salesOrderInfo2 = document.getElementById('chart-info2').getContext('2d');
         //sales chart
         new Chart(
             salesOrderInfo2, {
-                type: 'doughnut',
+                type: 'doughnut', 
                 data: {
                     labels: labels2,
                     datasets: [{
                         data: data2,
                         backgroundColor: colors,
-                        borderColor: '#000000',
+                        borderColor: '#000000', 
                     }]
                 },
                 options: { 

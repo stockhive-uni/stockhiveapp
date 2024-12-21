@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AdminTest extends TestCase {
-    use RefreshDatabase;
+    use RefreshDatabase; // Clears/Resets the DB - https://laravel.com/docs/11.x/database-testing#resetting-the-database-after-each-test - Adam
 
     // Log in with a user with admin perms (with an already created user)
     public function test_login_as_admin() {
@@ -14,15 +14,15 @@ class AdminTest extends TestCase {
             'email' => 'Manager1@email.com',
             'password' => '123'
         ]);
-        $response->assertRedirect('/dashboard');
+        $response->assertRedirect('/dashboard'); // Checks that user is redirected - https://docs.phpunit.de/en/11.5/assertions.html - Adam
     }
 
     // Test that the admin can go to the admin panel.
     public function test_admin_panel_load() {
         $user = User::where('email', 'Manager1@email.com')->first();
-        $this->actingAs($user);
+        $this->actingAs($user); // Testing Auth via Laravel - https://laravel.com/docs/11.x/http-tests#session-and-authentication - Adam
         $response = $this->get(route('admin'));
-        $response->assertStatus(200);
+        $response->assertStatus(200); // Check for successful response 
         $response->assertViewIs('Admin.index');
         $response->assertViewHas('employees');
     }
@@ -65,7 +65,7 @@ class AdminTest extends TestCase {
         ]);
         $response->assertStatus(200);
         $response->assertViewIs('Admin.user');
-        $response->assertViewHas('user', function ($user) { // Ensure that the user is created.
+        $response->assertViewHas('user', function ($user) { // Ensure that the user is created. - Adam
             return $user->email === 'newuser@example.com';
         });
     }
