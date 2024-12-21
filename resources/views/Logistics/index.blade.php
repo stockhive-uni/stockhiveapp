@@ -30,7 +30,7 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td class="py-2 px-4">{{ $order->id }}</td>
-                                <td class="py-2 px-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</td> 
+                                <td class="py-2 px-4">{{ $order->user->first_name ?? '' }} {{ $order->user->last_name ?? '' }}</td>
                                 <td class="py-2 px-4">{{ $order->date_time }}</td>
                                 <td class="py-2 px-4 flex justify-center items-center gap-4">
                                     <form action="{{ route('stock-management.ShowOrderHistory') }}" method="GET">

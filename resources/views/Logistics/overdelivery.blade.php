@@ -40,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($overDeliveries as $overDelivery)
+                            @foreach($overDeliveries as $index => $overDelivery)
                                 <tr class="hover:bg-stockhive-grey">
                                     <td class="py-2 px-4">{{ $overDelivery->delivery_note_id }}</td>
                                     <td class="py-2 px-4">{{ $overDelivery->item->name }}</td>
@@ -54,10 +54,13 @@
                                     <td class="py-2 px-4">{{ $overDelivery->returned ? 'Yes' : 'No' }}</td>
                                     <td class="py-2 px-4">{{ $overDelivery->date_time }}</td>
                                     <td class="py-2 px-4">
-                                        <input type="checkbox"
-                                            class="form-checkbox h-5 w-5 bg-stockhive-grey-dark text-accent rounded border-2"
-                                            name="over_deliveries[{{ $overDelivery->delivery_note_id }}][{{ $overDelivery->item_id }}]"
-                                            value="1" @if($overDelivery->returned) checked @endif>
+                                        <input type="checkbox" name="over_deliveries[{{ $index }}][selected]" value="1">
+                                        <input type='hidden' name="over_deliveries[{{ $index }}][delivery_note_id]"
+                                            value='{{$overDelivery->delivery_note_id}}' />
+                                        <input type='hidden' name="over_deliveries[{{ $index }}][item_id]"
+                                            value='{{$overDelivery->item_id}}' />
+                                        <input type='hidden' name="over_deliveries[{{ $index }}][store_id]"
+                                            value='{{$overDelivery->store_id}}' />
                                     </td>
                                 </tr>
                             @endforeach
