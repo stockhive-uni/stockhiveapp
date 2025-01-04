@@ -71,7 +71,7 @@
                             <tr>
                                 <th>{{$ItemsSoldThisMonth}}</th>
                                 <th>{{$ItemsSoldLastMonth}}</th>
-                                <th>{{number_format(($ItemsSoldThisMonth/$ItemsSoldLastMonth)*100, 1)}}</th>
+                                <th>{{ $ItemsSoldLastMonth != 0 ? number_format(($ItemsSoldThisMonth/$ItemsSoldLastMonth)*100, 1) : 'N/A' }}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -93,7 +93,7 @@
                             <tr>
                                 <th>{{$salesThisMonth}}</th>
                                 <th>{{$salesLastMonth}}</th>
-                                <th>{{number_format(($salesThisMonth/$salesLastMonth)*100, 1)}}</th>
+                                <th>{{ $salesThisMonth != 0 ? number_format(($salesThisMonth/$salesLastMonth)*100, 1) : 'N/A' }}</th>
                             </tr>
                         </tbody>
                     </table>
