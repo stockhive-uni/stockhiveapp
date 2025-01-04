@@ -93,7 +93,7 @@
                             <tr>
                                 <th>{{$salesThisMonth}}</th>
                                 <th>{{$salesLastMonth}}</th>
-                                <th>{{ $salesThisMonth != 0 ? number_format(($salesThisMonth/$salesLastMonth)*100, 1) : 'N/A' }}</th>
+                                <th>{{ $salesThisMonth != 0 && $salesLastMonth != 0 ? number_format(($salesThisMonth/$salesLastMonth)*100, 1) : 'N/A' }}</th>
                             </tr>
                         </tbody>
                     </table>
