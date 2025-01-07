@@ -32,7 +32,7 @@ class InventoryController extends Controller
         ->join('item', 'store_item.item_id', '=', 'item.id')
         ->join('department', 'item.department_id', '=', 'department.id')
         ->join('location', 'location.id', '=', 'store_item_storage.location_id')
-        ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id)
+        ->whereRelation('store_item.store', 'store_id', '=', Auth::user()->store_id) //from the documentation: https://laravel.com/docs/11.x/eloquent-relationships#inline-relationship-existence-queries
         ->where('store_item.store_id', '=', Auth::user()->store_id)
         ->OrderBy('last_spot_checked', 'asc')
         ->select('item.name AS itemName', 'item.price', 'item.id', 'department.name AS departmentName', 'store_item_storage.quantity', 'location.name AS location', 'store_item.last_spot_checked as last_spot_checked')
@@ -43,7 +43,7 @@ class InventoryController extends Controller
         //gets items that arent in the store_item_storage table, showing that there is no stock of it.
         $noStockWarning = store_item::with(['store', 'item', 'item.department'])
         ->leftJoin('store_item_storage', 'store_item.id', '=','store_item_storage.store_item_id') //selects records that have matches with the store_item_storage table
-        ->whereNull('store_item_storage.store_item_id')
+        ->whereNull('store_item_storage.store_item_id') //learnt how to use whereNull here https://laravel.com/docs/11.x/collections#method-wherenull
         ->limit(3) //reverses the selection, so only selects records that have no matches.
         ->get(); 
         return view('Inventory.index',['lowStockItemWarning' => $lowStockItemWarning, 'spotCheckItemWarning' => $spotCheckItemWarning, 'noStockWarning' => $noStockWarning]);
